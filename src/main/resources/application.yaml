@@ -1,0 +1,115 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILES:dev}
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+
+default:
+  server:
+    port: 48080
+  datasource:
+    url: 192.168.222.90
+    port: 5432
+    dbname: bpjsservice
+    username: postgres
+    password: G00gl3123
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 60000
+        follow-redirects: false
+
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-components: always
+
+app:
+  name: '@project.name@'
+  version: '@project.version@'
+  desc: '@project.description@'
+
+springdoc:
+  swagger-ui:
+    supported-submit-methods:
+    - None
+
+---
+server:
+  port: ${BPJSSERVICE_PORT:${default.server.port}}
+  servlet:
+    context-path: /bpjsservice
+
+spring:
+  application:
+    name: bpjsservice
+  cloud:
+    gcp:
+      logging:
+        enabled: true
+  sql:
+    init:
+      platform: postgre
+  datasource:
+    url: jdbc:postgresql://${BPJSSERVICE_DATABASE_URL:${default.datasource.url}}:${BPJSSERVICE_DATABASE_PORT:${default.datasource.port}}/${BPJSSERVICE_DATABASE_NAME:${default.datasource.dbname}}
+    username: ${BPJSSERVICE_DATABASE_USERNAME:${default.datasource.username}}
+    password: ${BPJSSERVICE_DATABASE_PASSWORD:${default.datasource.password}}
+    hikari:
+      minimum-idle: 0
+      max-lifetime: 60000
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    default-property-inclusion: NON_NULL
+  flyway:
+    baseline-on-migrate: true
+
+proxy:
+  commonservice:
+    host: ${COMMONSERVICE_HOST:${proxy.commonservice.url}}
+    url: http://appcluster.homtmh.local/commonservice
+  mtws:
+    host: ${MTWS_HOST:${proxy.mtws.url}}
+    url: http://192.168.222.191:18443/MTWS
+
+logging:
+  level:
+    org:
+      springframework:
+        web: WARN
+      hibernate: INFO 
+    #'[com.rsmurniteguh.emr.bpjsservice.repository]': DEBUG #Uncomment untuk cek log mybatis
+    #'[com.zaxxer.hikari]': DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - dev
+      - qa
+  sleuth:
+    enabled: false
+  datasource:
+    hikari:
+      maximum-pool-size: 2
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+  sleuth:
+    enabled: true 
+  datasource:
+    hikari:
+      maximum-pool-size: 4

@@ -1,0 +1,117 @@
+{"properties": [
+  {
+    "name": "default.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'default.datasource.url'"
+  },
+  {
+    "name": "default.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'default.datasource.username'"
+  },
+  {
+    "name": "default.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'default.datasource.password'"
+  },
+  {
+    "name": "default.datasource.dbname",
+    "type": "java.lang.String",
+    "description": "A description for 'default.datasource.dbname'"
+  },
+  {
+    "name": "default.datasource.port",
+    "type": "java.lang.String",
+    "description": "A description for 'default.datasource.port'"
+  },
+  {
+    "name": "default.server.port",
+    "type": "java.lang.String",
+    "description": "A description for 'default.server.port'"
+  },
+  {
+    "name": "default.host",
+    "type": "java.lang.String",
+    "description": "A description for 'default.host'"
+  },
+  {
+    "name": "proxy.fileservice.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.fileservice.host'"
+  },
+  {
+    "name": "proxy.fileservice.port",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.fileservice.port'"
+  },
+  {
+    "name": "proxy.puppeteer.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.puppeteer.host'"
+  },
+  {
+    "name": "proxy.puppeteer.port",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.puppeteer.port'"
+  },
+  {
+    "name": "proxy.commonservice.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.commonservice.host'"
+  },
+  {
+    "name": "proxy.commonservice.port",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.commonservice.port'"
+  },
+  {
+    "name": "proxy.fileservice.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.fileservice.url'"
+  },
+  {
+    "name": "proxy.puppeteer.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.puppeteer.url'"
+  },
+  {
+    "name": "proxy.commonservice.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.commonservice.url'"
+  },
+  {
+    "name": "app.name",
+    "type": "java.lang.String",
+    "description": "A description for 'app.name'"
+  },
+  {
+    "name": "app.version",
+    "type": "java.lang.String",
+    "description": "A description for 'app.version'"
+  },
+  {
+    "name": "app.desc",
+    "type": "java.lang.String",
+    "description": "A description for 'app.desc'"
+  },
+  {
+    "name": "proxy.mtws.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.mtws.host'"
+  },
+  {
+    "name": "proxy.mtws.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.mtws.url'"
+  },
+  {
+    "name": "proxy.reportingservice.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.reportingservice.host'"
+  },
+  {
+    "name": "proxy.reportingservice.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.reportingservice.url'"
+  }
+]}
