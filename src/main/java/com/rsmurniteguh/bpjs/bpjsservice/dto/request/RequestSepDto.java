@@ -10,7 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaDto.Asuransi;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto.Asuransi;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,6 +22,8 @@ public class RequestSepDto {
     private String noKartu;
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = Constant.TIMEZONE_JKT)
     private Timestamp tglSep;
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = Constant.TIMEZONE_JKT)
+    private Timestamp tglPulangSep;
     private String ppkPelayanan;
     private JenisPelayanan jnsPelayanan;
     private String klsRawat;
@@ -35,6 +37,7 @@ public class RequestSepDto {
     private SKDP skdp;
     private String noTelp;
     private String noSep;
+    private String keterangan;
     private String user;
 }
 

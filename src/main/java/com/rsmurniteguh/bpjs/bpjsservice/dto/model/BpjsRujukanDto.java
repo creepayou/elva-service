@@ -24,6 +24,10 @@ public class BpjsRujukanDto {
     private BpjsPesertaDto peserta;
     private VClaimMappingDto poliRujukan;
     private VClaimMappingDto provPerujuk;
+    private VClaimMappingDto poliTujuan;
+    private VClaimMappingDto tunjuanRujukan;
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglKunjungan;
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
+    private Timestamp tglRujukan;
 }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -23,9 +22,9 @@ public class BpjsKlaimDto {
     private KelasRawat kelasRawat;
     private String noFPK;
     private String noSEP;
-    private BpjsPesertaDto peserta;
+    private BpjsResponsePesertaDto peserta;
     private String poli;
-    private StatusKlaim status;
+    private String status;
     @JsonAlias({ "tglPlgSEP" })
     private Timestamp tglPulang;
     @JsonAlias({ "tglSEP", "tglSep" })

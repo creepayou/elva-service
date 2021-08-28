@@ -1,5 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +12,7 @@ public class BpjsEnum {
         RAWAT_INAP("1"),
         RAWAT_JALAN("2");
 
-        @Getter private String jenis;
+        @JsonValue @Getter private String jenis;
     }
 
     @AllArgsConstructor
@@ -19,7 +21,7 @@ public class BpjsEnum {
         PARTIAL("2"),
         RUJUK_BALIK("3");
 
-        @Getter private String jenis;
+        @JsonValue @Getter private String jenis;
     }
 
     @AllArgsConstructor
@@ -28,7 +30,7 @@ public class BpjsEnum {
         KELAS_II("2"),
         KELAS_III("3");
 
-        @Getter private String kelas;
+        @JsonValue @Getter private String kelas;
     }
 
     @AllArgsConstructor
@@ -36,7 +38,7 @@ public class BpjsEnum {
         FASKES_1("1"),
         FASKES_2("2");
 
-        @Getter private String jenis;
+        @JsonValue @Getter private String jenis;
     }
 
     @AllArgsConstructor
@@ -44,16 +46,16 @@ public class BpjsEnum {
         TIDAK("0"),
         YA("1");
 
-        @Getter private String ind;
+        @JsonValue @Getter private String ind;
     }
 
     @AllArgsConstructor
     public enum StatusKlaim{
-        PROSES("Proses Verifikasi"),
-        PENDING("Pending Verifikasi"),
-        KLAIM("Klaim");
+        PROSES_VERIFIKASI("1"),
+        PENDING_VERIFIKASI("2"),
+        KLAIM("3");
 
-        @Getter private String status;
+        @JsonValue @Getter private String status;
     }
 
     @AllArgsConstructor
@@ -63,6 +65,6 @@ public class BpjsEnum {
         TASPEN("3"),
         ASABRI("4");
 
-        @Getter private String jenis;
+        @JsonValue @Getter private String jenis;
     }
 }

@@ -23,26 +23,10 @@ public class BpjsSepDto {
     private KelasRawat kelasRawat;
     private String noSep;
     private String penjamin;
-    private Peserta peserta;
+    private BpjsPesertaDto peserta;
     private Informasi informasi;
     private String poli;
     private String poliEksekutif;
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglSep;
-}
-
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class Peserta{
-    private String asuransi;
-    private String hakKelas;
-    private String jnsPeserta;
-    private String kelamin;
-    private String nama;
-    private String noKartu;
-    private String noMr;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp tglLahir;
 }

@@ -14,7 +14,6 @@ import lombok.Data;
 @Data
 @JsonInclude(value = Include.NON_NULL)
 public class RequestRujukanDto {
-    
     private String noRujukan;
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta")
     private Timestamp tglRujukan;
