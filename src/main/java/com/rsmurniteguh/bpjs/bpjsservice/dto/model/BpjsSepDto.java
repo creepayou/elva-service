@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,14 +21,14 @@ import lombok.experimental.Accessors;
 public class BpjsSepDto {
     private String catatan;
     private String diagnosa;
-    private String jnsPelayanan;
-    private String kelasRawat;
+    private JenisPelayanan jnsPelayanan;
+    private KelasRawat kelasRawat;
     private String noSep;
     private String penjamin;
     private BpjsPesertaDto peserta;
     private Informasi informasi;
     private String poli;
-    private String poliEksekutif;
+    private Indikator poliEksekutif;
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglSep;
 }

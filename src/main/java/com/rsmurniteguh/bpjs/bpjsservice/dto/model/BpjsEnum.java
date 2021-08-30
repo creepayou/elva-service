@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,15 +15,17 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum JenisPelayanan {
-        RAWAT_INAP(new VClaimMappingDto().setKode("1").setNama("R.Inap")),
-        RAWAT_JALAN(new VClaimMappingDto().setKode("2").setNama("R.Jalan"));
+        RAWAT_INAP(new VClaimMappingDto().setKode("1").setNama("R.Inap"), "Rawat Inap"),
+        RAWAT_JALAN(new VClaimMappingDto().setKode("2").setNama("R.Jalan"), "Rawat Jalan");
 
         @JsonValue
         @Getter
         private VClaimMappingDto jenis;
+        @Getter
+        private String jenisText;
 
         @JsonCreator
-        public static JenisPelayanan fromValue(String value){
+        public static JenisPelayanan fromValue(String value) throws BpjsServiceException{
             return getJenisPelayanan(value);
         }
 
@@ -33,15 +36,16 @@ public class BpjsEnum {
             for (JenisPelayanan jp : values()) {
                 BY_JENIS.put(jp.getJenis().getKode(), jp);
                 BY_JENIS.put(jp.getJenis().getNama(), jp);
+                BY_JENIS.put(jp.getJenisText(), jp);
             }
         }
 
         @JsonIgnore
-        public static JenisPelayanan getJenisPelayanan(String jenis) {
+        public static JenisPelayanan getJenisPelayanan(String jenis) throws BpjsServiceException {
             if (BY_JENIS.containsKey(jenis))
                 return BY_JENIS.get(jenis);
             else
-                throw new IllegalStateException("Jenis Pelayanan tidak sesuai");
+                throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
         }
     }
 
@@ -63,11 +67,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static TipeRujukan getTipeRujukan(String tipe) {
+        public static TipeRujukan getTipeRujukan(String tipe) throws BpjsServiceException {
             if (BY_TIPE.containsKey(tipe))
                 return BY_TIPE.get(tipe);
             else
-                throw new IllegalStateException("Tipe Rujukan tidak sesuai");
+                throw new BpjsServiceException("Tipe Rujukan tidak sesuai");
         }
     }
 
@@ -93,16 +97,16 @@ public class BpjsEnum {
         }
 
         @JsonCreator
-        public static KelasRawat fromValue(String value){
+        public static KelasRawat fromValue(String value) throws BpjsServiceException{
             return getKelasRawat(value);
         }
 
         @JsonIgnore
-        public static KelasRawat getKelasRawat(String kelas) {
+        public static KelasRawat getKelasRawat(String kelas) throws BpjsServiceException {
             if(BY_KELAS.containsKey(kelas))
                 return BY_KELAS.get(kelas);
             else
-                throw new IllegalStateException("Kelas Rawat tidak sesuai");
+                throw new BpjsServiceException("Kelas Rawat tidak sesuai");
         }
     }
 
@@ -124,37 +128,38 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Faskes getJenisFaskes(String jenis) {
+        public static Faskes getJenisFaskes(String jenis) throws BpjsServiceException {
             if(BY_JENIS.containsKey(jenis))
                 return BY_JENIS.get(jenis);
             else
-                throw new IllegalStateException("Faskes tidak sesuai");
+                throw new BpjsServiceException("Faskes tidak sesuai");
         }
     }
 
     @AllArgsConstructor
     public enum Indikator {
-        TIDAK("0"), YA("1");
+        TIDAK(new VClaimMappingDto().setKode("0").setNama("Tidak")), YA(new VClaimMappingDto().setKode("1").setNama("Ya"));
 
         @JsonValue
         @Getter
-        private String ind;
+        private VClaimMappingDto ind;
 
         @JsonIgnore
         private static final Map<String, Indikator> BY_IND = new HashMap<>();
 
         static {
             for (Indikator ind : values()) {
-                BY_IND.put(ind.getInd(), ind);
+                BY_IND.put(ind.getInd().getKode(), ind);
+                BY_IND.put(ind.getInd().getNama(), ind);
             }
         }
 
         @JsonIgnore
-        public static Indikator getIndikator(String ind) {
+        public static Indikator getIndikator(String ind) throws BpjsServiceException {
             if(BY_IND.containsKey(ind))
                 return BY_IND.get(ind);
             else
-                throw new IllegalStateException("Jenis Pelayanan tidak sesuai");
+                throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
         }
     }
 
@@ -176,11 +181,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static StatusKlaim getStatusKlaim(String status) {
+        public static StatusKlaim getStatusKlaim(String status) throws BpjsServiceException {
             if(BY_STATUS.containsKey(status))
                 return BY_STATUS.get(status);
             else
-                throw new IllegalStateException("Status Klaim tidak sesuai");
+                throw new BpjsServiceException("Status Klaim tidak sesuai");
         }
     }
 
@@ -202,11 +207,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Penjamin getPenjamin(String jenis) {
+        public static Penjamin getPenjamin(String jenis) throws BpjsServiceException {
             if(BY_JENIS.containsKey(jenis))
                 return BY_JENIS.get(jenis);
             else
-                throw new IllegalStateException("Penjamin tidak sesuai");
+                throw new BpjsServiceException("Penjamin tidak sesuai");
         }
     }
 }

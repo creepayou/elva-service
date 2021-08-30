@@ -14,6 +14,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,7 +69,7 @@ public interface VClaimProxy {
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/SEP/{noSep}")
-        public VClaimResponse<RequestSepDto> searchSEP(@PathVariable("noSep") String noSep,
+        public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @PostMapping("/SEP/1.1/Insert")
@@ -137,9 +138,9 @@ public interface VClaimProxy {
                         @PathVariable("jnsPelayanan") String jnsPelayanan,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
-        @GetMapping("/Monitoring/Klaim/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}/Status/{status}")
+        @GetMapping("/Monitoring/Klaim/Tanggal/{tglPulang}/JnsPelayanan/{jnsPelayanan}/Status/{status}")
         public VClaimResponse<List<BpjsKlaimDto>> getDataKlaim(
-                        @PathVariable("tglSEP") String tglSEP,
+                        @PathVariable("tglPulang") String tglPulang,
                         @PathVariable("jnsPelayanan") String jnsPelayanan,
                         @PathVariable("status") String status, @RequestHeader(Constant.ENTITY) String entityCode);
 
