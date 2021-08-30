@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +23,7 @@ public class BaseController {
 	private final List<SimpleDateFormat> dateFormatList = Arrays.asList(
 		new SimpleDateFormat("dd-MMM-yyyy HH:mm"),
 		new SimpleDateFormat("dd-MMM-yyyy"),
+		new SimpleDateFormat("yyyy-MM-dd"),
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
 		new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 	);
@@ -68,15 +67,5 @@ public class BaseController {
 				}
 	        }
 	    });
-	}
-	
-	public void checkBindingResult(BindingResult bindingResult) throws ExceptionInInitializerError { //pengecekan untuk error pada model agar dapat throw ke UI
-		if(bindingResult.hasErrors()) {
-			String message = "";
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				message = String.join(StringUtils.hasText(message) ? "\n" : "", error.getDefaultMessage());
-			}
-			throw new ExceptionInInitializerError(message);
-		}
 	}
 }

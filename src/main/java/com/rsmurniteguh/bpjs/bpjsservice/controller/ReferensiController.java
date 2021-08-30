@@ -10,6 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,11 @@ public class ReferensiController {
 
     @GetMapping("/getFaskes")
     public ResponseSts<List<VClaimMappingDto>> getFaskes(@RequestParam("faskes") String paramFaskes,
-            @RequestParam("jenisFaskes") Faskes jenisFaskes,
+            @RequestParam("jenisFaskes") String jenisFaskes,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, jenisFaskes, entityCode));
+                    .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, Faskes.getJenisFaskes(jenisFaskes).getJenis(), entityCode));
             return ResponseSts.Success(response.get("faskes"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -70,13 +71,13 @@ public class ReferensiController {
     }
 
     @GetMapping("/getDokterDPJP")
-    public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") JenisPelayanan jenisPelayanan,
+    public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") String jenisPelayanan,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestParam("spesialis") String spesialis,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getDokterDPJP(jenisPelayanan, tglPelayanan, spesialis, entityCode));
+                    .handleVClaimResponse(vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(), DateUtil.formatTimestamp(tglPelayanan), spesialis, entityCode));
             return ResponseSts.Success(response.get("list"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

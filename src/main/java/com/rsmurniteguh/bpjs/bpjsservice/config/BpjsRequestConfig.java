@@ -1,6 +1,5 @@
 package com.rsmurniteguh.bpjs.bpjsservice.config;
 
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
@@ -14,14 +13,12 @@ import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.apachecommons.CommonsLog;
 
-@Component
 @CommonsLog
 public class BpjsRequestConfig {
 
@@ -30,26 +27,21 @@ public class BpjsRequestConfig {
 
     @Bean
     public RequestInterceptor requestInterceptor(){
-        return new RequestInterceptor(){
-            @Override
-            public void apply(RequestTemplate requestTemplate) {
-                try {
-                    String entityCode = requestTemplate.headers().get(Constant.ENTITY).toArray()[0].toString();
-                    requestTemplate.removeHeader(Constant.ENTITY);
+        return (RequestTemplate requestTemplate) -> {
+            try {
+                String entityCode = requestTemplate.headers().get(Constant.ENTITY).toArray()[0].toString();
+                requestTemplate.removeHeader(Constant.ENTITY);
 
-                    if(StringUtils.hasText(entityCode)){
-                        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
-                        final Long unixTime = System.currentTimeMillis() / 1000L;
-                        final String salt = bpjsConsumerDto.getConsumerId() + "&" + unixTime;
-                        requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
-                        requestTemplate.header("X-timestamp", unixTime + "");
-                        requestTemplate.header("X-signature", generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
-                    }
-                } catch (IllegalStateException e) {
-                    // Do nothing
-                } catch (GeneralSecurityException e) {
-                    log.error(e.getMessage(), e);
+                if(StringUtils.hasText(entityCode)){
+                    BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+                    final Long unixTime = System.currentTimeMillis() / 1000L;
+                    final String salt = bpjsConsumerDto.getConsumerId() + "&" + unixTime;
+                    requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
+                    requestTemplate.header("X-timestamp", unixTime + "");
+                    requestTemplate.header("X-signature", generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
                 }
+            } catch (IllegalStateException | GeneralSecurityException e) {
+                log.error(e.getMessage(), e);
             }
         };
     }

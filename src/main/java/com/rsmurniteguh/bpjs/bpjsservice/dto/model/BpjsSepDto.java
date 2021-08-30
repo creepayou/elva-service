@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,7 +19,7 @@ public class BpjsSepDto {
     private String catatan;
     private String diagnosa;
     private String jnsPelayanan;
-    private KelasRawat kelasRawat;
+    private String kelasRawat;
     private String noSep;
     private String penjamin;
     private BpjsPesertaDto peserta;

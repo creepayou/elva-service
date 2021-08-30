@@ -3,13 +3,8 @@ package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto;
@@ -42,34 +37,34 @@ public interface VClaimProxy {
 
         @GetMapping("/referensi/faskes/{param}/{jenisFaskes}")
         public VClaimResponse<List<VClaimMappingDto>> getFaskes(@PathVariable("param") String parameter,
-                        @PathVariable("jenisFaskes") Faskes jenisFaskes,
+                        @PathVariable("jenisFaskes") String jenisFaskes,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/referensi/dokter/pelayanan/{jenisPelayanan}/tglPelayanan/{tglPelayanan}/Spesialis/{spesialis}")
         public VClaimResponse<List<VClaimMappingDto>> getDokterDPJP(
-                        @PathVariable("jenisPelayanan") JenisPelayanan jenisPelayanan,
-                        @PathVariable("tglPelayanan") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = Constant.TIMEZONE_JKT) Timestamp tglPelayanan,
+                        @PathVariable("jenisPelayanan") String jenisPelayanan,
+                        @PathVariable("tglPelayanan") String tglPelayanan,
                         @PathVariable("spesialis") String spesialis, @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/referensi/propinsi")
         public VClaimResponse<List<VClaimMappingDto>> getPropinsi(@RequestHeader(Constant.ENTITY) String entityCode);
 
-        @GetMapping("/referensi/kabupaten/{kdPropinsi}")
+        @GetMapping("/referensi/kabupaten/propinsi/{kdPropinsi}")
         public VClaimResponse<List<VClaimMappingDto>> getKabupaten(@PathVariable("kdPropinsi") String kdPropinsi,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
-        @GetMapping("/referensi/kecamatan/{kdKabupaten}")
+        @GetMapping("/referensi/kecamatan/kabupaten/{kdKabupaten}")
         public VClaimResponse<List<VClaimMappingDto>> getKecamatan(@PathVariable("kdKabupaten") String kdKabupaten,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Peserta/nokartu/{noKartu}/tglSEP/{tglSEP}")
         public VClaimResponse<BpjsResponsePesertaDto> getPesertaByNoKartu(@PathVariable("noKartu") String noKartu,
-                        @PathVariable("tglSEP") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglSEP,
+                        @PathVariable("tglSEP") Timestamp tglSEP,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Peserta/nik/{nik}/tglSEP/{tglSEP}")
         public VClaimResponse<BpjsResponsePesertaDto> getPesertaByNik(@PathVariable("nik") String nik,
-                        @PathVariable("tglSEP") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglSEP,
+                        @PathVariable("tglSEP") Timestamp tglSEP,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/SEP/{noSep}")
@@ -137,21 +132,21 @@ public interface VClaimProxy {
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Monitoring/Kunjungan/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}")
-        public VClaimResponse<BpjsKunjunganDto> getDataKunjungan(
-                        @PathVariable("tglSEP") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglSEP,
-                        @PathVariable("jnsPelayanan") JenisPelayanan jnsPelayanan,
+        public VClaimResponse<List<BpjsKunjunganDto>> getDataKunjungan(
+                        @PathVariable("tglSEP") String tglSEP,
+                        @PathVariable("jnsPelayanan") String jnsPelayanan,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Monitoring/Klaim/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}/Status/{status}")
-        public VClaimResponse<BpjsKlaimDto> getDataKlaim(
-                        @PathVariable("tglSEP") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglSEP,
-                        @PathVariable("jnsPelayanan") JenisPelayanan jnsPelayanan,
-                        @PathVariable("status") StatusKlaim status, @RequestHeader(Constant.ENTITY) String entityCode);
+        public VClaimResponse<List<BpjsKlaimDto>> getDataKlaim(
+                        @PathVariable("tglSEP") String tglSEP,
+                        @PathVariable("jnsPelayanan") String jnsPelayanan,
+                        @PathVariable("status") String status, @RequestHeader(Constant.ENTITY) String entityCode);
 
-        @GetMapping("/monitoring/Klaim/HistoriPelayanan/NoKartu/{noKartu}/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}")
-        public VClaimResponse<BpjsKunjunganDto> getHistoriPelayanan(@PathVariable("noKartu") String noKartu,
-                        @PathVariable("tglAwal") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglAwal,
-                        @PathVariable("tglAkhir") @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta") Timestamp tglAkhir,
+        @GetMapping("/monitoring/HistoriPelayanan/NoKartu/{noKartu}/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}")
+        public VClaimResponse<List<BpjsKunjunganDto>> getHistoriPelayanan(@PathVariable("noKartu") String noKartu,
+                        @PathVariable("tglAwal") String tglAwal,
+                        @PathVariable("tglAkhir") String tglAkhir,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
 }
