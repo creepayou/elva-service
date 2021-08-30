@@ -113,5 +113,15 @@
     "name": "proxy.reportingservice.url",
     "type": "java.lang.String",
     "description": "A description for 'proxy.reportingservice.url'"
+  },
+  {
+    "name": "proxy.vclaimrest.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.vclaimrest.host'"
+  },
+  {
+    "name": "proxy.vclaimrest.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.vclaimrest.url'"
   }
 ]}

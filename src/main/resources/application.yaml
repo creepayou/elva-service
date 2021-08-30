@@ -7,7 +7,7 @@ mybatis:
 
 default:
   server:
-    port: 48080
+    port: 48084
   datasource:
     url: 192.168.222.90
     port: 5432
@@ -78,9 +78,9 @@ proxy:
   commonservice:
     host: ${COMMONSERVICE_HOST:${proxy.commonservice.url}}
     url: http://appcluster.homtmh.local/commonservice
-  mtws:
-    host: ${MTWS_HOST:${proxy.mtws.url}}
-    url: http://192.168.222.191:18443/MTWS
+  vclaimrest:
+    host: ${VCLAIMREST_HOST:${proxy.vclaimrest.url}}
+    url: https://new-api.bpjs-kesehatan.go.id:8080/new-vclaim-rest
 
 logging:
   level:

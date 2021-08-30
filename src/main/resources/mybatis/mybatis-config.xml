@@ -7,6 +7,6 @@
         <package name="com.rsmurniteguh.bpjs.bpjsservice.model"/>
     </typeAliases>
     <mappers>
-        <mapper resource="mybatis/mapper/UserMapper.xml"/>
+        <mapper resource="mybatis/mapper/BpjsConsumerMapper.xml"/>
     </mappers>
 </configuration>

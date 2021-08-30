@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerDtoMapper;
+import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumer;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -32,4 +34,8 @@ public class BpjsConsumerDto {
     private String defunctInd;
 
     private String entityCode;
+
+    public BpjsConsumer toBpjsConsumer(){
+        return BpjsConsumerDtoMapper.toBpjsConsumer(this);
+    }
 }
