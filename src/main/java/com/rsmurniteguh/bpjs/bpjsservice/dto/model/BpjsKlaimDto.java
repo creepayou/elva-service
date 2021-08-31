@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,15 +21,17 @@ public class BpjsKlaimDto {
 
     private VClaimMappingDto Inacbg;
     private Biaya biaya;
-    private String kelasRawat;
+    private KelasRawat kelasRawat;
     private String noFPK;
     private String noSEP;
     private BpjsResponsePesertaDto peserta;
     private String poli;
     private String status;
     @JsonAlias({ "tglPlgSEP" })
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglPulang;
     @JsonAlias({ "tglSEP", "tglSep" })
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglSep;
 }
 

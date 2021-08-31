@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 @Data
@@ -12,7 +13,8 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VClaimMappingDto {
-    
+    @NonNull
     private String kode;
+    @NonNull
     private String nama;
 }

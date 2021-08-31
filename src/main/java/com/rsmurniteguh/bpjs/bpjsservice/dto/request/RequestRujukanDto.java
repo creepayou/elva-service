@@ -2,10 +2,12 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.request;
 
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 
 import lombok.Data;
 
@@ -13,10 +15,11 @@ import lombok.Data;
 @JsonInclude(value = Include.NON_NULL)
 public class RequestRujukanDto {
     private String noRujukan;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta")
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglRujukan;
     private String ppkDirujuk;
-    private String jnsPelayanan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    private JenisPelayanan jnsPelayanan;
     private String catatan;
     private String diagRujukan;
     private String tipeRujukan;

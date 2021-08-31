@@ -6,6 +6,7 @@ import java.util.List;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
@@ -45,12 +46,12 @@ public class MonitoringController extends BaseController {
 
     @GetMapping("/getDataKlaim")
     public ResponseSts<List<BpjsKlaimDto>> getDataKlaim(@RequestParam("tanggalPulang") String tglPulang,
-            @RequestParam("jenisPelayanan") String jnsPelayanan,
-            @RequestParam("statusKlaim") String statusKlaim,
+            @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan,
+            @RequestParam("statusKlaim") StatusKlaim statusKlaim,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             return ResponseSts.Success(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getDataKlaim(tglPulang, JenisPelayanan.getJenisPelayanan(jnsPelayanan).getJenis().getKode(), statusKlaim, entityCode)).get("klaim"));
+                    .handleVClaimResponse(vClaimProxy.getDataKlaim(tglPulang, jnsPelayanan.getJenis().getKode(), statusKlaim.getStatus().getKode(), entityCode)).get("klaim"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.Fail(e.getMessage());

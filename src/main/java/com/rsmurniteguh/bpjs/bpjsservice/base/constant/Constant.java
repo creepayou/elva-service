@@ -12,6 +12,7 @@ public final class Constant {
 	public static final String ENTITY = "mt-entitycode";
 
 	public static final String TIMEZONE_JKT = "Asia/Jakarta";
+	public static final String TIMEZONE_UTC = "UTC";
 
 	public enum EntityCode{
 		MTMH,

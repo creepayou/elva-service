@@ -3,7 +3,6 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -29,13 +28,9 @@ public class BpjsResponsePesertaDto {
     private Provider provUmum;
     private String sex;
     private DetailPeserta statusPeserta;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglCetakKartu;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglLahir;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglTAT;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp tglTMT;
     private Umur umur;
 
@@ -52,9 +47,7 @@ public class BpjsResponsePesertaDto {
         private String cob;
         private String nmAsuransi;
         private String noAsuransi;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private Timestamp tglTAT;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private Timestamp tglTMT; 
     }
 }

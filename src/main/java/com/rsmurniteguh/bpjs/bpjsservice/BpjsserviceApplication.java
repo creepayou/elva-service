@@ -4,6 +4,8 @@ import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 
+import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,7 +34,7 @@ public class BpjsserviceApplication {
 
 	@PostConstruct
 	public void init(){
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		TimeZone.setDefault(TimeZone.getTimeZone(Constant.TIMEZONE_UTC));
 	}
 
 	@Bean

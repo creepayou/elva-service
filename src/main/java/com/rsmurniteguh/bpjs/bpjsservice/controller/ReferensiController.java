@@ -45,11 +45,11 @@ public class ReferensiController {
 
     @GetMapping("/getFaskes")
     public ResponseSts<List<VClaimMappingDto>> getFaskes(@RequestParam("faskes") String paramFaskes,
-            @RequestParam("jenisFaskes") String jenisFaskes,
+            @RequestParam("jenisFaskes") Faskes jenisFaskes,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, Faskes.getJenisFaskes(jenisFaskes).getJenis(), entityCode));
+                    .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, jenisFaskes.getJenis(), entityCode));
             return ResponseSts.Success(response.get("faskes"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

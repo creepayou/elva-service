@@ -2,14 +2,16 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.request;
 
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto.Asuransi;
 
 import lombok.Data;
@@ -20,13 +22,15 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 public class RequestSepDto {
     private String noKartu;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = Constant.TIMEZONE_JKT)
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglSep;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = Constant.TIMEZONE_JKT)
+    @JsonSerialize(using = CustomJsonDateTimeSerializer.class)
     private Timestamp tglPulangSep;
     private String ppkPelayanan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private JenisPelayanan jnsPelayanan;
-    private String klsRawat;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    private KelasRawat klsRawat;
     private String noMR;
     private Rujukan rujukan;
     private String catatan;
@@ -45,8 +49,9 @@ public class RequestSepDto {
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 final class Rujukan{
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Faskes asalRujukan;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = Constant.TIMEZONE_JKT)
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglRujukan;
     private String noRujukan;
     private String ppkRujukan;
@@ -57,6 +62,7 @@ final class Rujukan{
 @JsonInclude(value = Include.NON_NULL)
 final class Poli{
     private String tujuan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Indikator eksekutif;
 }
 
@@ -64,6 +70,7 @@ final class Poli{
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 final class KatarakInd{
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Indikator katarak;
 }
 
@@ -71,6 +78,7 @@ final class KatarakInd{
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 final class Jaminan{
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Indikator lakaLantas;
     private PenjaminJaminan penjamin;
 }
@@ -80,7 +88,7 @@ final class Jaminan{
 @JsonInclude(value = Include.NON_NULL)
 final class PenjaminJaminan{
     private String penjamin;
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd", timezone = Constant.TIMEZONE_JKT)
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglKejadian;
     private String keterangan;
 }
@@ -89,6 +97,7 @@ final class PenjaminJaminan{
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 final class SuplesiJaminan{
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Indikator suplesi;
     private String noSepSuplesi;
     private LokasiLakalantas lokasiLaka;

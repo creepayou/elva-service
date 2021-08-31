@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 
 import lombok.AllArgsConstructor;
@@ -15,35 +14,33 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum JenisPelayanan {
-        RAWAT_INAP(new VClaimMappingDto().setKode("1").setNama("R.Inap"), "Rawat Inap"),
-        RAWAT_JALAN(new VClaimMappingDto().setKode("2").setNama("R.Jalan"), "Rawat Jalan");
+        RAWAT_INAP(new VClaimMappingDto("1", "Rawat Inap"), "R.Inap"),
+        RAWAT_JALAN(new VClaimMappingDto("2","Rawat Jalan"), "R.Jalan");
 
-        @JsonValue
         @Getter
         private VClaimMappingDto jenis;
-        @Getter
-        private String jenisText;
+        protected String jenisText;
 
         @JsonCreator
         public static JenisPelayanan fromValue(String value) throws BpjsServiceException{
             return getJenisPelayanan(value);
         }
 
-        @JsonIgnore
-        private static final Map<String, JenisPelayanan> BY_JENIS = new HashMap<>();
+        private static final Map<String, JenisPelayanan> BY_VALUE = new HashMap<>();
 
         static {
             for (JenisPelayanan jp : values()) {
-                BY_JENIS.put(jp.getJenis().getKode(), jp);
-                BY_JENIS.put(jp.getJenis().getNama(), jp);
-                BY_JENIS.put(jp.getJenisText(), jp);
+                BY_VALUE.put(jp.getJenis().getKode(), jp);
+                BY_VALUE.put(jp.getJenis().getNama(), jp);
+                BY_VALUE.put(jp.jenisText, jp);
+                BY_VALUE.put(jp.name(), jp);
             }
         }
 
         @JsonIgnore
         public static JenisPelayanan getJenisPelayanan(String jenis) throws BpjsServiceException {
-            if (BY_JENIS.containsKey(jenis))
-                return BY_JENIS.get(jenis);
+            if (BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
         }
@@ -53,7 +50,6 @@ public class BpjsEnum {
     public enum TipeRujukan {
         PENUH("1"), PARTIAL("2"), RUJUK_BALIK("3");
 
-        @JsonValue
         @Getter
         private String tipe;
 
@@ -77,22 +73,22 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum KelasRawat {
-        KELAS_I(new VClaimMappingDto().setKode("1").setNama("Kelas 1")), 
-        KELAS_II(new VClaimMappingDto().setKode("2").setNama("Kelas 2")), 
-        KELAS_III(new VClaimMappingDto().setKode("3").setNama("Kelas 3")),
-        UNKNOWN(new VClaimMappingDto().setKode("-").setNama("Tidak Ada"));
+        KELAS_I(new VClaimMappingDto("1","Kelas 1")), 
+        KELAS_II(new VClaimMappingDto("2","Kelas 2")), 
+        KELAS_III(new VClaimMappingDto("3","Kelas 3")),
+        NONE(new VClaimMappingDto("-","Tidak Ada"));
 
-        @JsonValue
         @Getter
         private VClaimMappingDto kelas;
 
         @JsonIgnore
-        private static final Map<String, KelasRawat> BY_KELAS = new HashMap<>();
+        private static final Map<String, KelasRawat> BY_VALUE = new HashMap<>();
 
         static {
             for (KelasRawat kr : values()) {
-                BY_KELAS.put(kr.getKelas().getKode(), kr);
-                BY_KELAS.put(kr.getKelas().getNama(), kr);
+                BY_VALUE.put(kr.getKelas().getKode(), kr);
+                BY_VALUE.put(kr.getKelas().getNama(), kr);
+                BY_VALUE.put(kr.name(), kr);
             }
         }
 
@@ -103,8 +99,8 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static KelasRawat getKelasRawat(String kelas) throws BpjsServiceException {
-            if(BY_KELAS.containsKey(kelas))
-                return BY_KELAS.get(kelas);
+            if(BY_VALUE.containsKey(kelas))
+                return BY_VALUE.get(kelas);
             else
                 throw new BpjsServiceException("Kelas Rawat tidak sesuai");
         }
@@ -114,23 +110,23 @@ public class BpjsEnum {
     public enum Faskes {
         FASKES_1("1"), FASKES_2("2");
 
-        @JsonValue
         @Getter
         private String jenis;
 
         @JsonIgnore
-        private static final Map<String, Faskes> BY_JENIS = new HashMap<>();
+        private static final Map<String, Faskes> BY_VALUE = new HashMap<>();
 
         static {
             for (Faskes fk : values()) {
-                BY_JENIS.put(fk.getJenis(), fk);
+                BY_VALUE.put(fk.getJenis(), fk);
+                BY_VALUE.put(fk.name(), fk);
             }
         }
 
         @JsonIgnore
-        public static Faskes getJenisFaskes(String jenis) throws BpjsServiceException {
-            if(BY_JENIS.containsKey(jenis))
-                return BY_JENIS.get(jenis);
+        public static Faskes getJenisByValue(String jenis) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Faskes tidak sesuai");
         }
@@ -138,26 +134,26 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum Indikator {
-        TIDAK(new VClaimMappingDto().setKode("0").setNama("Tidak")), YA(new VClaimMappingDto().setKode("1").setNama("Ya"));
+        TIDAK(new VClaimMappingDto("0","Tidak")), 
+        YA(new VClaimMappingDto("1","Ya"));
 
-        @JsonValue
         @Getter
         private VClaimMappingDto ind;
 
-        @JsonIgnore
-        private static final Map<String, Indikator> BY_IND = new HashMap<>();
+        private static final Map<String, Indikator> BY_VALUE = new HashMap<>();
 
         static {
             for (Indikator ind : values()) {
-                BY_IND.put(ind.getInd().getKode(), ind);
-                BY_IND.put(ind.getInd().getNama(), ind);
+                BY_VALUE.put(ind.getInd().getKode(), ind);
+                BY_VALUE.put(ind.getInd().getNama(), ind);
+                BY_VALUE.put(ind.name(), ind);
             }
         }
 
         @JsonIgnore
-        public static Indikator getIndikator(String ind) throws BpjsServiceException {
-            if(BY_IND.containsKey(ind))
-                return BY_IND.get(ind);
+        public static Indikator getIndByValue(String ind) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(ind))
+                return BY_VALUE.get(ind);
             else
                 throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
         }
@@ -165,25 +161,27 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum StatusKlaim {
-        PROSES_VERIFIKASI("1"), PENDING_VERIFIKASI("2"), KLAIM("3");
+        PROSES_VERIFIKASI(new VClaimMappingDto("1","Proses Verifikasi")), 
+        PENDING_VERIFIKASI(new VClaimMappingDto("2","Pending Verifikasi")), 
+        KLAIM(new VClaimMappingDto("3","Klaim"));
 
-        @JsonValue
         @Getter
-        private String status;
+        private VClaimMappingDto status;
 
-        @JsonIgnore
-        private static final Map<String, StatusKlaim> BY_STATUS = new HashMap<>();
+        private static final Map<String, StatusKlaim> BY_VALUE = new HashMap<>();
 
         static {
             for (StatusKlaim sts : values()) {
-                BY_STATUS.put(sts.getStatus(), sts);
+                BY_VALUE.put(sts.getStatus().getKode(), sts);
+                BY_VALUE.put(sts.getStatus().getNama(), sts);
+                BY_VALUE.put(sts.name(), sts);
             }
         }
 
         @JsonIgnore
-        public static StatusKlaim getStatusKlaim(String status) throws BpjsServiceException {
-            if(BY_STATUS.containsKey(status))
-                return BY_STATUS.get(status);
+        public static StatusKlaim getStatusByValue(String status) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(status))
+                return BY_VALUE.get(status);
             else
                 throw new BpjsServiceException("Status Klaim tidak sesuai");
         }
@@ -193,23 +191,22 @@ public class BpjsEnum {
     public enum Penjamin {
         JASA_RAHARJA("1"), BPJS_TK("2"), TASPEN("3"), ASABRI("4");
 
-        @JsonValue
         @Getter
         private String jenis;
 
-        @JsonIgnore
-        private static final Map<String, Penjamin> BY_JENIS = new HashMap<>();
+        private static final Map<String, Penjamin> BY_VALUE = new HashMap<>();
 
         static {
             for (Penjamin pj : values()) {
-                BY_JENIS.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.name(), pj);
             }
         }
 
         @JsonIgnore
-        public static Penjamin getPenjamin(String jenis) throws BpjsServiceException {
-            if(BY_JENIS.containsKey(jenis))
-                return BY_JENIS.get(jenis);
+        public static Penjamin getJenisByValue(String jenis) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Penjamin tidak sesuai");
         }
