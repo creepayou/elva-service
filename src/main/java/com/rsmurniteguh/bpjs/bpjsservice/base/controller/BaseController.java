@@ -21,11 +21,7 @@ import lombok.extern.java.Log;
 public class BaseController {
 	
 	private final List<SimpleDateFormat> dateFormatList = Arrays.asList(
-		new SimpleDateFormat("dd-MMM-yyyy HH:mm"),
-		new SimpleDateFormat("dd-MMM-yyyy"),
-		new SimpleDateFormat("yyyy-MM-dd"),
-		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
-		new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	);
 	
 	@InitBinder

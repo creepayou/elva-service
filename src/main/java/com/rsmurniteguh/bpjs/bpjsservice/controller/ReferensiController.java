@@ -45,8 +45,7 @@ public class ReferensiController {
 
     @GetMapping("/getFaskes")
     public ResponseSts<List<VClaimMappingDto>> getFaskes(@RequestParam("faskes") String paramFaskes,
-            @RequestParam("jenisFaskes") Faskes jenisFaskes,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestParam("jenisFaskes") Faskes jenisFaskes, @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, jenisFaskes.getJenis(), entityCode));
@@ -72,12 +71,13 @@ public class ReferensiController {
 
     @GetMapping("/getDokterDPJP")
     public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") String jenisPelayanan,
-            @RequestParam("tglPelayanan") Timestamp tglPelayanan,
-            @RequestParam("spesialis") String spesialis,
+            @RequestParam("tglPelayanan") Timestamp tglPelayanan, @RequestParam("spesialis") String spesialis,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
-            Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(), DateUtil.formatTimestamp(tglPelayanan), spesialis, entityCode));
+            Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(),
+                            DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), spesialis,
+                            entityCode));
             return ResponseSts.Success(response.get("list"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

@@ -1,6 +1,5 @@
 package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
@@ -60,12 +59,12 @@ public interface VClaimProxy {
 
         @GetMapping("/Peserta/nokartu/{noKartu}/tglSEP/{tglSEP}")
         public VClaimResponse<BpjsResponsePesertaDto> getPesertaByNoKartu(@PathVariable("noKartu") String noKartu,
-                        @PathVariable("tglSEP") Timestamp tglSEP,
+                        @PathVariable("tglSEP") String tglSEP,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Peserta/nik/{nik}/tglSEP/{tglSEP}")
         public VClaimResponse<BpjsResponsePesertaDto> getPesertaByNik(@PathVariable("nik") String nik,
-                        @PathVariable("tglSEP") Timestamp tglSEP,
+                        @PathVariable("tglSEP") String tglSEP,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/SEP/{noSep}")
