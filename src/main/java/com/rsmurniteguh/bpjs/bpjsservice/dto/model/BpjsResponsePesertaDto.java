@@ -30,18 +30,19 @@ public class BpjsResponsePesertaDto {
     private Provider provUmum;
     private String sex;
     private DetailPeserta statusPeserta;
-    @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglCetakKartu;
-    @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglLahir;
-    @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglTAT;
-    @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglTMT;
     private Umur umur;
 
-    public void setNoMr(String noMR){
-        if(this.mr == null) this.mr = new MR();
+    public void setNoMr(String noMR) {
+        if (this.mr == null)
+            this.mr = new MR();
         this.mr.setNoMR(noMR);
     }
 
@@ -53,56 +54,56 @@ public class BpjsResponsePesertaDto {
         private Indikator cob;
         private String nmAsuransi;
         private String noAsuransi;
-        @JsonDeserialize(using= CustomJsonDateDeserializer.class)
+        @JsonDeserialize(using = CustomJsonDateDeserializer.class)
         private Timestamp tglTAT;
-        @JsonDeserialize(using= CustomJsonDateDeserializer.class)
-        private Timestamp tglTMT; 
+        @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+        private Timestamp tglTMT;
     }
-}
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class Informasi {
-    @JsonAlias({"Dinsos"})
-    private String dinSos;
-    private String noSKTM;
-    private String prolanisPRB;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Informasi {
+        @JsonAlias({ "Dinsos" })
+        private String dinSos;
+        private String noSKTM;
+        private String prolanisPRB;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class DetailPeserta {
-    private String keterangan;
-    private String kode;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class DetailPeserta {
+        private String keterangan;
+        private String kode;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class MR {
-    private String noMR;
-    private String noTelepon;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class MR {
+        private String noMR;
+        private String noTelepon;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class Provider {
-    private String kdProvider;
-    private String nmProvider;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Provider {
+        private String kdProvider;
+        private String nmProvider;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-final class Umur {
-    private String umurSaatPelayanan;
-    private String umurSekarang;
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class Umur {
+        private String umurSaatPelayanan;
+        private String umurSekarang;
+    }
 }

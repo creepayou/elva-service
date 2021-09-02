@@ -25,11 +25,11 @@ public class SepController {
     private VClaimProxy vClaimProxy;
 
     @GetMapping("/searchSEP")
-    public ResponseSts<BpjsSepDto> searchSEP(@RequestParam("noSEP") String noSEP,
+    public ResponseSts<BpjsSepDto> searchSEP(@RequestParam("sepNo") String sepNo,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
             return ResponseSts
-                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.searchSEP(noSEP, entityCode)));
+                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.searchSEP(sepNo, entityCode)));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {

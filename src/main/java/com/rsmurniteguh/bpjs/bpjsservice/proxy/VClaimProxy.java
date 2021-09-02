@@ -8,6 +8,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
@@ -96,31 +97,31 @@ public interface VClaimProxy {
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/{noRujukan}")
-        public VClaimResponse<BpjsRujukanDto> getRujukanPCareByNoRujukan(@PathVariable("noRujukan") String noRujukan,
+        public VClaimResponse2<BpjsRujukanDto> getRujukanPCareByNoRujukan(@PathVariable("noRujukan") String noRujukan,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/RS/{noRujukan}")
-        public VClaimResponse<BpjsRujukanDto> getRujukanRsByNoRujukan(@PathVariable("noRujukan") String noRujukan,
+        public VClaimResponse2<BpjsRujukanDto> getRujukanRsByNoRujukan(@PathVariable("noRujukan") String noRujukan,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/Peserta/{noKartu}")
-        public VClaimResponse<BpjsRujukanDto> getRujukanPCareByNoKartu(@PathVariable("noKartu") String noKartu,
+        public VClaimResponse2<BpjsRujukanDto> getRujukanPCareByNoKartu(@PathVariable("noKartu") String noKartu,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/RS/Peserta/{noKartu}")
-        public VClaimResponse<BpjsRujukanDto> getRujukanRsByNoKartu(@PathVariable("noKartu") String noKartu,
+        public VClaimResponse2<BpjsRujukanDto> getRujukanRsByNoKartu(@PathVariable("noKartu") String noKartu,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/List/Peserta/{noKartu}")
-        public VClaimResponse<List<BpjsRujukanDto>> getRujukanPCareListByNoKartu(
+        public VClaimResponse2<BpjsRujukanListDto> getRujukanPCareListByNoKartu(
                         @PathVariable("noKartu") String noKartu, @RequestHeader(Constant.ENTITY) String entityCode);
 
         @GetMapping("/Rujukan/RS/List/Peserta/{noKartu}")
-        public VClaimResponse<List<BpjsRujukanDto>> getRujukanRsListByNoKartu(@PathVariable("noKartu") String noKartu,
+        public VClaimResponse2<BpjsRujukanListDto> getRujukanRsListByNoKartu(@PathVariable("noKartu") String noKartu,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @PostMapping("/Rujukan/insert")
-        public VClaimResponse<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+        public VClaimResponse2<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
                         @RequestHeader(Constant.ENTITY) String entityCode);
 
         @PutMapping("/Rujukan/update")

@@ -52,6 +52,11 @@ public class BpjsEnum {
 
         @Getter
         private String tipe;
+        
+        @JsonCreator
+        public static TipeRujukan fromValue(String value) throws BpjsServiceException{
+            return getTipeRujukan(value);
+        }
 
         @JsonIgnore
         private static final Map<String, TipeRujukan> BY_TIPE = new HashMap<>();
@@ -80,6 +85,11 @@ public class BpjsEnum {
 
         @Getter
         private VClaimMappingDto kelas;
+        
+        @JsonCreator
+        public static KelasRawat fromValue(String value) throws BpjsServiceException{
+            return getKelasRawat(value);
+        }
 
         @JsonIgnore
         private static final Map<String, KelasRawat> BY_VALUE = new HashMap<>();
@@ -90,11 +100,6 @@ public class BpjsEnum {
                 BY_VALUE.put(kr.getKelas().getNama(), kr);
                 BY_VALUE.put(kr.name(), kr);
             }
-        }
-
-        @JsonCreator
-        public static KelasRawat fromValue(String value) throws BpjsServiceException{
-            return getKelasRawat(value);
         }
 
         @JsonIgnore
@@ -112,6 +117,11 @@ public class BpjsEnum {
 
         @Getter
         private String jenis;
+
+        @JsonCreator
+        public static Faskes fromValue(String value) throws BpjsServiceException{
+            return getJenisByValue(value);
+        }
 
         @JsonIgnore
         private static final Map<String, Faskes> BY_VALUE = new HashMap<>();
@@ -139,6 +149,11 @@ public class BpjsEnum {
 
         @Getter
         private VClaimMappingDto ind;
+
+        @JsonCreator
+        public static Indikator fromValue(String value) throws BpjsServiceException{
+            return getIndByValue(value);
+        }
 
         private static final Map<String, Indikator> BY_VALUE = new HashMap<>();
 
@@ -168,6 +183,11 @@ public class BpjsEnum {
         @Getter
         private VClaimMappingDto status;
 
+        @JsonCreator
+        public static StatusKlaim fromValue(String value) throws BpjsServiceException{
+            return getStatusByValue(value);
+        }
+
         private static final Map<String, StatusKlaim> BY_VALUE = new HashMap<>();
 
         static {
@@ -193,6 +213,11 @@ public class BpjsEnum {
 
         @Getter
         private String jenis;
+
+        @JsonCreator
+        public static Penjamin fromValue(String value) throws BpjsServiceException{
+            return getJenisByValue(value);
+        }
 
         private static final Map<String, Penjamin> BY_VALUE = new HashMap<>();
 
