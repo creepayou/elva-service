@@ -6,6 +6,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
@@ -35,13 +36,15 @@ public class PesertaController extends BaseController {
         try {
             if (tglSEP == null)
                 tglSEP = new Timestamp(System.currentTimeMillis());
-            return ResponseSts.Success(VClaimResponseUtil
+            return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPesertaByNik(nik,
                             DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                     .get("peserta"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -52,13 +55,15 @@ public class PesertaController extends BaseController {
         try {
             if (tglSEP == null)
                 tglSEP = new Timestamp(System.currentTimeMillis());
-            return ResponseSts.Success(VClaimResponseUtil
+            return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(bpjsNo,
                             DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                     .get("peserta"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 }

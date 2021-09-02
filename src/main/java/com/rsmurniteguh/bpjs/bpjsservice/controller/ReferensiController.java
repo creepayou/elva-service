@@ -9,6 +9,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
@@ -36,10 +37,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDiagnosa(paramDiagnosa, entityCode));
-            return ResponseSts.Success(response.get("diagnosa"));
+            return ResponseSts.onSuccess(response.get("diagnosa"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -49,10 +52,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, jenisFaskes.getJenis(), entityCode));
-            return ResponseSts.Success(response.get("faskes"));
+            return ResponseSts.onSuccess(response.get("faskes"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -62,10 +67,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPoli(paramPoli, entityCode));
-            return ResponseSts.Success(response.get("poli"));
+            return ResponseSts.onSuccess(response.get("poli"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -78,10 +85,12 @@ public class ReferensiController {
                     vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(),
                             DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), spesialis,
                             entityCode));
-            return ResponseSts.Success(response.get("list"));
+            return ResponseSts.onSuccess(response.get("list"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -90,10 +99,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPropinsi(entityCode));
-            return ResponseSts.Success(response.get("list"));
+            return ResponseSts.onSuccess(response.get("list"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -103,10 +114,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKabupaten(kodePropinsi, entityCode));
-            return ResponseSts.Success(response.get("list"));
+            return ResponseSts.onSuccess(response.get("list"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -116,10 +129,12 @@ public class ReferensiController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKecamatan(kodeKabupaten, entityCode));
-            return ResponseSts.Success(response.get("list"));
+            return ResponseSts.onSuccess(response.get("list"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 }

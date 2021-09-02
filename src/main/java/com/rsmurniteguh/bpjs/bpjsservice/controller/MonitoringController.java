@@ -35,14 +35,14 @@ public class MonitoringController extends BaseController {
     public ResponseSts<List<BpjsKunjunganDto>> getKunjungan(@RequestParam("tanggalSEP") Timestamp tglSEP,
             @RequestParam("jenisPelayanan") String jnsPelayanan, @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
-            return ResponseSts.Success(VClaimResponseUtil
+            return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataKunjungan(
                             DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT),
                             JenisPelayanan.getJenisPelayanan(jnsPelayanan).getJenis().getKode(), entityCode))
                     .get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -51,14 +51,14 @@ public class MonitoringController extends BaseController {
             @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan,
             @RequestParam("statusKlaim") StatusKlaim statusKlaim, @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
-            return ResponseSts.Success(VClaimResponseUtil
+            return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataKlaim(
                             DateUtil.formatTimestampWithTimezone(tglPulang, Constant.TIMEZONE_JKT),
                             jnsPelayanan.getJenis().getKode(), statusKlaim.getStatus().getKode(), entityCode))
                     .get("klaim"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 
@@ -67,12 +67,12 @@ public class MonitoringController extends BaseController {
             @RequestParam("tglAwal") Timestamp tglAwal, @RequestParam("tglAkhir") Timestamp tglAkhir,
             @RequestHeader(Constant.ENTITY) String entityCode) {
         try {
-            return ResponseSts.Success(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getHistoriPelayanan(noKartu,
+            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getHistoriPelayanan(noKartu,
                     DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),
                     DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), entityCode)).get("histori"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return ResponseSts.Fail(e.getMessage());
+            return ResponseSts.onFail(e.getMessage());
         }
     }
 }
