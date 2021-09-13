@@ -26,7 +26,7 @@ public class RujukanController extends BaseController{
     private VClaimProxy vClaimProxy;
 
     @GetMapping("/getRujukanByNoRujukan/{noRujukan}")
-    public ResponseSts<BpjsRujukanDto> getRujukanByNoRujukan(@PathVariable("noRujukan") String noRujukan, @RequestHeader(Constant.ENTITY) String entityCode){
+    public ResponseSts<BpjsRujukanDto> getRujukanByNoRujukan(@PathVariable("noRujukan") String noRujukan, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
         try{
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getRujukanRsByNoRujukan(noRujukan, entityCode)));
         } catch(Exception e){
@@ -36,7 +36,7 @@ public class RujukanController extends BaseController{
     }
 
     @GetMapping("/getRujukanByBpjsNo/{bpjsNo}")
-    public ResponseSts<BpjsRujukanDto> getRujukanByBpjsNo(@PathVariable("bpjsNo") String bpjsNo, @RequestHeader(Constant.ENTITY) String entityCode){
+    public ResponseSts<BpjsRujukanDto> getRujukanByBpjsNo(@PathVariable("bpjsNo") String bpjsNo, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
         try{
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getRujukanRsByNoKartu(bpjsNo, entityCode)));
         } catch(Exception e){
@@ -46,7 +46,7 @@ public class RujukanController extends BaseController{
     }
 
     @GetMapping("/getRujukanListByBpjsNo/{bpjsNo}")
-    public ResponseSts<BpjsRujukanListDto> getRujukanListByBpjsNo (@PathVariable("bpjsNo") String bpjsNo, @RequestHeader(Constant.ENTITY) String entityCode){
+    public ResponseSts<BpjsRujukanListDto> getRujukanListByBpjsNo (@PathVariable("bpjsNo") String bpjsNo, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
         try{
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getRujukanRsListByNoKartu(bpjsNo, entityCode)));
         } catch(Exception e){

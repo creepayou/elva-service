@@ -16,6 +16,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,7 @@ public class MonitoringController extends BaseController {
 
     @GetMapping("/getKunjungan")
     public ResponseSts<List<BpjsKunjunganDto>> getKunjungan(@RequestParam("tanggalSEP") Timestamp tglSEP,
-            @RequestParam("jenisPelayanan") String jnsPelayanan, @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestParam("jenisPelayanan") String jnsPelayanan, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataKunjungan(
@@ -49,7 +50,7 @@ public class MonitoringController extends BaseController {
     @GetMapping("/getDataKlaim")
     public ResponseSts<List<BpjsKlaimDto>> getDataKlaim(@RequestParam("tanggalPulang") Timestamp tglPulang,
             @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan,
-            @RequestParam("statusKlaim") StatusKlaim statusKlaim, @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestParam("statusKlaim") StatusKlaim statusKlaim, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataKlaim(
@@ -62,10 +63,10 @@ public class MonitoringController extends BaseController {
         }
     }
 
-    @GetMapping("/getHistori")
-    public ResponseSts<List<BpjsKunjunganDto>> getHistori(@RequestParam("noBPJS") String noKartu,
+    @GetMapping("/getHistori/{bpjsNo}")
+    public ResponseSts<List<BpjsKunjunganDto>> getHistori(@PathVariable("bpjsNo") String noKartu,
             @RequestParam("tglAwal") Timestamp tglAwal, @RequestParam("tglAkhir") Timestamp tglAkhir,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getHistoriPelayanan(noKartu,
                     DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),

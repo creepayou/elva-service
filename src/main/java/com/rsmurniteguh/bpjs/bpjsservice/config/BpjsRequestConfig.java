@@ -29,8 +29,8 @@ public class BpjsRequestConfig {
     public RequestInterceptor requestInterceptor(){
         return (RequestTemplate requestTemplate) -> {
             try {
-                String entityCode = requestTemplate.headers().get(Constant.ENTITY).toArray()[0].toString();
-                requestTemplate.removeHeader(Constant.ENTITY);
+                String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
+                requestTemplate.removeHeader(Constant.MT_ENTITY_CODE);
 
                 if(StringUtils.hasText(entityCode)){
                     BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);

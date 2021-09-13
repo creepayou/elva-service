@@ -26,7 +26,7 @@ public class SepController {
 
     @GetMapping("/searchSEP")
     public ResponseSts<BpjsSepDto> searchSEP(@RequestParam("sepNo") String sepNo,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts
                     .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.searchSEP(sepNo, entityCode)));

@@ -32,7 +32,7 @@ public class PesertaController extends BaseController {
     @GetMapping("/getPesertaByNIK/{nik}")
     public ResponseSts<BpjsResponsePesertaDto> getPesertaByNIK(@PathVariable("nik") String nik,
             @RequestParam(value = "tglSEP", required = false) Timestamp tglSEP,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             if (tglSEP == null)
                 tglSEP = new Timestamp(System.currentTimeMillis());
@@ -51,7 +51,7 @@ public class PesertaController extends BaseController {
     @GetMapping("/getPesertaByBpjsNo/{bpjsNo}")
     public ResponseSts<BpjsResponsePesertaDto> getPesertaByBpjsNo(@PathVariable("bpjsNo") String bpjsNo,
             @RequestParam(value = "tglSEP", required = false) Timestamp tglSEP,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             if (tglSEP == null)
                 tglSEP = new Timestamp(System.currentTimeMillis());

@@ -33,7 +33,7 @@ public class ReferensiController {
 
     @GetMapping("/getDiagnosa")
     public ResponseSts<List<VClaimMappingDto>> getDiagnosa(@RequestParam("diagnosa") String paramDiagnosa,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDiagnosa(paramDiagnosa, entityCode));
@@ -48,7 +48,7 @@ public class ReferensiController {
 
     @GetMapping("/getFaskes")
     public ResponseSts<List<VClaimMappingDto>> getFaskes(@RequestParam("faskes") String paramFaskes,
-            @RequestParam("jenisFaskes") Faskes jenisFaskes, @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestParam("jenisFaskes") Faskes jenisFaskes, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes, jenisFaskes.getJenis(), entityCode));
@@ -63,7 +63,7 @@ public class ReferensiController {
 
     @GetMapping("/getPoli")
     public ResponseSts<List<VClaimMappingDto>> getPoli(@RequestParam("poli") String paramPoli,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPoli(paramPoli, entityCode));
@@ -79,7 +79,7 @@ public class ReferensiController {
     @GetMapping("/getDokterDPJP")
     public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") String jenisPelayanan,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan, @RequestParam("spesialis") String spesialis,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil.handleVClaimResponse(
                     vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(),
@@ -95,7 +95,7 @@ public class ReferensiController {
     }
 
     @GetMapping("/getPropinsi")
-    public ResponseSts<List<VClaimMappingDto>> getPropinsi(@RequestHeader(Constant.ENTITY) String entityCode) {
+    public ResponseSts<List<VClaimMappingDto>> getPropinsi(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPropinsi(entityCode));
@@ -110,7 +110,7 @@ public class ReferensiController {
 
     @GetMapping("/getKabupaten")
     public ResponseSts<List<VClaimMappingDto>> getKabupaten(@RequestParam("kodePropinsi") String kodePropinsi,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKabupaten(kodePropinsi, entityCode));
@@ -125,7 +125,7 @@ public class ReferensiController {
 
     @GetMapping("/getKecamatan")
     public ResponseSts<List<VClaimMappingDto>> getKecamatan(@RequestParam("kodeKabupaten") String kodeKabupaten,
-            @RequestHeader(Constant.ENTITY) String entityCode) {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKecamatan(kodeKabupaten, entityCode));

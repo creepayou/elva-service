@@ -9,7 +9,7 @@ public final class Constant {
 	public static final String IND_YES = "Y";
 	public static final String IND_NO = "N";
 
-	public static final String ENTITY = "mt-entitycode";
+	public static final String MT_ENTITY_CODE = "mt-entity-code";
 
 	public static final String TIMEZONE_JKT = "Asia/Jakarta";
 	public static final String TIMEZONE_UTC = "UTC";
