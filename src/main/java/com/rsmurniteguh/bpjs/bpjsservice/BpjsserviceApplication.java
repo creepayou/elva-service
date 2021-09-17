@@ -38,7 +38,7 @@ public class BpjsserviceApplication {
 	}
 
 	@Bean
-	public OpenAPI emrServiceOpenAPI() {
+	public OpenAPI openAPI() {
 		return new OpenAPI()
 				.info(new Info().title(applicationName)
 				.description(applicationDescription)
