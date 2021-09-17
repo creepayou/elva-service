@@ -34,12 +34,12 @@ public class MonitoringController extends BaseController {
 
     @GetMapping("/getKunjungan")
     public ResponseSts<List<BpjsKunjunganDto>> getKunjungan(@RequestParam("tanggalSEP") Timestamp tglSEP,
-            @RequestParam("jenisPelayanan") String jnsPelayanan, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+            @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataKunjungan(
                             DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT),
-                            JenisPelayanan.getJenisPelayanan(jnsPelayanan).getJenis().getKode(), entityCode))
+                            jnsPelayanan.getJenis().getKode(), entityCode))
                     .get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
