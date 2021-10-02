@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class BpjsPesertaDto{
+public class BpjsPesertaDto{
     private String asuransi;
     private String hakKelas;
     private String jnsPeserta;
