@@ -43,79 +43,79 @@ public class RequestSepDto {
     private String noSep;
     private String keterangan;
     private String user;
-}
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class Rujukan{
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private Faskes asalRujukan;
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
-    private Timestamp tglRujukan;
-    private String noRujukan;
-    private String ppkRujukan;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class Rujukan{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Faskes asalRujukan;
+        @JsonSerialize(using = CustomJsonDateSerializer.class)
+        private Timestamp tglRujukan;
+        private String noRujukan;
+        private String ppkRujukan;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class Poli{
-    private String tujuan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private Indikator eksekutif;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class Poli{
+        private String tujuan;
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Indikator eksekutif;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class KatarakInd{
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private Indikator katarak;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class KatarakInd{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Indikator katarak;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class Jaminan{
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private Indikator lakaLantas;
-    private PenjaminJaminan penjamin;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class Jaminan{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Indikator lakaLantas;
+        private PenjaminJaminan penjamin;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class PenjaminJaminan{
-    private String penjamin;
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
-    private Timestamp tglKejadian;
-    private String keterangan;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class PenjaminJaminan{
+        private String penjamin;
+        @JsonSerialize(using = CustomJsonDateSerializer.class)
+        private Timestamp tglKejadian;
+        private String keterangan;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class SuplesiJaminan{
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private Indikator suplesi;
-    private String noSepSuplesi;
-    private LokasiLakalantas lokasiLaka;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class SuplesiJaminan{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Indikator suplesi;
+        private String noSepSuplesi;
+        private LokasiLakalantas lokasiLaka;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class LokasiLakalantas{
-    private String kdPropinsi;
-    private String kdKabupaten;
-    private String kdKecamatan;
-}
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class LokasiLakalantas{
+        private String kdPropinsi;
+        private String kdKabupaten;
+        private String kdKecamatan;
+    }
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(value = Include.NON_NULL)
-final class SKDP{
-    private String noSurat;
-    private String kodeDPJP;
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    public static class SKDP{
+        private String noSurat;
+        private String kodeDPJP;
+    }
 }

@@ -26,4 +26,6 @@ public class BpjsConsumer {
     private String defunct_ind;
 
     private String entity_code;
+
+    private String provider_code;
 }

@@ -5,9 +5,11 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +29,9 @@ public class SepController {
     @Autowired
     private VClaimProxy vClaimProxy;
 
+    @Autowired
+    private BpjsConsumerService bpjsConsumerService;
+
     @GetMapping("/searchSEP")
     public ResponseSts<BpjsSepDto> searchSEP(@RequestParam("sepNo") String sepNo,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -43,8 +48,9 @@ public class SepController {
     public ResponseSts<BpjsSepDto> insertSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
+            String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
             return ResponseSts
-                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertSEP(requestSepDto, entityCode)).get("sep"));
+                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertSEP(requestSepDto.setPpkPelayanan(providerCode), entityCode)).get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -63,7 +69,7 @@ public class SepController {
         }
     }
 
-    @PostMapping("/deleteSEP")
+    @DeleteMapping("/deleteSEP")
     public ResponseSts<String> deleteSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {

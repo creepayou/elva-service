@@ -32,5 +32,10 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService{
     public BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode) {
         return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getByEntityCode(entityCode));
     }
+
+    @Override
+    public String getProviderCodeByEntityCode(String entityCode) {
+        return getBpjsConsumerByEntityCode(entityCode).getProviderCode();
+    }
     
 }

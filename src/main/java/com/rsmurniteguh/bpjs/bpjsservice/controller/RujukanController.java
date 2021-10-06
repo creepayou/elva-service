@@ -7,6 +7,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RujukanController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
+
+    @Autowired
+    private BpjsConsumerService bpjsConsumerService;
 
     @GetMapping("/getRujukanByNoRujukan/{noRujukan}")
     public ResponseSts<BpjsRujukanDto> getRujukanByNoRujukan(@PathVariable("noRujukan") String noRujukan,
@@ -70,8 +74,9 @@ public class RujukanController extends BaseController {
     public ResponseSts<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            return ResponseSts.onSuccess(
-                    VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertRujukan(requestRujukanDto, entityCode)));
+            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertRujukan(
+                    requestRujukanDto.setPpkDirujuk(bpjsConsumerService.getProviderCodeByEntityCode(entityCode)),
+                    entityCode)));
         } catch (Exception e) {
             return ResponseSts.onFail(e.getMessage());
         }
@@ -81,8 +86,8 @@ public class RujukanController extends BaseController {
     public ResponseSts<String> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            return ResponseSts.onSuccess(
-                    VClaimResponseUtil.handleVClaimResponse(vClaimProxy.updateRujukan(requestRujukanDto, entityCode)).get("rujukan"));
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.updateRujukan(requestRujukanDto, entityCode)).get("rujukan"));
         } catch (Exception e) {
             return ResponseSts.onFail(e.getMessage());
         }
@@ -92,8 +97,8 @@ public class RujukanController extends BaseController {
     public ResponseSts<String> deleteRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            return ResponseSts.onSuccess(
-                    VClaimResponseUtil.handleVClaimResponse(vClaimProxy.deleteRujukan(requestRujukanDto, entityCode)).get("rujukan"));
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.deleteRujukan(requestRujukanDto, entityCode)).get("rujukan"));
         } catch (Exception e) {
             return ResponseSts.onFail(e.getMessage());
         }
