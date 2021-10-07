@@ -20,16 +20,19 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BpjsSepDto {
+    private String ppkPerujuk;
     private String catatan;
     private String diagnosa;
     private JenisPelayanan jnsPelayanan;
     private KelasRawat kelasRawat;
     private String noSep;
+    private String noSurat;
     private String penjamin;
     private BpjsPesertaDto peserta;
     private Informasi informasi;
     private String poli;
     private Indikator poliEksekutif;
+    private boolean isRujukanOffline;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglSep;
 }
