@@ -42,8 +42,8 @@ app:
 
 springdoc:
   swagger-ui:
-    supported-submit-methods:
-    - None
+    supported-submit-methods: 
+    - get
 
 ---
 server:
