@@ -50,7 +50,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class Asuransi {
+    public static class Asuransi {
         private Indikator cob;
         private String nmAsuransi;
         private String noAsuransi;
