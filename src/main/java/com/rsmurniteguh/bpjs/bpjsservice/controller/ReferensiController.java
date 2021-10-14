@@ -16,6 +16,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -132,6 +133,20 @@ public class ReferensiController {
             return ResponseSts.onSuccess(response.get("list"));
         } catch (BpjsServiceException e){
             return ResponseSts.onFail(e.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAsalFaskes/{providerCode}")
+    public ResponseSts<Faskes> getAsalFaskes(@PathVariable("providerCode") String providerCode, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
+        try {
+            ResponseSts<List<VClaimMappingDto>> responseFaskes2 = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
+            if(responseFaskes2.isSuccess()){
+                return ResponseSts.onSuccess(Faskes.FASKES_2);
+            }
+            return ResponseSts.onSuccess(Faskes.FASKES_1);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

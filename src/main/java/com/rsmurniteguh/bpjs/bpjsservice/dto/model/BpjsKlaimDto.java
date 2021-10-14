@@ -24,7 +24,7 @@ public class BpjsKlaimDto {
     private KelasRawat kelasRawat;
     private String noFPK;
     private String noSEP;
-    private BpjsResponsePesertaDto peserta;
+    private BpjsPesertaResponseDto peserta;
     private String poli;
     private String status;
     @JsonAlias({ "tglPlgSEP" })

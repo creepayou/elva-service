@@ -10,7 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto.Informasi;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto.Informasi;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

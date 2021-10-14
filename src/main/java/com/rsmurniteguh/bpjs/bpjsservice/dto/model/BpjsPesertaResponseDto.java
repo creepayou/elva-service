@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BpjsResponsePesertaDto {
+public class BpjsPesertaResponseDto {
     private Asuransi cob;
     private DetailPeserta hakKelas;
     private Informasi informasi;
@@ -64,7 +64,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class Informasi {
+    public static class Informasi {
         @JsonAlias({ "Dinsos" })
         private String dinSos;
         private String noSKTM;
@@ -75,7 +75,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class DetailPeserta {
+    public static class DetailPeserta {
         private String keterangan;
         private String kode;
     }
@@ -84,7 +84,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class MR {
+    public static class MR {
         private String noMR;
         private String noTelepon;
     }
@@ -93,7 +93,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class Provider {
+    public static class Provider {
         private String kdProvider;
         private String nmProvider;
     }
@@ -102,7 +102,7 @@ public class BpjsResponsePesertaDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public class Umur {
+    public static class Umur {
         private String umurSaatPelayanan;
         private String umurSekarang;
     }
