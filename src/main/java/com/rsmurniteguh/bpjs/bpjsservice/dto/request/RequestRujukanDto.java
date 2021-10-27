@@ -16,6 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 public class RequestRujukanDto {
+    private String noSep;
     private String noRujukan;
     @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglRujukan;

@@ -75,11 +75,11 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/SEP/1.1/Update")
-    public VClaimResponse<String> updateSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/SEP/Delete")
-    public VClaimResponse<String> deleteSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSep")
@@ -119,15 +119,15 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Rujukan/insert")
-    public VClaimResponse2<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+    public VClaimResponse2<BpjsRujukanDto> insertRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/Rujukan/update")
-    public VClaimResponse<String> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+    public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/Rujukan/delete")
-    public VClaimResponse<String> deleteRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+    public VClaimResponse<String> deleteRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/Monitoring/Kunjungan/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}")

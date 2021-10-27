@@ -7,7 +7,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
-import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +45,20 @@ public class SepController {
         }
     }
 
+    private BpjsRequestDto<RequestSepDto> createBpjsRequestSep(RequestSepDto requestSepDto){
+        BpjsRequestDto<RequestSepDto> requestSep = new BpjsRequestDto<>();
+        requestSep.getRequest().put("t_sep", requestSepDto);
+        return requestSep;
+    }
+
     @PostMapping("/insertSEP")
     public ResponseSts<BpjsSepDto> insertSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
-            BpjsRequestDto<RequestSepDto> requestSep = new BpjsRequestDto<>();
-            requestSep.getRequest().put("t_sep", requestSepDto.setPpkPelayanan(providerCode));
-            log.info(JsonUtil.toJsonString(requestSep));
+            requestSepDto.setPpkPelayanan(providerCode);
             return ResponseSts
-                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertSEP(requestSep, entityCode)).get("sep"));
+                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.insertSEP(createBpjsRequestSep(requestSepDto), entityCode)).get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -67,7 +70,7 @@ public class SepController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts
-                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.updateSEP(requestSepDto, entityCode)).get("sep"));
+                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.updateSEP(createBpjsRequestSep(requestSepDto), entityCode)).get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -79,7 +82,7 @@ public class SepController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts
-                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.deleteSEP(requestSepDto, entityCode)).get("sep"));
+                    .onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.deleteSEP(createBpjsRequestSep(requestSepDto), entityCode)).get("sep"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

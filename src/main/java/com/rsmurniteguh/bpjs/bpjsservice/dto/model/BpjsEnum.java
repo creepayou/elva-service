@@ -46,6 +46,10 @@ public class BpjsEnum {
         }
     }
 
+    public enum JenisRujukan {
+        PCARE, RS
+    }
+
     @AllArgsConstructor
     public enum TipeRujukan {
         PENUH("1"), PARTIAL("2"), RUJUK_BALIK("3");
