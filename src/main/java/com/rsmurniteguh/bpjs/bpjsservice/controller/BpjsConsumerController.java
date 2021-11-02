@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.apachecommons.CommonsLog;
 
 @RestController
 @CommonsLog
-@RequestMapping("/bpjsConsumer")
+@RequestMapping("/bpjsconsumer")
 public class BpjsConsumerController {
     
     @Autowired
@@ -24,6 +25,16 @@ public class BpjsConsumerController {
     public ResponseSts<String> getProviderCode(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
         try{
             return ResponseSts.onSuccess(bpjsConsumerService.getProviderCodeByEntityCode(entityCode));
+        } catch (Exception e){
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/isBpjsConsumerAvailable")
+    public ResponseSts<Boolean> isBpjsConsumerAvailable(@RequestParam("entityCode") String entityCode){
+        try{
+            return ResponseSts.onSuccess(bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode) != null);
         } catch (Exception e){
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
