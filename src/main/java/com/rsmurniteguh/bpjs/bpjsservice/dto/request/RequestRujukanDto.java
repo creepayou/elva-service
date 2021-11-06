@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TipeRujukan;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -25,7 +26,8 @@ public class RequestRujukanDto {
     private JenisPelayanan jnsPelayanan;
     private String catatan;
     private String diagRujukan;
-    private String tipeRujukan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    private TipeRujukan tipeRujukan;
     private String poliRujukan;
     private String user;
 }
