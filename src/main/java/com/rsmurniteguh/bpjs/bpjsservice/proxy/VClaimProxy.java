@@ -126,7 +126,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Rujukan/delete")
+    @DeleteMapping("/Rujukan/delete")
     public VClaimResponse<String> deleteRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 

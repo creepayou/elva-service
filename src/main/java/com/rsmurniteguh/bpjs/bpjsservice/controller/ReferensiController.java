@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
@@ -27,7 +28,7 @@ import lombok.extern.apachecommons.CommonsLog;
 @RestController
 @RequestMapping("/referensi")
 @CommonsLog
-public class ReferensiController {
+public class ReferensiController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
