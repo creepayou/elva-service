@@ -68,6 +68,7 @@ public class BpjsEnum {
         static {
             for (TipeRujukan tr : values()) {
                 BY_TIPE.put(tr.getTipe(), tr);
+                BY_TIPE.put(tr.name(), tr);
             }
         }
 
