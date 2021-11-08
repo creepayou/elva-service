@@ -35,6 +35,8 @@ public class BpjsConsumerDto {
 
     private String entityCode;
 
+    private String providerCode;
+
     public BpjsConsumer toBpjsConsumer(){
         return BpjsConsumerDtoMapper.toBpjsConsumer(this);
     }

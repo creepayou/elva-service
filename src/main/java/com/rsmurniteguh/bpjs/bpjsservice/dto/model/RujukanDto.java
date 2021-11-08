@@ -20,7 +20,7 @@ public class RujukanDto {
     private String keluhan;
     private String noKunjungan;
     private VClaimMappingDto pelayanan;
-    private BpjsResponsePesertaDto peserta;
+    private BpjsPesertaResponseDto peserta;
     private VClaimMappingDto poliRujukan;
     private VClaimMappingDto provPerujuk;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)

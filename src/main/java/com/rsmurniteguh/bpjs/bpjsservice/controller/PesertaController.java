@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsResponsePesertaDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
@@ -30,7 +30,7 @@ public class PesertaController extends BaseController {
     private VClaimProxy vClaimProxy;
 
     @GetMapping("/getPesertaByNIK/{nik}")
-    public ResponseSts<BpjsResponsePesertaDto> getPesertaByNIK(@PathVariable("nik") String nik,
+    public ResponseSts<BpjsPesertaResponseDto> getPesertaByNIK(@PathVariable("nik") String nik,
             @RequestParam(value = "tglSEP", required = false) Timestamp tglSEP,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
@@ -49,7 +49,7 @@ public class PesertaController extends BaseController {
     }
 
     @GetMapping("/getPesertaByBpjsNo/{bpjsNo}")
-    public ResponseSts<BpjsResponsePesertaDto> getPesertaByBpjsNo(@PathVariable("bpjsNo") String bpjsNo,
+    public ResponseSts<BpjsPesertaResponseDto> getPesertaByBpjsNo(@PathVariable("bpjsNo") String bpjsNo,
             @RequestParam(value = "tglSEP", required = false) Timestamp tglSEP,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {

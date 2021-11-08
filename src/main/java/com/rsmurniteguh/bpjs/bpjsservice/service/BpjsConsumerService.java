@@ -9,4 +9,6 @@ public interface BpjsConsumerService {
     void updateBpjsConsumer(BpjsConsumerDto bpjsConsumerDto);
     
     BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode);
+
+    String getProviderCodeByEntityCode(String entityCode);
 }

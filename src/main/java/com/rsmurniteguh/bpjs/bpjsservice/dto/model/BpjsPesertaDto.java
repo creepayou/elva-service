@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class BpjsPesertaDto{
+public class BpjsPesertaDto{
     private String asuransi;
     private String hakKelas;
     private String jnsPeserta;
@@ -23,6 +23,6 @@ final class BpjsPesertaDto{
     private String nama;
     private String noKartu;
     private String noMr;
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglLahir;
 }

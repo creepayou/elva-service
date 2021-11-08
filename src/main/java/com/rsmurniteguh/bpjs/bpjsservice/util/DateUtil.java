@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.util;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,14 +42,17 @@ public class DateUtil {
     }
 
     public static Timestamp customFormatStringWithTimezone(String string, String fromTimezone, String pattern){
-        LocalDate localDate = LocalDate.parse(string, DateTimeFormatter.ofPattern(pattern));
-        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.of(fromTimezone));
+        LocalDateTime localDateTime = LocalDateTime.parse(string, DateTimeFormatter.ofPattern(pattern));
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of(fromTimezone));
 
         return Timestamp.valueOf(zonedDateTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()); 
     }
 
     public static Timestamp formatStringWithTimezone(String string, String fromTimezone){
-        return customFormatStringWithTimezone(string, fromTimezone, DATE_PATTERN);
+        LocalDate localDate = LocalDate.parse(string, DateTimeFormatter.ofPattern(DATE_PATTERN));
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.of(fromTimezone));
+
+        return Timestamp.valueOf(zonedDateTime.withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime()); 
     }
 
     public static Timestamp formatStringWithTimezone2(String string, String fromTimezone){

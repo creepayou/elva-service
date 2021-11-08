@@ -46,6 +46,10 @@ public class BpjsEnum {
         }
     }
 
+    public enum JenisRujukan {
+        PCARE, RS
+    }
+
     @AllArgsConstructor
     public enum TipeRujukan {
         PENUH("1"), PARTIAL("2"), RUJUK_BALIK("3");
@@ -64,6 +68,7 @@ public class BpjsEnum {
         static {
             for (TipeRujukan tr : values()) {
                 BY_TIPE.put(tr.getTipe(), tr);
+                BY_TIPE.put(tr.name(), tr);
             }
         }
 

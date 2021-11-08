@@ -13,6 +13,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
 import feign.RequestInterceptor;
@@ -39,6 +40,7 @@ public class BpjsRequestConfig {
                     requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
                     requestTemplate.header("X-timestamp", unixTime + "");
                     requestTemplate.header("X-signature", generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
+                    requestTemplate.header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                 }
             } catch (IllegalStateException | GeneralSecurityException e) {
                 log.error(e.getMessage(), e);
