@@ -23,7 +23,7 @@ public class BpjsKunjunganDto {
    private String diagnosa;
    private JenisPelayanan jnsPelayanan;
    private KelasRawat kelasRawat;
-   @JsonAlias({ "nama, namaPeserta" })
+   @JsonAlias("namaPeserta")
    private String nama;
    private String noKartu;
    private String noSep;
