@@ -70,16 +70,49 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    /**
+     * @deprecated migrate to V2
+     * @param requestSepDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @PostMapping("/SEP/1.1/insert")
     public VClaimResponse<BpjsSepDto> insertSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @PostMapping("/SEP/2.0/insert") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse<BpjsSepDto> insertSEPV2(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    /**
+     * @deprecated migrate to V2
+     * @param requestSepDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @PutMapping("/SEP/1.1/Update")
     public VClaimResponse<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @PutMapping("/SEP/2.0/Update") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    /**
+     * @deprecated migrate to V2
+     * @param requestSepDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @DeleteMapping("/SEP/Delete")
     public VClaimResponse<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @DeleteMapping("/SEP/2.0/Delete") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSep")
@@ -90,8 +123,19 @@ public interface VClaimProxy {
     public VClaimResponse<String> approvalSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    /**
+     * @deprecated migrate to V2
+     * @param requestSepDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @PutMapping("/Sep/updtglplg")
     public VClaimResponse<String> updateTglPulangSEP(@RequestBody RequestSepDto requestSepDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PutMapping("/Sep/2.0/updtglplg") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse<String> updateTglPulangSEPV2(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/Rujukan/{noRujukan}")
@@ -118,12 +162,36 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsRujukanListDto> getRujukanRsListByNoKartu(@PathVariable("noKartu") String noKartu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    /**
+     * @deprecated migrate to V2
+     * @param requestRujukanDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @PostMapping("/Rujukan/insert")
-    public VClaimResponse2<BpjsRujukanDto> insertRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
+    public VClaimResponse2<BpjsRujukanDto> insertRujukan(
+            @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @PostMapping("/Rujukan/2.0/insert") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse2<BpjsRujukanDto> insertRujukanV2(
+            @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    /**
+     * @deprecated migrate to V2
+     * @param requestRujukanDto
+     * @param entityCode
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @PutMapping("/Rujukan/update")
     public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PutMapping("/Rujukan/2.0/update") //FIXME: Sesuaikan model ke v2
+    public VClaimResponse<String> updateRujukanV2(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/Rujukan/delete")
