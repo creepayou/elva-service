@@ -31,10 +31,9 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
         String logString = String.format(
-                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s, Host: %s %s",
+                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s",
                 request.getMethod(), request.getRequestURI(), request.getHeader(Constant.MT_ENTITY_CODE), executeTime,
-                response.getStatus(), parameterString(request.getParameterMap()), request.getRemoteHost(),
-                request.getRemoteAddr());
+                response.getStatus(), parameterString(request.getParameterMap()));
         if (!HttpStatus.valueOf(response.getStatus()).isError()) {
             log.info(logString);
         } else {
