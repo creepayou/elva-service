@@ -2,8 +2,6 @@ package com.rsmurniteguh.bpjs.bpjsservice.model;
 
 import java.sql.Timestamp;
 
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.VclaimVersion;
-
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -31,5 +29,5 @@ public class BpjsConsumer {
 
     private String provider_code;
 
-    private VclaimVersion vclaim_version;
+    private VClaimVersion vclaim_version;
 }

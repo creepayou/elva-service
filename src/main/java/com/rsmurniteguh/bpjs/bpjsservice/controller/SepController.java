@@ -1,11 +1,11 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.VclaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
@@ -52,7 +52,7 @@ public class SepController {
         return requestSep;
     }
 
-    private VclaimVersion getVclaimVersion(String entityCode) {
+    private VClaimVersion getVclaimVersion(String entityCode) {
         return bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode).getVclaimVersion();
     }
 
@@ -63,8 +63,8 @@ public class SepController {
             String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
             requestSepDto.setPpkPelayanan(providerCode);
 
-            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
-            if (vclaimVersion.equals(VclaimVersion.V2)) {
+            VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
+            if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
                         .get("sep"));
@@ -83,8 +83,8 @@ public class SepController {
     public ResponseSts<String> updateSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
-            if (vclaimVersion.equals(VclaimVersion.V2)) {
+            VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
+            if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
                         .get("sep"));
@@ -103,8 +103,8 @@ public class SepController {
     public ResponseSts<String> deleteSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
-            if (vclaimVersion.equals(VclaimVersion.V2)) {
+            VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
+            if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
                         .get("sep"));
