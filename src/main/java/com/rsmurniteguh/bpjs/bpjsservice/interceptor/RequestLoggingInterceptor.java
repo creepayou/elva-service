@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -31,9 +32,9 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
         String logString = String.format(
-                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s",
+                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s, Body: %s",
                 request.getMethod(), request.getRequestURI(), request.getHeader(Constant.MT_ENTITY_CODE), executeTime,
-                response.getStatus(), parameterString(request.getParameterMap()));
+                response.getStatus(), parameterString(request.getParameterMap()), bodyString(request));
         if (!HttpStatus.valueOf(response.getStatus()).isError()) {
             log.info(logString);
         } else {
@@ -54,5 +55,16 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             return "(" + parameterString.substring(0, parameterString.lastIndexOf(',')) + ")";
         }
         return stringBuilder.toString();
+    }
+
+    private String bodyString(HttpServletRequest request) {
+        try {
+            if (request.getMethod().equals("POST")) {
+                return IOUtils.toString(request.getReader());
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        return "";
     }
 }
