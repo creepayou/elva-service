@@ -22,7 +22,8 @@ public class BpjsConsumerDtoMapper {
                 .setCreated_by(bpjsConsumerDto.getCreatedBy()).setCreated_datetime(bpjsConsumerDto.getCreatedDateTime())
                 .setUpdated_by(bpjsConsumerDto.getUpdatedBy()).setUpdated_datetime(bpjsConsumerDto.getUpdatedDateTime())
                 .setDefunct_ind(bpjsConsumerDto.getDefunctInd()).setEntity_code(bpjsConsumerDto.getEntityCode())
-                .setProvider_code(bpjsConsumerDto.getProviderCode());
+                .setProvider_code(bpjsConsumerDto.getProviderCode())
+                .setVclaim_version(bpjsConsumerDto.getVclaimVersion());
     }
 
     public static List<BpjsConsumer> toBpjsConsumerList(List<BpjsConsumerDto> bpjsCosnumerDtoList) {
@@ -39,7 +40,8 @@ public class BpjsConsumerDtoMapper {
                 .setConsumerId(bpjsConsumer.getConsumer_id()).setConsumerSecret(bpjsConsumer.getConsumer_secret())
                 .setCreatedBy(bpjsConsumer.getCreated_by()).setCreatedDateTime(bpjsConsumer.getCreated_datetime())
                 .setUpdatedBy(bpjsConsumer.getUpdated_by()).setUpdatedDateTime(bpjsConsumer.getUpdated_datetime())
-                .setDefunctInd(bpjsConsumer.getDefunct_ind()).setProviderCode(bpjsConsumer.getProvider_code());
+                .setDefunctInd(bpjsConsumer.getDefunct_ind()).setProviderCode(bpjsConsumer.getProvider_code())
+                .setVclaimVersion(bpjsConsumer.getVclaim_version());
     }
 
     public static List<BpjsConsumerDto> toBpjsConsumerDtoList(List<BpjsConsumer> bpjsConsumerList) {

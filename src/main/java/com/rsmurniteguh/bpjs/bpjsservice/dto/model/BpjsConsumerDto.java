@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerDtoMapper;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.VclaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumer;
 
 import lombok.Data;
@@ -36,6 +37,8 @@ public class BpjsConsumerDto {
     private String entityCode;
 
     private String providerCode;
+
+    private VclaimVersion vclaimVersion;
 
     public BpjsConsumer toBpjsConsumer(){
         return BpjsConsumerDtoMapper.toBpjsConsumer(this);

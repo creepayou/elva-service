@@ -6,11 +6,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
-import com.rsmurniteguh.bpjs.bpjsservice.proxy.CommonServiceProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
-import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +34,6 @@ public class SepController {
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
 
-    @Autowired
-    private CommonServiceProxy commonServiceProxy;
-
     @GetMapping("/searchSEP/{sepNo}")
     public ResponseSts<BpjsSepDto> searchSEP(@PathVariable("sepNo") String sepNo,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -58,9 +52,8 @@ public class SepController {
         return requestSep;
     }
 
-    private VclaimVersion getVclaimVersion() throws BpjsServiceException {
-        return VclaimVersion.getVersion(
-                ResponseStsUtil.handleResponseSts(commonServiceProxy.getParameterValue(Constant.VCLAIM_VERSION)));
+    private VclaimVersion getVclaimVersion(String entityCode) {
+        return bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode).getVclaimVersion();
     }
 
     @PostMapping("/insertSEP")
@@ -70,7 +63,7 @@ public class SepController {
             String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
             requestSepDto.setPpkPelayanan(providerCode);
 
-            VclaimVersion vclaimVersion = getVclaimVersion();
+            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VclaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
@@ -90,7 +83,7 @@ public class SepController {
     public ResponseSts<String> updateSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            VclaimVersion vclaimVersion = getVclaimVersion();
+            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VclaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
@@ -110,7 +103,7 @@ public class SepController {
     public ResponseSts<String> deleteSEP(@RequestBody RequestSepDto requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            VclaimVersion vclaimVersion = getVclaimVersion();
+            VclaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VclaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
