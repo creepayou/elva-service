@@ -49,6 +49,7 @@ public class RencanaKontrolController extends BaseController {
             return ResponseSts.onFail(e.getMessage());
         }
     }
+    
     @GetMapping("/getDataDokter")
     public ResponseSts<List<DataDokterDto>> getDataDokter(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol, 
     		@RequestParam("poli") String poli, 
@@ -57,6 +58,24 @@ public class RencanaKontrolController extends BaseController {
         try {           
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), poli,
+                    		DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
+                    .get("list"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/getSpesialistik")
+    public ResponseSts<List<DataDokterDto>> getSpesialistik(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol, 
+    		@RequestParam("nomor") String nomor, 
+    		@RequestParam("tglRencanaKontrol") Timestamp tglRencanaKontrol, 
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {           
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), nomor,
                     		DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
                     .get("list"));
         } catch (BpjsServiceException e){

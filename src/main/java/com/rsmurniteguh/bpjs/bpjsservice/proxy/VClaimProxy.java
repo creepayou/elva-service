@@ -220,7 +220,7 @@ public interface VClaimProxy {
             @PathVariable("tglAkhir") String tglAkhir, @PathVariable("filter") String filter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     
-    @GetMapping("/RencanaKontrol/JadwalPrakterDokter/JnsKontrol/{jnsKontrol}/KdPoli/{kdPoli}/TglRencanaKontrol/{tglRencanaKontrol}")
+    @GetMapping("/RencanaKontrol/JadwalPraktekDokter/JnsKontrol/{jnsKontrol}/KdPoli/{kdPoli}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<DataDokterDto>> getDataDokter(@PathVariable("jnsKontrol") String jnsKontrol,
             @PathVariable("kdPoli") String kdPoli, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);

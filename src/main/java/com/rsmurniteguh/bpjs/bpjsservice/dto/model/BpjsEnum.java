@@ -274,7 +274,7 @@ public class BpjsEnum {
     
     @AllArgsConstructor
     public enum JenisKontrol {
-        NO_KARTU("1"), NO_SEP("2");
+        SPRI("1"), RENCANA_KONTROL("2");
 
         @Getter
         private String jenis;
