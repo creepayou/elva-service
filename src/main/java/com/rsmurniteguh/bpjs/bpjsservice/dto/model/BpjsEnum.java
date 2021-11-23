@@ -271,4 +271,64 @@ public class BpjsEnum {
                 throw new BpjsServiceException("Version tidak sesuai!");
         }
     }
+    
+    @AllArgsConstructor
+    public enum JenisKontrol {
+        NO_KARTU("1"), NO_SEP("2");
+
+        @Getter
+        private String jenis;
+
+        @JsonCreator
+        public static JenisKontrol fromValue(String value) throws BpjsServiceException{
+            return getJenisByValue(value);
+        }
+
+        private static final Map<String, JenisKontrol> BY_VALUE = new HashMap<>();
+
+        static {
+            for (JenisKontrol pj : values()) {
+                BY_VALUE.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static JenisKontrol getJenisByValue(String jenis) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
+            else
+                throw new BpjsServiceException("Jenis kontrol tidak sesuai");
+        }
+    }
+    
+    @AllArgsConstructor
+    public enum FilterTanggalRencanaKontrol {
+        TANGGAL_ENTRI("1"), TANGGAL_RENCANA_KONTROL("2");
+
+        @Getter
+        private String filter;
+
+        @JsonCreator
+        public static FilterTanggalRencanaKontrol fromValue(String value) throws BpjsServiceException{
+            return getFilterByValue(value);
+        }
+
+        private static final Map<String, FilterTanggalRencanaKontrol> BY_VALUE = new HashMap<>();
+
+        static {
+            for (FilterTanggalRencanaKontrol pj : values()) {
+                BY_VALUE.put(pj.getFilter(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static FilterTanggalRencanaKontrol getFilterByValue(String filter) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
+        }
+    }
 }

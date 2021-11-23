@@ -10,6 +10,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
@@ -211,6 +213,16 @@ public interface VClaimProxy {
     @GetMapping("/monitoring/HistoriPelayanan/NoKartu/{noKartu}/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}")
     public VClaimResponse<List<BpjsKunjunganDto>> getHistoriPelayanan(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglAwal") String tglAwal, @PathVariable("tglAkhir") String tglAkhir,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/RencanaKontrol/ListRencanaKontrol/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}/filter/{filter}")
+    public VClaimResponse<List<RencanaKontrolDto>> getRencanaKontrol(@PathVariable("tglAwal") String tglAwal,
+            @PathVariable("tglAkhir") String tglAkhir, @PathVariable("filter") String filter,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/RencanaKontrol/JadwalPrakterDokter/JnsKontrol/{jnsKontrol}/KdPoli/{kdPoli}/TglRencanaKontrol/{tglRencanaKontrol}")
+    public VClaimResponse<List<DataDokterDto>> getDataDokter(@PathVariable("jnsKontrol") String jnsKontrol,
+            @PathVariable("kdPoli") String kdPoli, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 }
