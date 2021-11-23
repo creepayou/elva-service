@@ -39,6 +39,8 @@ public class BpjsConsumerDto {
     private String providerCode;
 
     private VClaimVersion vclaimVersion;
+    
+    private String userKey;
 
     public BpjsConsumer toBpjsConsumer(){
         return BpjsConsumerDtoMapper.toBpjsConsumer(this);

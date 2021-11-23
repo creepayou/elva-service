@@ -30,4 +30,6 @@ public class BpjsConsumer {
     private String provider_code;
 
     private VClaimVersion vclaim_version;
+    
+    private String user_key;
 }

@@ -40,7 +40,7 @@ public class BpjsRequestConfig {
                     requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
                     requestTemplate.header("X-timestamp", unixTime + "");
                     requestTemplate.header("X-signature", generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
-                    requestTemplate.header("user_key", "78ed3d69e6e991b5c6e61c3dfbd0c5d7");
+                    requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
                     requestTemplate.header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                 }
             } catch (IllegalStateException | GeneralSecurityException e) {
