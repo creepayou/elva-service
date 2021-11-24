@@ -241,34 +241,4 @@ public class BpjsEnum {
                 throw new BpjsServiceException("Penjamin tidak sesuai");
         }
     }
-
-    @AllArgsConstructor
-    public enum VclaimVersion{
-        V1_1("1.1"), V2("2.0");
-        
-        @Getter
-        private String version;
-
-        @JsonCreator
-        public static VclaimVersion fromVersion(String version) throws BpjsServiceException{
-            return getVersion(version);
-        }
-
-        private static final Map<String, VclaimVersion> BY_VERSION = new HashMap<>();
-
-        static {
-            for (VclaimVersion v : values()) {
-                BY_VERSION.put(v.getVersion(), v);
-                BY_VERSION.put(v.name(), v);
-            }
-        }
-
-        @JsonIgnore
-        public static VclaimVersion getVersion(String version) throws BpjsServiceException {
-            if(BY_VERSION.containsKey(version))
-                return BY_VERSION.get(version);
-            else
-                throw new BpjsServiceException("Version tidak sesuai!");
-        }
-    }
 }
