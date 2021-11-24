@@ -1,16 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
-import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisRujukan;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
-import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
-import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +12,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisRujukan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RujukanKhususDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SaranaDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
+import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -129,4 +137,46 @@ public class RujukanController extends BaseController {
             return ResponseSts.onFail(e.getMessage());
         }
     }
+    
+    @GetMapping("/getSarana")
+    public ResponseSts<List<SaranaDto>> getSarana(@RequestParam("ppkRujukan") String ppkRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(
+                    VClaimResponseUtil.handleVClaimResponse(
+                    		vClaimProxy.getSarana(ppkRujukan, entityCode)).get("list"));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/getSpesialistikRujukan")
+    public ResponseSts<List<SpesialistikRujukanDto>> getSpesialistikRujukan(@RequestParam("ppkRujukan") String ppkRujukan,
+    		@RequestParam("tglRujukan") Timestamp tglRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(
+                    VClaimResponseUtil.handleVClaimResponse(
+                    		vClaimProxy.getSpesialistikRujukan(ppkRujukan, DateUtil.formatTimestampWithTimezone(tglRujukan, Constant.TIMEZONE_JKT), entityCode)).get("list"));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/getRujukanKhusus")
+    public ResponseSts<List<RujukanKhususDto>> getRujukanKhusus(@RequestParam("bulan") String bulan,
+    		@RequestParam("tahun") String tahun,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(
+                    VClaimResponseUtil.handleVClaimResponse(
+                    		vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get("rujukan"));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
 }

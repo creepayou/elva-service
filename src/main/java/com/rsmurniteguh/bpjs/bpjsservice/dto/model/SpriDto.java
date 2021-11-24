@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SpriCrudDto{
+public class SpriDto{
     private String noSPRI;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglRencanaKontrol;

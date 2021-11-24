@@ -23,7 +23,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriCrudDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
@@ -186,7 +186,7 @@ public class RencanaKontrolController extends BaseController {
     }
     
     @PostMapping("/insertSpri")
-    public ResponseSts<SpriCrudDto> insertSpri(@RequestBody RequestSpriDto rqSpriDto,
+    public ResponseSts<SpriDto> insertSpri(@RequestBody RequestSpriDto rqSpriDto,
     		 @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
     	try {
     		return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
@@ -198,7 +198,7 @@ public class RencanaKontrolController extends BaseController {
     }
     
     @PutMapping("/updateSpri")
-    public ResponseSts<SpriCrudDto> updateSpri(@RequestBody RequestSpriDto rqSpriDto,
+    public ResponseSts<SpriDto> updateSpri(@RequestBody RequestSpriDto rqSpriDto,
     		 @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
     	try {
     		System.out.println(JsonUtil.toJsonString(rqSpriDto));

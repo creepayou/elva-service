@@ -22,8 +22,11 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RujukanKhususDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SaranaDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriCrudDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
@@ -263,12 +266,27 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     
     @PostMapping("/RencanaKontrol/insertSPRI") 
-    public VClaimResponse2<SpriCrudDto> insertSpri(
+    public VClaimResponse2<SpriDto> insertSpri(
             @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     
     @PutMapping("/RencanaKontrol/UpdateSPRI") 
-    public VClaimResponse2<SpriCrudDto> updateSpri(
+    public VClaimResponse2<SpriDto> updateSpri(
             @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/Rujukan/ListSarana/PPKRujukan/{ppkRujukan}")
+    public VClaimResponse<List<SaranaDto>> getSarana(@PathVariable("ppkRujukan") String ppkRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/Rujukan/ListSpesialistik/PPKRujukan/{ppkRujukan}/TglRujukan/{tglRujukan}")
+    public VClaimResponse<List<SpesialistikRujukanDto>> getSpesialistikRujukan(@PathVariable("ppkRujukan") String ppkRujukan,
+    		@PathVariable("tglRujukan") String tglRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
+    public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
+    		@PathVariable("tahun") String tahun,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
 }
