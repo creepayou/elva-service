@@ -107,7 +107,7 @@ public interface VClaimProxy {
     public VClaimResponse<BpjsSepDto> insertSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/SEP/2.0/insert") // FIXME: Sesuaikan model ke v2
+    @PostMapping("/SEP/2.0/insert")
     public VClaimResponse<BpjsSepDto> insertSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -214,7 +214,7 @@ public interface VClaimProxy {
             @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/Rujukan/2.0/insert") // FIXME: Sesuaikan model ke v2
+    @PostMapping("/Rujukan/2.0/insert")
     public VClaimResponse2<BpjsRujukanDto> insertRujukanV2(
             @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
@@ -230,7 +230,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Rujukan/2.0/update") // FIXME: Sesuaikan model ke v2
+    @PutMapping("/Rujukan/2.0/update")
     public VClaimResponse<String> updateRujukanV2(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
