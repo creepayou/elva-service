@@ -7,6 +7,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
@@ -50,7 +51,8 @@ public class SepController {
         }
     }
 
-    private BpjsRequestDto<RequestSepDto> createBpjsRequestSep(RequestSepDtoV2 requestSepDtoV2) throws IOException {
+    private BpjsRequestDto<RequestSepDto> createBpjsRequestSepFromV2(RequestSepDtoV2 requestSepDtoV2)
+            throws IOException {
         RequestSepDto requestSepDto = ObjectUtil.convertObjectToClass(requestSepDtoV2, RequestSepDto.class);
         requestSepDto.setKlsRawat(requestSepDtoV2.getKlsRawat().getKlsRawatHak());
 
@@ -59,8 +61,8 @@ public class SepController {
         return requestSep;
     }
 
-    private BpjsRequestDto<RequestSepDtoV2> createBpjsRequestSepV2(RequestSepDtoV2 requestSepDto) {
-        BpjsRequestDto<RequestSepDtoV2> requestSep = new BpjsRequestDto<>();
+    private <T> BpjsRequestDto<T> createBpjsRequestSep(T requestSepDto) {
+        BpjsRequestDto<T> requestSep = new BpjsRequestDto<>();
         requestSep.getRequest().put("t_sep", requestSepDto);
         return requestSep;
     }
@@ -78,14 +80,13 @@ public class SepController {
 
             VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VClaimVersion.V2)) {
-                return ResponseSts
-                        .onSuccess(VClaimResponseUtil
-                                .handleVClaimResponse(
-                                        vClaimProxy.insertSEPV2(createBpjsRequestSepV2(requestSepDto), entityCode))
-                                .get("sep"));
+                return ResponseSts.onSuccess(VClaimResponseUtil
+                        .handleVClaimResponse(vClaimProxy.insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
+                        .get("sep"));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
-                        .handleVClaimResponse(vClaimProxy.insertSEP(createBpjsRequestSep(requestSepDto), entityCode))
+                        .handleVClaimResponse(
+                                vClaimProxy.insertSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
                         .get("sep"));
             }
         } catch (Exception e) {
@@ -101,11 +102,12 @@ public class SepController {
             VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
-                        .handleVClaimResponse(vClaimProxy.updateSEPV2(createBpjsRequestSepV2(requestSepDto), entityCode))
+                        .handleVClaimResponse(vClaimProxy.updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
                         .get("sep"));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
-                        .handleVClaimResponse(vClaimProxy.updateSEP(createBpjsRequestSep(requestSepDto), entityCode))
+                        .handleVClaimResponse(
+                                vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
                         .get("sep"));
             }
         } catch (Exception e) {
@@ -121,11 +123,34 @@ public class SepController {
             VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
             if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
-                        .handleVClaimResponse(vClaimProxy.deleteSEPV2(createBpjsRequestSepV2(requestSepDto), entityCode))
+                        .handleVClaimResponse(vClaimProxy.deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
                         .get("sep"));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
-                        .handleVClaimResponse(vClaimProxy.deleteSEP(createBpjsRequestSep(requestSepDto), entityCode))
+                        .handleVClaimResponse(
+                                vClaimProxy.deleteSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
+                        .get("sep"));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @PutMapping("/updateTanggalPulang")
+    public ResponseSts<String> updateTanggalPulang(@RequestBody RequestUpdateTglPulangDto requestUpdateTglPulangDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
+            if (vclaimVersion.equals(VClaimVersion.V2)) {
+                return ResponseSts.onSuccess(VClaimResponseUtil
+                        .handleVClaimResponse(vClaimProxy
+                                .updateTglPulangSEPV2(createBpjsRequestSep(requestUpdateTglPulangDto), entityCode))
+                        .get("sep"));
+            } else {
+                return ResponseSts.onSuccess(VClaimResponseUtil
+                        .handleVClaimResponse(vClaimProxy
+                                .updateTglPulangSEP(createBpjsRequestSep(requestUpdateTglPulangDto), entityCode))
                         .get("sep"));
             }
         } catch (Exception e) {

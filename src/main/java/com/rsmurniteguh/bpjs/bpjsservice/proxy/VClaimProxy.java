@@ -32,6 +32,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
@@ -141,11 +142,11 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @PutMapping("/Sep/updtglplg")
-    public VClaimResponse<String> updateTglPulangSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse<String> updateTglPulangSEP(@RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/Sep/2.0/updtglplg") //FIXME: Sesuaikan model ke v2
-    public VClaimResponse<String> updateTglPulangSEPV2(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse<String> updateTglPulangSEPV2(@RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/Rujukan/{noRujukan}")
