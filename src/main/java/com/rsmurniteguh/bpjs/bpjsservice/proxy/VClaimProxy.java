@@ -2,6 +2,15 @@ package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 
 import java.util.List;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
@@ -11,25 +20,19 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
-
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 
 @FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = BpjsRequestConfig.class)
 public interface VClaimProxy {
@@ -231,5 +234,28 @@ public interface VClaimProxy {
     @GetMapping("/RencanaKontrol/ListSpesialistik/JnsKontrol/{jnsKontrol}/nomor/{nomor}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<SpesialistikDto>> getSpesialistik(@PathVariable("jnsKontrol") String jnsKontrol,
             @PathVariable("nomor") String nomor, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/RencanaKontrol/noSuratKontrol/{noSuratKontrol}")
+    public VClaimResponse2<RencanaKontrolDto> getRencanaKontrolByNoSurat(@PathVariable("noSuratKontrol") String noSuratKontrol,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping("/RencanaKontrol/nosep/{noSep}")
+    public VClaimResponse3 getRencanaKontrolByNoSep(@PathVariable("noSep") String noSep,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @PostMapping("/RencanaKontrol/insert") 
+    public VClaimResponse2<RencanaKontrolCrudDto> insertRencanaKontrol(
+            @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @PutMapping("/RencanaKontrol/Update") 
+    public VClaimResponse2<RencanaKontrolCrudDto> updateRencanaKontrol(
+            @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @DeleteMapping("/RencanaKontrol/Delete") 
+    public VClaimResponse<String> deleteRencanaKontrol(
+            @RequestBody BpjsRequestDto<RequestRencanaKontrolDto> rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
