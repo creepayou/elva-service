@@ -241,4 +241,95 @@ public class BpjsEnum {
                 throw new BpjsServiceException("Penjamin tidak sesuai");
         }
     }
+
+    @AllArgsConstructor
+    public enum VclaimVersion{
+        V1_1("1.1"), V2("2.0");
+        
+        @Getter
+        private String version;
+
+        @JsonCreator
+        public static VclaimVersion fromVersion(String version) throws BpjsServiceException{
+            return getVersion(version);
+        }
+
+        private static final Map<String, VclaimVersion> BY_VERSION = new HashMap<>();
+
+        static {
+            for (VclaimVersion v : values()) {
+                BY_VERSION.put(v.getVersion(), v);
+                BY_VERSION.put(v.name(), v);
+            }
+        }
+
+        @JsonIgnore
+        public static VclaimVersion getVersion(String version) throws BpjsServiceException {
+            if(BY_VERSION.containsKey(version))
+                return BY_VERSION.get(version);
+            else
+                throw new BpjsServiceException("Version tidak sesuai!");
+        }
+    }
+    
+    @AllArgsConstructor
+    public enum JenisKontrol {
+        SPRI("1"), RENCANA_KONTROL("2");
+
+        @Getter
+        private String jenis;
+
+        @JsonCreator
+        public static JenisKontrol fromValue(String value) throws BpjsServiceException{
+            return getJenisByValue(value);
+        }
+
+        private static final Map<String, JenisKontrol> BY_VALUE = new HashMap<>();
+
+        static {
+            for (JenisKontrol pj : values()) {
+                BY_VALUE.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static JenisKontrol getJenisByValue(String jenis) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
+            else
+                throw new BpjsServiceException("Jenis kontrol tidak sesuai");
+        }
+    }
+    
+    @AllArgsConstructor
+    public enum FilterTanggalRencanaKontrol {
+        TANGGAL_ENTRI("1"), TANGGAL_RENCANA_KONTROL("2");
+
+        @Getter
+        private String filter;
+
+        @JsonCreator
+        public static FilterTanggalRencanaKontrol fromValue(String value) throws BpjsServiceException{
+            return getFilterByValue(value);
+        }
+
+        private static final Map<String, FilterTanggalRencanaKontrol> BY_VALUE = new HashMap<>();
+
+        static {
+            for (FilterTanggalRencanaKontrol pj : values()) {
+                BY_VALUE.put(pj.getFilter(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static FilterTanggalRencanaKontrol getFilterByValue(String filter) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
+        }
+    }
+
 }
