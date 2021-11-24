@@ -117,7 +117,7 @@ public class RencanaKontrolController extends BaseController {
         try {      
         	RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
         	VClaimResponse3 responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
-        	if(responseBpjs.getMetaData().getCode().equals("200")){         
+        	if(responseBpjs.getMetaData().getCode().equals(Constant.HTTP_OK)){         
                 rencanaKontrolDto.setSep(ObjectUtil.convertObjectToClass(responseBpjs.getResponse(), BpjsSepDto.class));
                 rencanaKontrolDto.setProvUmum(responseBpjs.getProvUmum());
                 rencanaKontrolDto.setProvPerujuk(responseBpjs.getProvPerujuk());

@@ -41,25 +41,27 @@ public class FeignClientConfig extends Client.Default {
         Response response = super.execute(request, options);
         InputStream bodyStream = response.body().asInputStream();
         String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
-        
-        VClaimEncResponse bpjsResponse = JsonUtil.fromJson(responseBody, VClaimEncResponse.class);
+        VClaimEncResponse bpjsResponse = null;
+        try {
+            bpjsResponse = JsonUtil.fromJson(responseBody, VClaimEncResponse.class);
+        } catch (Exception e) {
+            return response.toBuilder().body(responseBody, StandardCharsets.UTF_8).build();
+        }
         
         BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
         
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
         
-        if(bpjsResponse.getMetaData().getCode().equals("200")) {
+        if(bpjsResponse.getMetaData().getCode().equals(Constant.HTTP_OK)) {
         	try {
         		String decrypted = DecryptUtil.decrypt(bpjsResponse.getResponse().toString(), key);
-        		log.info(decrypted);
-        		LinkedHashMap<String, Object> testMap = JsonUtil.fromJson(decrypted, new TypeReference<LinkedHashMap<String, Object>>() {});
-        		bpjsResponse.setResponse(testMap);
+        		LinkedHashMap<String, Object> decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<LinkedHashMap<String, Object>>() {});
+        		bpjsResponse.setResponse(decryptedResult);
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
         }
         String jsonResult = JsonUtil.toJsonString(bpjsResponse);
-        log.info(jsonResult);
         return response.toBuilder().body(jsonResult, StandardCharsets.UTF_8).build();
     }
 }
