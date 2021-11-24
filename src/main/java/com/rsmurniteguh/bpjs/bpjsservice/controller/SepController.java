@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
@@ -153,6 +155,30 @@ public class SepController {
                                 .updateTglPulangSEP(createBpjsRequestSep(requestUpdateTglPulangDto), entityCode))
                         .get("sep"));
             }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getSepInternal/{sepNo}")
+    public ResponseSts<BpjsSepInternalListDto> getSepInternal(@PathVariable("sepNo") String sepNo,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(
+                    VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getDataSepInternal(sepNo, entityCode)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deleteSepInternal")
+    public ResponseSts<String> getDataSepInternal(@RequestBody RequestSepInternal requestSepInternal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.deleteSepInternal(createBpjsRequestSep(requestSepInternal), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
