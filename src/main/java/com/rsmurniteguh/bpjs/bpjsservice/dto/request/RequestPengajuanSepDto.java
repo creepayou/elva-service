@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
-import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusPulang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,16 +17,14 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RequestUpdateTglPulangDto {
-    private String noSep;
-    @JsonSerialize(using = CustomJsonDateTimeSerializer.class)
-    private Timestamp tglPlg;
-    private String ppkPelayanan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private StatusPulang statusPulang;
-    private String noSuratMeninggal;
+public class RequestPengajuanSepDto {
+    private String noKartu;
     @JsonSerialize(using = CustomJsonDateSerializer.class)
-    private Timestamp tglPulang;
-    private String noLPManual;
+    private Timestamp tglSep;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    private JenisPelayanan jnsPelayanan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    private JenisPelayanan jnsPengajuan;
+    private String keterangan;
     private String user;
 }

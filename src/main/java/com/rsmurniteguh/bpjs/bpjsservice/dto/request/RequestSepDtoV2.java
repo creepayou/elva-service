@@ -50,9 +50,13 @@ public class RequestSepDtoV2 {
     private String keterangan;
     private String user;
     private String dpjpLayan;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private TujuanKunjungan tujuanKunj;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private FlagProcedure flagProcedure;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private KodePenunjang kdPenunjang;
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private AssesmenPel assesmentPel;
 
     @Data
@@ -133,8 +137,11 @@ public class RequestSepDtoV2 {
     @Data
     @Accessors(chain = true)
     public static class KlsRawat{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private KelasRawat klsRawatHak;
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private KelasRawat klsRawatNaik;
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private Pembiayaan pembiayaan;
         private String penanggungJawab;
     }

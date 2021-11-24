@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
@@ -31,6 +33,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
@@ -142,11 +145,13 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSep")
-    public VClaimResponse<String> pengajuanSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse2<String> pengajuanSEP(
+            @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/aprovalSEP")
-    public VClaimResponse<String> approvalSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse2<String> approvalSEP(
+            @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     /**
@@ -170,8 +175,18 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsSepInternalListDto> getDataSepInternal(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @GetMapping("/SEP/Internal/delete")
+    @DeleteMapping("/SEP/Internal/delete")
     public VClaimResponse2<String> deleteSepInternal(@RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/FingerPrint/Peserta/{noKartu}/TglPelayanan/{tglPelayanan}")
+    public VClaimResponse2<BpjsFingerPrintStatusDto> getFingerPrintStatus(@PathVariable("noKartu") String noKartu,
+            @PathVariable("tglPelayanan") String tglPelayanan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/FingerPrint/List/Peserta/TglPelayanan/{tglPelayanan}")
+    public VClaimResponse<List<BpjsFingerPrintDto>> getFingerPrintList(
+            @PathVariable("tglPelayanan") String tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
@@ -250,7 +265,7 @@ public interface VClaimProxy {
     @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
     public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
             @PathVariable("tahun") String tahun, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
+
     // #endregion
 
     // #region Monitoring

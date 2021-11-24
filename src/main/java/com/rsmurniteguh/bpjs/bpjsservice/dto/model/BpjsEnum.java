@@ -508,4 +508,34 @@ public class BpjsEnum {
                 throw new BpjsServiceException("Pembiayaan tidak sesuai");
         }
     }
+
+    @AllArgsConstructor
+    public enum JenisPengajuan {
+        BACKDATE("1"), FINGER_PRINT("2");
+
+        @Getter
+        private String jenis;
+
+        @JsonCreator
+        public static JenisPengajuan fromValue(String value) throws BpjsServiceException {
+            return getJenisPengajuan(value);
+        }
+
+        private static final Map<String, JenisPengajuan> BY_VALUE = new HashMap<>();
+
+        static {
+            for (JenisPengajuan jp : values()) {
+                BY_VALUE.put(jp.getJenis(), jp);
+                BY_VALUE.put(jp.name(), jp);
+            }
+        }
+
+        @JsonIgnore
+        public static JenisPengajuan getJenisPengajuan(String jenis) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
+            else
+                throw new BpjsServiceException("Jenis Pengajuan tidak sesuai");
+        }
+    }
 }
