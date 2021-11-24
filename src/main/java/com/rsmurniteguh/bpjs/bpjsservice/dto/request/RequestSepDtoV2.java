@@ -9,10 +9,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmenPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TujuanKunjungan;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -45,10 +50,10 @@ public class RequestSepDtoV2 {
     private String keterangan;
     private String user;
     private String dpjpLayan;
-    private String tujuanKunj;
-    private String flagProcedure;
-    private String kdPenunjang;
-    private String assesmentPel;
+    private TujuanKunjungan tujuanKunj;
+    private FlagProcedure flagProcedure;
+    private KodePenunjang kdPenunjang;
+    private AssesmenPel assesmentPel;
 
     @Data
     @Accessors(chain = true)
@@ -130,7 +135,7 @@ public class RequestSepDtoV2 {
     public static class KlsRawat{
         private KelasRawat klsRawatHak;
         private KelasRawat klsRawatNaik;
-        private String pembiayaan;
+        private Pembiayaan pembiayaan;
         private String penanggungJawab;
     }
 }

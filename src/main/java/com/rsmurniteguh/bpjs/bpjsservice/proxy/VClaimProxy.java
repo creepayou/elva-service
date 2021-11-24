@@ -19,6 +19,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
@@ -33,6 +34,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
@@ -43,6 +45,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 
 @FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = BpjsRequestConfig.class)
 public interface VClaimProxy {
+
+    // #region Referensi
 
     @GetMapping("/referensi/diagnosa/{param}")
     public VClaimResponse<List<VClaimMappingDto>> getDiagnosa(@PathVariable("param") String parameter,
@@ -73,6 +77,10 @@ public interface VClaimProxy {
     public VClaimResponse<List<VClaimMappingDto>> getKecamatan(@PathVariable("kdKabupaten") String kdKabupaten,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    // #endregion
+
+    // #region Peserta
+
     @GetMapping("/Peserta/nokartu/{noKartu}/tglSEP/{tglSEP}")
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNoKartu(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglSEP") String tglSEP, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
@@ -80,6 +88,10 @@ public interface VClaimProxy {
     @GetMapping("/Peserta/nik/{nik}/tglSEP/{tglSEP}")
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNik(@PathVariable("nik") String nik,
             @PathVariable("tglSEP") String tglSEP, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    // #endregion
+
+    // #region SEP
 
     @GetMapping("/SEP/{noSep}")
     public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
@@ -96,7 +108,7 @@ public interface VClaimProxy {
     public VClaimResponse<BpjsSepDto> insertSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/SEP/2.0/insert") //FIXME: Sesuaikan model ke v2
+    @PostMapping("/SEP/2.0/insert")
     public VClaimResponse<BpjsSepDto> insertSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -111,7 +123,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/SEP/2.0/Update") //FIXME: Sesuaikan model ke v2
+    @PutMapping("/SEP/2.0/Update")
     public VClaimResponse<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -126,7 +138,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @DeleteMapping("/SEP/2.0/Delete") //FIXME: Sesuaikan model ke v2
+    @DeleteMapping("/SEP/2.0/Delete")
     public VClaimResponse<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -146,12 +158,26 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @PutMapping("/Sep/updtglplg")
-    public VClaimResponse<String> updateTglPulangSEP(@RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
+    public VClaimResponse<String> updateTglPulangSEP(
+            @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Sep/2.0/updtglplg") //FIXME: Sesuaikan model ke v2
-    public VClaimResponse<String> updateTglPulangSEPV2(@RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
+    @PutMapping("/Sep/2.0/updtglplg")
+    public VClaimResponse<String> updateTglPulangSEPV2(
+            @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/Internal/{noSep}")
+    public VClaimResponse2<BpjsSepInternalListDto> getDataSepInternal(@PathVariable("noSep") String noSep,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/Internal/delete")
+    public VClaimResponse2<String> deleteSepInternal(@RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    // #endregion
+
+    // #region Rujukan
 
     @GetMapping("/Rujukan/{noRujukan}")
     public VClaimResponse2<BpjsRujukanDto> getRujukanPCareByNoRujukan(@PathVariable("noRujukan") String noRujukan,
@@ -189,7 +215,7 @@ public interface VClaimProxy {
             @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/Rujukan/2.0/insert") //FIXME: Sesuaikan model ke v2
+    @PostMapping("/Rujukan/2.0/insert")
     public VClaimResponse2<BpjsRujukanDto> insertRujukanV2(
             @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
@@ -205,13 +231,37 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Rujukan/2.0/update") //FIXME: Sesuaikan model ke v2
+    @PutMapping("/Rujukan/2.0/update")
     public VClaimResponse<String> updateRujukanV2(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/Rujukan/delete")
     public VClaimResponse<String> deleteRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/Rujukan/ListSarana/PPKRujukan/{ppkRujukan}")
+    public VClaimResponse<List<SaranaDto>> getSarana(@PathVariable("ppkRujukan") String ppkRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/Rujukan/ListSpesialistik/PPKRujukan/{ppkRujukan}/TglRujukan/{tglRujukan}")
+    public VClaimResponse<List<SpesialistikRujukanDto>> getSpesialistikRujukan(
+            @PathVariable("ppkRujukan") String ppkRujukan, @PathVariable("tglRujukan") String tglRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
+    public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
+            @PathVariable("tahun") String tahun, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);     
+    
+    @PostMapping("/Rujukan/Khusus/insert")
+    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @DeleteMapping("/Rujukan/Khusus/delete")
+    public VClaimResponse<String> deleteRujukanKhusus(@RequestBody BpjsRequestDto<RequestRujukanKhususDto> rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    // #endregion
+
+    // #region Monitoring
 
     @GetMapping("/Monitoring/Kunjungan/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}")
     public VClaimResponse<List<BpjsKunjunganDto>> getDataKunjungan(@PathVariable("tglSEP") String tglSEP,
@@ -228,73 +278,57 @@ public interface VClaimProxy {
             @PathVariable("tglAwal") String tglAwal, @PathVariable("tglAkhir") String tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    // #endregion
+
+    // #region RencanaKontrol
+
     @GetMapping("/RencanaKontrol/ListRencanaKontrol/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}/filter/{filter}")
     public VClaimResponse<List<RencanaKontrolDto>> getRencanaKontrol(@PathVariable("tglAwal") String tglAwal,
             @PathVariable("tglAkhir") String tglAkhir, @PathVariable("filter") String filter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
     @GetMapping("/RencanaKontrol/JadwalPraktekDokter/JnsKontrol/{jnsKontrol}/KdPoli/{kdPoli}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<DataDokterDto>> getDataDokter(@PathVariable("jnsKontrol") String jnsKontrol,
             @PathVariable("kdPoli") String kdPoli, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
     @GetMapping("/RencanaKontrol/ListSpesialistik/JnsKontrol/{jnsKontrol}/nomor/{nomor}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<SpesialistikDto>> getSpesialistik(@PathVariable("jnsKontrol") String jnsKontrol,
             @PathVariable("nomor") String nomor, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
     @GetMapping("/RencanaKontrol/noSuratKontrol/{noSuratKontrol}")
-    public VClaimResponse2<RencanaKontrolDto> getRencanaKontrolByNoSurat(@PathVariable("noSuratKontrol") String noSuratKontrol,
+    public VClaimResponse2<RencanaKontrolDto> getRencanaKontrolByNoSurat(
+            @PathVariable("noSuratKontrol") String noSuratKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
     @GetMapping("/RencanaKontrol/nosep/{noSep}")
     public VClaimResponse3 getRencanaKontrolByNoSep(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @PostMapping("/RencanaKontrol/insert") 
+
+    @PostMapping("/RencanaKontrol/insert")
     public VClaimResponse2<RencanaKontrolCrudDto> insertRencanaKontrol(
             @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @PutMapping("/RencanaKontrol/Update") 
+
+    @PutMapping("/RencanaKontrol/Update")
     public VClaimResponse2<RencanaKontrolCrudDto> updateRencanaKontrol(
             @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @DeleteMapping("/RencanaKontrol/Delete") 
+
+    @DeleteMapping("/RencanaKontrol/Delete")
     public VClaimResponse<String> deleteRencanaKontrol(
             @RequestBody BpjsRequestDto<RequestRencanaKontrolDto> rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @PostMapping("/RencanaKontrol/insertSPRI") 
-    public VClaimResponse2<SpriDto> insertSpri(
-            @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
+
+    @PostMapping("/RencanaKontrol/insertSPRI")
+    public VClaimResponse2<SpriDto> insertSpri(@RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PutMapping("/RencanaKontrol/UpdateSPRI")
+    public VClaimResponse2<SpriDto> updateSpri(@RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     
-    @PutMapping("/RencanaKontrol/UpdateSPRI") 
-    public VClaimResponse2<SpriDto> updateSpri(
-            @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @GetMapping("/Rujukan/ListSarana/PPKRujukan/{ppkRujukan}")
-    public VClaimResponse<List<SaranaDto>> getSarana(@PathVariable("ppkRujukan") String ppkRujukan,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @GetMapping("/Rujukan/ListSpesialistik/PPKRujukan/{ppkRujukan}/TglRujukan/{tglRujukan}")
-    public VClaimResponse<List<SpesialistikRujukanDto>> getSpesialistikRujukan(@PathVariable("ppkRujukan") String ppkRujukan,
-    		@PathVariable("tglRujukan") String tglRujukan,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
-    public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
-    		@PathVariable("tahun") String tahun,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @PostMapping("/Rujukan/Khusus/insert")
-    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    @DeleteMapping("/Rujukan/Khusus/delete")
-    public VClaimResponse<String> deleteRujukanKhusus(@RequestBody BpjsRequestDto<RequestRujukanKhususDto> rqRujukanKhususDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    // #endregion
+
 }

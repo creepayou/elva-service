@@ -15,14 +15,14 @@ public class BpjsEnum {
     @AllArgsConstructor
     public enum JenisPelayanan {
         RAWAT_INAP(new VClaimMappingDto("1", "Rawat Inap"), "R.Inap"),
-        RAWAT_JALAN(new VClaimMappingDto("2","Rawat Jalan"), "R.Jalan");
+        RAWAT_JALAN(new VClaimMappingDto("2", "Rawat Jalan"), "R.Jalan");
 
         @Getter
         private VClaimMappingDto jenis;
         protected String jenisText;
 
         @JsonCreator
-        public static JenisPelayanan fromValue(String value) throws BpjsServiceException{
+        public static JenisPelayanan fromValue(String value) throws BpjsServiceException {
             return getJenisPelayanan(value);
         }
 
@@ -56,9 +56,9 @@ public class BpjsEnum {
 
         @Getter
         private String tipe;
-        
+
         @JsonCreator
-        public static TipeRujukan fromValue(String value) throws BpjsServiceException{
+        public static TipeRujukan fromValue(String value) throws BpjsServiceException {
             return getTipeRujukan(value);
         }
 
@@ -83,16 +83,14 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum KelasRawat {
-        KELAS_I(new VClaimMappingDto("1","Kelas 1")), 
-        KELAS_II(new VClaimMappingDto("2","Kelas 2")), 
-        KELAS_III(new VClaimMappingDto("3","Kelas 3")),
-        NONE(new VClaimMappingDto("-","Tidak Ada"));
+        KELAS_I(new VClaimMappingDto("1", "Kelas 1")), KELAS_II(new VClaimMappingDto("2", "Kelas 2")),
+        KELAS_III(new VClaimMappingDto("3", "Kelas 3")), NONE(new VClaimMappingDto("-", "Tidak Ada"));
 
         @Getter
         private VClaimMappingDto kelas;
-        
+
         @JsonCreator
-        public static KelasRawat fromValue(String value) throws BpjsServiceException{
+        public static KelasRawat fromValue(String value) throws BpjsServiceException {
             return getKelasRawat(value);
         }
 
@@ -109,7 +107,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static KelasRawat getKelasRawat(String kelas) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(kelas))
+            if (BY_VALUE.containsKey(kelas))
                 return BY_VALUE.get(kelas);
             else
                 throw new BpjsServiceException("Kelas Rawat tidak sesuai");
@@ -124,7 +122,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static Faskes fromValue(String value) throws BpjsServiceException{
+        public static Faskes fromValue(String value) throws BpjsServiceException {
             return getJenisByValue(value);
         }
 
@@ -140,7 +138,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static Faskes getJenisByValue(String jenis) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(jenis))
+            if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Faskes tidak sesuai");
@@ -149,14 +147,13 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum Indikator {
-        TIDAK(new VClaimMappingDto("0","Tidak")), 
-        YA(new VClaimMappingDto("1","Ya"));
+        TIDAK(new VClaimMappingDto("0", "Tidak")), YA(new VClaimMappingDto("1", "Ya"));
 
         @Getter
         private VClaimMappingDto ind;
 
         @JsonCreator
-        public static Indikator fromValue(String value) throws BpjsServiceException{
+        public static Indikator fromValue(String value) throws BpjsServiceException {
             return getIndByValue(value);
         }
 
@@ -172,7 +169,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static Indikator getIndByValue(String ind) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(ind))
+            if (BY_VALUE.containsKey(ind))
                 return BY_VALUE.get(ind);
             else
                 throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
@@ -181,15 +178,14 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum StatusKlaim {
-        PROSES_VERIFIKASI(new VClaimMappingDto("1","Proses Verifikasi")), 
-        PENDING_VERIFIKASI(new VClaimMappingDto("2","Pending Verifikasi")), 
-        KLAIM(new VClaimMappingDto("3","Klaim"));
+        PROSES_VERIFIKASI(new VClaimMappingDto("1", "Proses Verifikasi")),
+        PENDING_VERIFIKASI(new VClaimMappingDto("2", "Pending Verifikasi")), KLAIM(new VClaimMappingDto("3", "Klaim"));
 
         @Getter
         private VClaimMappingDto status;
 
         @JsonCreator
-        public static StatusKlaim fromValue(String value) throws BpjsServiceException{
+        public static StatusKlaim fromValue(String value) throws BpjsServiceException {
             return getStatusByValue(value);
         }
 
@@ -205,7 +201,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static StatusKlaim getStatusByValue(String status) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(status))
+            if (BY_VALUE.containsKey(status))
                 return BY_VALUE.get(status);
             else
                 throw new BpjsServiceException("Status Klaim tidak sesuai");
@@ -220,7 +216,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static Penjamin fromValue(String value) throws BpjsServiceException{
+        public static Penjamin fromValue(String value) throws BpjsServiceException {
             return getJenisByValue(value);
         }
 
@@ -235,7 +231,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static Penjamin getJenisByValue(String jenis) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(jenis))
+            if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Penjamin tidak sesuai");
@@ -243,14 +239,14 @@ public class BpjsEnum {
     }
 
     @AllArgsConstructor
-    public enum VclaimVersion{
+    public enum VclaimVersion {
         V1_1("1.1"), V2("2.0");
-        
+
         @Getter
         private String version;
 
         @JsonCreator
-        public static VclaimVersion fromVersion(String version) throws BpjsServiceException{
+        public static VclaimVersion fromVersion(String version) throws BpjsServiceException {
             return getVersion(version);
         }
 
@@ -265,13 +261,13 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static VclaimVersion getVersion(String version) throws BpjsServiceException {
-            if(BY_VERSION.containsKey(version))
+            if (BY_VERSION.containsKey(version))
                 return BY_VERSION.get(version);
             else
-                throw new BpjsServiceException("Version tidak sesuai!");
+                throw new BpjsServiceException("Version tidak sesuai");
         }
     }
-    
+
     @AllArgsConstructor
     public enum JenisKontrol {
         SPRI("1"), RENCANA_KONTROL("2");
@@ -280,7 +276,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static JenisKontrol fromValue(String value) throws BpjsServiceException{
+        public static JenisKontrol fromValue(String value) throws BpjsServiceException {
             return getJenisByValue(value);
         }
 
@@ -295,13 +291,13 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static JenisKontrol getJenisByValue(String jenis) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(jenis))
+            if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Jenis kontrol tidak sesuai");
         }
     }
-    
+
     @AllArgsConstructor
     public enum FilterTanggalRencanaKontrol {
         TANGGAL_ENTRI("1"), TANGGAL_RENCANA_KONTROL("2");
@@ -310,7 +306,7 @@ public class BpjsEnum {
         private String filter;
 
         @JsonCreator
-        public static FilterTanggalRencanaKontrol fromValue(String value) throws BpjsServiceException{
+        public static FilterTanggalRencanaKontrol fromValue(String value) throws BpjsServiceException {
             return getFilterByValue(value);
         }
 
@@ -325,7 +321,7 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static FilterTanggalRencanaKontrol getFilterByValue(String filter) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(filter))
+            if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
                 throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
@@ -340,7 +336,7 @@ public class BpjsEnum {
         private String status;
 
         @JsonCreator
-        public static StatusPulang fromValue(String value) throws BpjsServiceException{
+        public static StatusPulang fromValue(String value) throws BpjsServiceException {
             return getFilterByValue(value);
         }
 
@@ -355,11 +351,161 @@ public class BpjsEnum {
 
         @JsonIgnore
         public static StatusPulang getFilterByValue(String filter) throws BpjsServiceException {
-            if(BY_VALUE.containsKey(filter))
+            if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
+                throw new BpjsServiceException("Status pulang tidak sesuai");
         }
     }
 
+    @AllArgsConstructor
+    public enum TujuanKunjungan {
+        NORMAL("0"), PROSEDUR("1"), KONSUL_DOKTER("2");
+
+        @Getter
+        private String tujuan;
+
+        @JsonCreator
+        public static TujuanKunjungan fromValue(String value) throws BpjsServiceException {
+            return getTujuanByValue(value);
+        }
+
+        private static final Map<String, TujuanKunjungan> BY_VALUE = new HashMap<>();
+
+        static {
+            for (TujuanKunjungan pj : values()) {
+                BY_VALUE.put(pj.getTujuan(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static TujuanKunjungan getTujuanByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Tujuan kunjungan tidak sesuai");
+        }
+    }
+
+    @AllArgsConstructor
+    public enum FlagProcedure {
+        TIDAK_BERKELANJUTAN("0"), BERKELANJUTAN("1");
+
+        @Getter
+        private String flag;
+
+        @JsonCreator
+        public static FlagProcedure fromValue(String value) throws BpjsServiceException {
+            return getFlagByValue(value);
+        }
+
+        private static final Map<String, FlagProcedure> BY_VALUE = new HashMap<>();
+
+        static {
+            for (FlagProcedure pj : values()) {
+                BY_VALUE.put(pj.getFlag(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static FlagProcedure getFlagByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Flag procedure tidak sesuai");
+        }
+    }
+
+    @AllArgsConstructor
+    public enum KodePenunjang {
+        RADIOTERAPI("1"), KEMOTERAPI("2"), REHAB_MEDIK("3"), REHAB_PSIKOSOSIAL("4"), TRANSFUSI_DARAH("5"),
+        PELAYANAN_GIGI("6"), LABORATORIUM("7"), USG("8"), FARMASI("9"), LAIN_LAIN("10"), MRI("11"), HEMODIALISA("12");
+
+        @Getter
+        private String kode;
+
+        @JsonCreator
+        public static KodePenunjang fromValue(String value) throws BpjsServiceException {
+            return getKodeByValue(value);
+        }
+
+        private static final Map<String, KodePenunjang> BY_VALUE = new HashMap<>();
+
+        static {
+            for (KodePenunjang pj : values()) {
+                BY_VALUE.put(pj.getKode(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static KodePenunjang getKodeByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Kode penunjang tidak sesuai");
+        }
+    }
+
+    @AllArgsConstructor
+    public enum AssesmenPel {
+        POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4");
+
+        @Getter
+        private String assesmen;
+
+        @JsonCreator
+        public static AssesmenPel fromValue(String value) throws BpjsServiceException {
+            return getAssesmenPelByValue(value);
+        }
+
+        private static final Map<String, AssesmenPel> BY_VALUE = new HashMap<>();
+
+        static {
+            for (AssesmenPel pj : values()) {
+                BY_VALUE.put(pj.getAssesmen(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static AssesmenPel getAssesmenPelByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Assesmen pel tidak sesuai");
+        }
+    }
+
+    @AllArgsConstructor
+    public enum Pembiayaan {
+        PRIBADI("1"), PEMBERI_KERJA("2"), ASURANSI("3");
+
+        @Getter
+        private String jenis;
+
+        @JsonCreator
+        public static Pembiayaan fromValue(String value) throws BpjsServiceException {
+            return getJenisByValue(value);
+        }
+
+        private static final Map<String, Pembiayaan> BY_VALUE = new HashMap<>();
+
+        static {
+            for (Pembiayaan pj : values()) {
+                BY_VALUE.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static Pembiayaan getJenisByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Pembiayaan tidak sesuai");
+        }
+    }
 }
