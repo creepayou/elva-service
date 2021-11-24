@@ -23,14 +23,20 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RujukanKhususDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SaranaDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
@@ -39,7 +45,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 @FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = BpjsRequestConfig.class)
 public interface VClaimProxy {
 
-    //#region Referensi
+    // #region Referensi
 
     @GetMapping("/referensi/diagnosa/{param}")
     public VClaimResponse<List<VClaimMappingDto>> getDiagnosa(@PathVariable("param") String parameter,
@@ -70,9 +76,9 @@ public interface VClaimProxy {
     public VClaimResponse<List<VClaimMappingDto>> getKecamatan(@PathVariable("kdKabupaten") String kdKabupaten,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#endregion
+    // #endregion
 
-    //#region Peserta
+    // #region Peserta
 
     @GetMapping("/Peserta/nokartu/{noKartu}/tglSEP/{tglSEP}")
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNoKartu(@PathVariable("noKartu") String noKartu,
@@ -82,9 +88,9 @@ public interface VClaimProxy {
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNik(@PathVariable("nik") String nik,
             @PathVariable("tglSEP") String tglSEP, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#endregion
+    // #endregion
 
-    //#region SEP
+    // #region SEP
 
     @GetMapping("/SEP/{noSep}")
     public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
@@ -163,14 +169,14 @@ public interface VClaimProxy {
     @GetMapping("/SEP/Internal/{noSep}")
     public VClaimResponse2<BpjsSepInternalListDto> getDataSepInternal(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
     @GetMapping("/SEP/Internal/delete")
     public VClaimResponse2<String> deleteSepInternal(@RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#endregion
+    // #endregion
 
-    //#region Rujukan
+    // #region Rujukan
 
     @GetMapping("/Rujukan/{noRujukan}")
     public VClaimResponse2<BpjsRujukanDto> getRujukanPCareByNoRujukan(@PathVariable("noRujukan") String noRujukan,
@@ -232,9 +238,22 @@ public interface VClaimProxy {
     public VClaimResponse<String> deleteRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#endregion
+    @GetMapping("/Rujukan/ListSarana/PPKRujukan/{ppkRujukan}")
+    public VClaimResponse<List<SaranaDto>> getSarana(@PathVariable("ppkRujukan") String ppkRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#region Monitoring
+    @GetMapping("/Rujukan/ListSpesialistik/PPKRujukan/{ppkRujukan}/TglRujukan/{tglRujukan}")
+    public VClaimResponse<List<SpesialistikRujukanDto>> getSpesialistikRujukan(
+            @PathVariable("ppkRujukan") String ppkRujukan, @PathVariable("tglRujukan") String tglRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
+    public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
+            @PathVariable("tahun") String tahun, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            
+    // #endregion
+
+    // #region Monitoring
 
     @GetMapping("/Monitoring/Kunjungan/Tanggal/{tglSEP}/JnsPelayanan/{jnsPelayanan}")
     public VClaimResponse<List<BpjsKunjunganDto>> getDataKunjungan(@PathVariable("tglSEP") String tglSEP,
@@ -251,9 +270,9 @@ public interface VClaimProxy {
             @PathVariable("tglAwal") String tglAwal, @PathVariable("tglAkhir") String tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    //#endregion
+    // #endregion
 
-    //#region RencanaKontrol
+    // #region RencanaKontrol
 
     @GetMapping("/RencanaKontrol/ListRencanaKontrol/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}/filter/{filter}")
     public VClaimResponse<List<RencanaKontrolDto>> getRencanaKontrol(@PathVariable("tglAwal") String tglAwal,
@@ -293,7 +312,15 @@ public interface VClaimProxy {
     public VClaimResponse<String> deleteRencanaKontrol(
             @RequestBody BpjsRequestDto<RequestRencanaKontrolDto> rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
-    //#endregion
+
+    @PostMapping("/RencanaKontrol/insertSPRI")
+    public VClaimResponse2<SpriDto> insertSpri(@RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PutMapping("/RencanaKontrol/UpdateSPRI")
+    public VClaimResponse2<SpriDto> updateSpri(@RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    // #endregion
 
 }

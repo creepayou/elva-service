@@ -23,13 +23,17 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.ObjectUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
@@ -169,6 +173,37 @@ public class RencanaKontrolController extends BaseController {
     	try {
     		return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
     				vClaimProxy.deleteRencanaKontrol(createBpjsRequestRencanaKontrol(rqRencanaKontrolDto), entityCode)));
+    	} catch (Exception e) {
+    		log.error(e.getMessage(), e);
+    	    return ResponseSts.onFail(e.getMessage());
+    	}
+    }
+    
+    private BpjsRequestDto2<RequestSpriDto> createBpjsRequestSpri(RequestSpriDto rqSpriDto) {
+        BpjsRequestDto2<RequestSpriDto> requestSpri = new BpjsRequestDto2<>();
+        requestSpri.setRequest(rqSpriDto);
+        return requestSpri;
+    }
+    
+    @PostMapping("/insertSpri")
+    public ResponseSts<SpriDto> insertSpri(@RequestBody RequestSpriDto rqSpriDto,
+    		 @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
+    	try {
+    		return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.insertSpri(createBpjsRequestSpri(rqSpriDto), entityCode)));
+    	} catch (Exception e) {
+    		log.error(e.getMessage(), e);
+    	    return ResponseSts.onFail(e.getMessage());
+    	}
+    }
+    
+    @PutMapping("/updateSpri")
+    public ResponseSts<SpriDto> updateSpri(@RequestBody RequestSpriDto rqSpriDto,
+    		 @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode){
+    	try {
+    		System.out.println(JsonUtil.toJsonString(rqSpriDto));
+    		return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.updateSpri(createBpjsRequestSpri(rqSpriDto), entityCode)));
     	} catch (Exception e) {
     		log.error(e.getMessage(), e);
     	    return ResponseSts.onFail(e.getMessage());
