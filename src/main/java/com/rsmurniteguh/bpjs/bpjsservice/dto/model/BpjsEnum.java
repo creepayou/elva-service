@@ -332,4 +332,34 @@ public class BpjsEnum {
         }
     }
 
+    @AllArgsConstructor
+    public enum StatusPulang {
+        PERSETUJUAN_DOKTER("1"), PERMINTAAN_SENDIRI("3"), MENINGGAL("4"), LAIN_LAIN("5");
+
+        @Getter
+        private String status;
+
+        @JsonCreator
+        public static StatusPulang fromValue(String value) throws BpjsServiceException{
+            return getFilterByValue(value);
+        }
+
+        private static final Map<String, StatusPulang> BY_VALUE = new HashMap<>();
+
+        static {
+            for (StatusPulang pj : values()) {
+                BY_VALUE.put(pj.getStatus(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static StatusPulang getFilterByValue(String filter) throws BpjsServiceException {
+            if(BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
+        }
+    }
+
 }
