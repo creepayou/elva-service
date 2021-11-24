@@ -16,6 +16,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterTanggalRencana
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
@@ -69,13 +70,13 @@ public class RencanaKontrolController extends BaseController {
     }
     
     @GetMapping("/getSpesialistik")
-    public ResponseSts<List<DataDokterDto>> getSpesialistik(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol, 
+    public ResponseSts<List<SpesialistikDto>> getSpesialistik(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol, 
     		@RequestParam("nomor") String nomor, 
     		@RequestParam("tglRencanaKontrol") Timestamp tglRencanaKontrol, 
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {           
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), nomor,
+                    .handleVClaimResponse(vClaimProxy.getSpesialistik(jenisKontrol.getJenis(), nomor,
                     		DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
                     .get("list"));
         } catch (BpjsServiceException e){

@@ -21,6 +21,8 @@ public class RequestRujukanDto {
     private String noRujukan;
     @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglRujukan;
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
+    private Timestamp tglRencanaKunjungan;
     private String ppkDirujuk;
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private JenisPelayanan jnsPelayanan;
