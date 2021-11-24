@@ -25,4 +25,5 @@ public class VClaimResponseUtil {
             throw new BpjsServiceException(vClaimResponse.getMetaData().getMessage());
         }
     }
+  
 }
