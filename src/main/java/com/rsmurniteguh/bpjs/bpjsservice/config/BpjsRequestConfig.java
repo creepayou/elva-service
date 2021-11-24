@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
+import feign.Client;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.apachecommons.CommonsLog;
@@ -31,7 +32,6 @@ public class BpjsRequestConfig {
         return (RequestTemplate requestTemplate) -> {
             try {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
-                requestTemplate.removeHeader(Constant.MT_ENTITY_CODE);
 
                 if(StringUtils.hasText(entityCode)){
                     BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
@@ -47,6 +47,11 @@ public class BpjsRequestConfig {
                 log.error(e.getMessage(), e);
             }
         };
+    }
+    
+    @Bean
+    public Client client() {
+        return new FeignClientConfig(null, null, bpjsConsumerService);
     }
 
     private String generateHmacSHA256Signature(String data, String key) throws GeneralSecurityException {
