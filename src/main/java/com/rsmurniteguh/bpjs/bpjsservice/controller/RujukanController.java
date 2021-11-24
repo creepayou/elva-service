@@ -25,6 +25,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SaranaDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
@@ -175,6 +176,36 @@ public class RujukanController extends BaseController {
                     		vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get("rujukan"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    @PostMapping("/insertRujukanKhusus")
+    public ResponseSts<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.insertRujukanKhusus(rqRujukanKhususDto, entityCode)).get("rujukan"));
+        } catch (Exception e) {
+        	log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    private BpjsRequestDto<RequestRujukanKhususDto> createBpjsRequestRencanaKontrol(RequestRujukanKhususDto rqRujukanKhususDto) {
+        BpjsRequestDto<RequestRujukanKhususDto> requestRujukanKhusus = new BpjsRequestDto<>();
+        requestRujukanKhusus.getRequest().put("t_rujukan", rqRujukanKhususDto);
+        return requestRujukanKhusus;
+    }
+    
+    @DeleteMapping("/deleteRujukanKhusus")
+    public ResponseSts<String> deleteRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                    vClaimProxy.deleteRujukanKhusus(createBpjsRequestRencanaKontrol(rqRujukanKhususDto), entityCode)).get("rujukan"));
+        } catch (Exception e) {
+        	log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
