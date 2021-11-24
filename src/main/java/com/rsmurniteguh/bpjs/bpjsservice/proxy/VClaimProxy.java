@@ -23,12 +23,15 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpesialistikDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
@@ -256,5 +259,15 @@ public interface VClaimProxy {
     @DeleteMapping("/RencanaKontrol/Delete") 
     public VClaimResponse<String> deleteRencanaKontrol(
             @RequestBody BpjsRequestDto<RequestRencanaKontrolDto> rqRencanaKontrolDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @PostMapping("/RencanaKontrol/insertSPRI") 
+    public VClaimResponse2<SpriCrudDto> insertSpri(
+            @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @PutMapping("/RencanaKontrol/UpdateSPRI") 
+    public VClaimResponse2<SpriCrudDto> updateSpri(
+            @RequestBody BpjsRequestDto2<RequestSpriDto> rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
