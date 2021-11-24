@@ -32,6 +32,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
@@ -289,4 +290,11 @@ public interface VClaimProxy {
     		@PathVariable("tahun") String tahun,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     
+    @PostMapping("/Rujukan/Khusus/insert")
+    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @DeleteMapping("/Rujukan/Khusus/delete")
+    public VClaimResponse<String> deleteRujukanKhusus(@RequestBody BpjsRequestDto<RequestRujukanKhususDto> rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
