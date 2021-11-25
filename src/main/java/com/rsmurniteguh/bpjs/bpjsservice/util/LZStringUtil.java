@@ -541,15 +541,4 @@ public class LZStringUtil {
 	private static int powerOf2(int power) {
 		return 1 << power;
 	}
-
-	public static void main(String[] args) {
-		String input;
-//			input = "hello";
-		input = "hello1hello2hello3hello4hello5hello6hello7hello8hello9helloAhelloBhelloChelloDhelloEhelloF";
-
-		System.out.println(decompress(compress(input)));
-		System.out.println(decompressFromBase64(compressToBase64(input)));
-		System.out.println(decompressFromUTF16(compressToUTF16(input)));
-		System.out.println(decompressFromEncodedURIComponent(compressToEncodedURIComponent(input)));
-	}
 }

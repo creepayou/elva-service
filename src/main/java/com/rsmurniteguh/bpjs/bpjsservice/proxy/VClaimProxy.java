@@ -2,20 +2,15 @@ package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 
 import java.util.List;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukBalikDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukBalikListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
@@ -31,16 +26,28 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.SpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukBalikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = BpjsRequestConfig.class)
 public interface VClaimProxy {
@@ -142,11 +149,13 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSep")
-    public VClaimResponse<String> pengajuanSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse2<String> pengajuanSEP(
+            @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/aprovalSEP")
-    public VClaimResponse<String> approvalSEP(@RequestBody RequestSepDto requestSepDto,
+    public VClaimResponse2<String> approvalSEP(
+            @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     /**
@@ -170,8 +179,18 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsSepInternalListDto> getDataSepInternal(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @GetMapping("/SEP/Internal/delete")
+    @DeleteMapping("/SEP/Internal/delete")
     public VClaimResponse2<String> deleteSepInternal(@RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/FingerPrint/Peserta/{noKartu}/TglPelayanan/{tglPelayanan}")
+    public VClaimResponse2<BpjsFingerPrintStatusDto> getFingerPrintStatus(@PathVariable("noKartu") String noKartu,
+            @PathVariable("tglPelayanan") String tglPelayanan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/SEP/FingerPrint/List/Peserta/TglPelayanan/{tglPelayanan}")
+    public VClaimResponse<List<BpjsFingerPrintDto>> getFingerPrintList(
+            @PathVariable("tglPelayanan") String tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
@@ -250,7 +269,15 @@ public interface VClaimProxy {
     @GetMapping("/Rujukan/Khusus/List/Bulan/{bulan}/Tahun/{tahun}")
     public VClaimResponse<List<RujukanKhususDto>> getRujukanKhusus(@PathVariable("bulan") String bulan,
             @PathVariable("tahun") String tahun, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
+
+    @PostMapping("/Rujukan/Khusus/insert")
+    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @DeleteMapping("/Rujukan/Khusus/delete")
+    public VClaimResponse<String> deleteRujukanKhusus(
+            @RequestBody BpjsRequestDto<RequestRujukanKhususDto> rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     // #endregion
 
     // #region Monitoring
@@ -323,4 +350,29 @@ public interface VClaimProxy {
 
     // #endregion
 
+    // #region PRB
+    @PostMapping("/PRB/insert")
+    public VClaimResponse<Object> insertRujukBalik(
+            @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PutMapping("/PRB/update")
+    public VClaimResponse2<String> updateRujukBalik(
+            @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @DeleteMapping("/PRB/delete")
+    public VClaimResponse2<String> deleteRujukBalik(
+            @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/prb/{noSrb}/nosep/{noSep}")
+    public VClaimResponse<BpjsRujukBalikDto> getRujukBalik(@PathVariable("noSrb") String noSrb,
+            @PathVariable("noSep") String noSep, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/prb/tglMulai/{tglMulai}/tglAkhir/{tglAkhir}")
+    public VClaimResponse<BpjsRujukBalikListDto> getRujukBalikList(@PathVariable("tglMulai") String tglMulai,
+            @PathVariable("tglAkhir") String tglAkhir, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    // #endregion
 }
