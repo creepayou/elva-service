@@ -100,7 +100,7 @@ public class RujukanController extends BaseController {
         return requestRujukan;
     }
 
-    @PostMapping("/insertRujukan")
+    @PostMapping("/insert")
     public ResponseSts<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
@@ -113,7 +113,7 @@ public class RujukanController extends BaseController {
         }
     }
 
-    @PutMapping("/updateRujukan")
+    @PutMapping("/update")
     public ResponseSts<String> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
@@ -126,7 +126,7 @@ public class RujukanController extends BaseController {
         }
     }
 
-    @DeleteMapping("/deleteRujukan")
+    @DeleteMapping("/delete")
     public ResponseSts<String> deleteRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
