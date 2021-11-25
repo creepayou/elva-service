@@ -80,7 +80,7 @@ public class SepController {
         return bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode).getVclaimVersion();
     }
 
-    @PostMapping("/insertSEP")
+    @PostMapping("/insert")
     public ResponseSts<BpjsSepDto> insertSEP(@RequestBody RequestSepDtoV2 requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
@@ -104,7 +104,7 @@ public class SepController {
         }
     }
 
-    @PutMapping("/updateSEP")
+    @PutMapping("/update")
     public ResponseSts<String> updateSEP(@RequestBody RequestSepDtoV2 requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
@@ -125,7 +125,7 @@ public class SepController {
         }
     }
 
-    @DeleteMapping("/deleteSEP")
+    @DeleteMapping("/delete")
     public ResponseSts<String> deleteSEP(@RequestBody RequestSepDtoV2 requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
