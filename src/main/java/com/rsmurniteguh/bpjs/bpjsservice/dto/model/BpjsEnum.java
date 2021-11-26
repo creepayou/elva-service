@@ -390,7 +390,7 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum FlagProcedure {
-        TIDAK_BERKELANJUTAN("0"), BERKELANJUTAN("1");
+        TIDAK_BERKELANJUTAN("0"), BERKELANJUTAN("1"), NONE("");
 
         @Getter
         private String flag;
@@ -421,7 +421,7 @@ public class BpjsEnum {
     @AllArgsConstructor
     public enum KodePenunjang {
         RADIOTERAPI("1"), KEMOTERAPI("2"), REHAB_MEDIK("3"), REHAB_PSIKOSOSIAL("4"), TRANSFUSI_DARAH("5"),
-        PELAYANAN_GIGI("6"), LABORATORIUM("7"), USG("8"), FARMASI("9"), LAIN_LAIN("10"), MRI("11"), HEMODIALISA("12");
+        PELAYANAN_GIGI("6"), LABORATORIUM("7"), USG("8"), FARMASI("9"), LAIN_LAIN("10"), MRI("11"), HEMODIALISA("12"), NONE("");
 
         @Getter
         private String kode;
@@ -451,7 +451,7 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum AssesmentPel {
-        POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4");
+        POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4"), NONE("");
 
         @Getter
         private String assesmen;

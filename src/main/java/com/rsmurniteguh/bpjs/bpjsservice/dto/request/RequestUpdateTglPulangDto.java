@@ -28,6 +28,8 @@ public class RequestUpdateTglPulangDto {
     private String noSuratMeninggal;
     @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Timestamp tglPulang;
+    @JsonSerialize(using = CustomJsonDateSerializer.class)
+    private Timestamp tglMeninggal;
     private String noLPManual;
     private String user;
 }
