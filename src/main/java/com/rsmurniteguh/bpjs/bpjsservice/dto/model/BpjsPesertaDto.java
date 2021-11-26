@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,7 +18,7 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BpjsPesertaDto{
     private String asuransi;
-    private String hakKelas;
+    private KelasRawat hakKelas;
     private String jnsPeserta;
     private String kelamin;
     private String nama;
