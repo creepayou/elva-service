@@ -450,28 +450,28 @@ public class BpjsEnum {
     }
 
     @AllArgsConstructor
-    public enum AssesmenPel {
+    public enum AssesmentPel {
         POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4");
 
         @Getter
         private String assesmen;
 
         @JsonCreator
-        public static AssesmenPel fromValue(String value) throws BpjsServiceException {
-            return getAssesmenPelByValue(value);
+        public static AssesmentPel fromValue(String value) throws BpjsServiceException {
+            return getAssesmentPelByValue(value);
         }
 
-        private static final Map<String, AssesmenPel> BY_VALUE = new HashMap<>();
+        private static final Map<String, AssesmentPel> BY_VALUE = new HashMap<>();
 
         static {
-            for (AssesmenPel pj : values()) {
+            for (AssesmentPel pj : values()) {
                 BY_VALUE.put(pj.getAssesmen(), pj);
                 BY_VALUE.put(pj.name(), pj);
             }
         }
 
         @JsonIgnore
-        public static AssesmenPel getAssesmenPelByValue(String filter) throws BpjsServiceException {
+        public static AssesmentPel getAssesmentPelByValue(String filter) throws BpjsServiceException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else

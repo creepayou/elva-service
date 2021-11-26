@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmenPel;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmentPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
@@ -34,7 +34,6 @@ public class RequestSepDtoV2 {
     private String ppkPelayanan;
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private JenisPelayanan jnsPelayanan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private KlsRawat klsRawat;
     private String noMR;
     private Rujukan rujukan;
@@ -57,7 +56,7 @@ public class RequestSepDtoV2 {
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private KodePenunjang kdPenunjang;
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private AssesmenPel assesmentPel;
+    private AssesmentPel assesmentPel;
 
     @Data
     @Accessors(chain = true)

@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmenPel;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmentPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
@@ -47,8 +47,8 @@ public class CustomBpjsEnumSerializer extends JsonSerializer<Object> {
             jsonGenerator.writeString(((Pembiayaan) bpjsEnum).getJenis());
         } else if (bpjsEnum instanceof FlagProcedure) {
             jsonGenerator.writeString(((FlagProcedure) bpjsEnum).getFlag());
-        } else if (bpjsEnum instanceof AssesmenPel) {
-            jsonGenerator.writeString(((AssesmenPel) bpjsEnum).getAssesmen());
+        } else if (bpjsEnum instanceof AssesmentPel) {
+            jsonGenerator.writeString(((AssesmentPel) bpjsEnum).getAssesmen());
         } else if (bpjsEnum instanceof KodePenunjang) {
             jsonGenerator.writeString(((KodePenunjang) bpjsEnum).getKode());
         } else if (bpjsEnum instanceof StatusPulang) {
