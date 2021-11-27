@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
@@ -40,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @CommonsLog
 @RequestMapping("/sep")
-public class SepController {
+public class SepController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
