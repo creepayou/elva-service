@@ -141,7 +141,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.insertRencanaKontrol(rqRencanaKontrolDto, entityCode)));
+                    .handleVClaimResponse(vClaimProxy.insertRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -154,7 +154,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.updateRencanaKontrol(rqRencanaKontrolDto, entityCode)));
+                    .handleVClaimResponse(vClaimProxy.updateRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -180,10 +180,10 @@ public class RencanaKontrolController extends BaseController {
         }
     }
 
-    private BpjsRequestDto2<RequestSpriDto> createBpjsRequestSpri(RequestSpriDto rqSpriDto) {
-        BpjsRequestDto2<RequestSpriDto> requestSpri = new BpjsRequestDto2<>();
-        requestSpri.setRequest(rqSpriDto);
-        return requestSpri;
+    private <T> BpjsRequestDto2<T> createRencanaKontrolRequest(T request) {
+        BpjsRequestDto2<T> bpjsRequest = new BpjsRequestDto2<>();
+        bpjsRequest.setRequest(request);
+        return bpjsRequest;
     }
 
     @PostMapping("/insertSpri")
@@ -191,7 +191,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.insertSpri(createBpjsRequestSpri(rqSpriDto), entityCode)));
+                    .handleVClaimResponse(vClaimProxy.insertSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -203,7 +203,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.updateSpri(createBpjsRequestSpri(rqSpriDto), entityCode)));
+                    .handleVClaimResponse(vClaimProxy.updateSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

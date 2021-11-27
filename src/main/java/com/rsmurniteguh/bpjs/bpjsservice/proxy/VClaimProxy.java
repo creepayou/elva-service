@@ -327,12 +327,12 @@ public interface VClaimProxy {
 
     @PostMapping("/RencanaKontrol/insert")
     public VClaimResponse2<RencanaKontrolCrudDto> insertRencanaKontrol(
-            @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
+            @RequestBody BpjsRequestDto2<RequestRencanaKontrolDto> rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/RencanaKontrol/Update")
     public VClaimResponse2<RencanaKontrolCrudDto> updateRencanaKontrol(
-            @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
+            @RequestBody BpjsRequestDto2<RequestRencanaKontrolDto> rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/RencanaKontrol/Delete")
