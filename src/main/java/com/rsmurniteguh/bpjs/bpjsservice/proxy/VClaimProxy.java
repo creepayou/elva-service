@@ -170,7 +170,7 @@ public interface VClaimProxy {
             @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Sep/2.0/updtglplg")
+    @PutMapping("/SEP/2.0/updtglplg")
     public VClaimResponse<String> updateTglPulangSEPV2(
             @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
