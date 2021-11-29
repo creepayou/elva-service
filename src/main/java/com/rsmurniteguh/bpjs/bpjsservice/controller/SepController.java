@@ -1,6 +1,5 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.ObjectUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +31,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CommonsLog
@@ -61,10 +59,16 @@ public class SepController extends BaseController {
         }
     }
 
-    private BpjsRequestDto<RequestSepDto> createBpjsRequestSepFromV2(RequestSepDtoV2 requestSepDtoV2)
-            throws IOException {
-        RequestSepDto requestSepDto = ObjectUtil.convertObjectToClass(requestSepDtoV2, RequestSepDto.class);
-        requestSepDto.setKlsRawat(requestSepDtoV2.getKlsRawat().getKlsRawatHak());
+    private BpjsRequestDto<RequestSepDto> createBpjsRequestSepFromV2(RequestSepDtoV2 requestSepDtoV2) {
+        RequestSepDto requestSepDto = new RequestSepDto().setCatatan(requestSepDtoV2.getCatatan())
+                .setCob(requestSepDtoV2.getCob()).setKlsRawat(requestSepDtoV2.getKlsRawat().getKlsRawatHak())
+                .setDiagAwal(requestSepDtoV2.getDiagAwal()).setJaminan(requestSepDtoV2.getJaminan())
+                .setJnsPelayanan(requestSepDtoV2.getJnsPelayanan()).setKatarak(requestSepDtoV2.getKatarak())
+                .setKeterangan(requestSepDtoV2.getKeterangan()).setNoKartu(requestSepDtoV2.getNoSep())
+                .setNoTelp(requestSepDtoV2.getNoTelp()).setPoli(requestSepDtoV2.getPoli())
+                .setPpkPelayanan(requestSepDtoV2.getPpkPelayanan()).setRujukan(requestSepDtoV2.getRujukan())
+                .setSkdp(requestSepDtoV2.getSkdp()).setTglPulangSep(requestSepDtoV2.getTglPulangSep())
+                .setTglSep(requestSepDtoV2.getTglPulangSep()).setUser(requestSepDtoV2.getUser());
 
         BpjsRequestDto<RequestSepDto> requestSep = new BpjsRequestDto<>();
         requestSep.getRequest().put("t_sep", requestSepDto);
