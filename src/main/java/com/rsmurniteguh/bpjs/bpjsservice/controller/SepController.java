@@ -221,7 +221,7 @@ public class SepController extends BaseController {
         }
     }
 
-    @GetMapping(value = "/getFingerPrintStatus/{bpjsNo}")
+    @GetMapping("/getFingerPrintStatus/{bpjsNo}")
     public ResponseSts<BpjsFingerPrintStatusDto> getFingerPrintStatus(@PathVariable("bpjsNo") String bpjsNo,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -234,7 +234,7 @@ public class SepController extends BaseController {
         }
     }
 
-    @GetMapping(value = "/getFingerPrintList")
+    @GetMapping("/getFingerPrintList")
     public ResponseSts<List<BpjsFingerPrintDto>> getFingerPrintStatus(
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -244,6 +244,32 @@ public class SepController extends BaseController {
                             DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), entityCode))
                     .get("list"));
         } catch (Exception e) {
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getSuplesiJasaRaharja/{bpjsNo}")
+    public ResponseSts<Object> getSuplesiJasaRaharja(@PathVariable("bpjsNo") String bpjsNo,
+            @RequestParam("tglPelayanan") Timestamp tglPelayanan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getPotensiSuplesiJasaRaharja(bpjsNo,
+                            DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), entityCode)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getDataKecelakaan/{bpjsNo}")
+    public ResponseSts<Object> getDataKecelakaan(@PathVariable("bpjsNo") String bpjsNo,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getDataKecelakaanInduk(bpjsNo, entityCode)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }

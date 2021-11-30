@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -108,7 +109,9 @@ public class RujukanController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
-            requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
+            if(StringUtils.hasText(bpjsConsumerDto.getProviderCode())) {
+                requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
+            }
 
             if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(

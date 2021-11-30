@@ -64,10 +64,12 @@ public interface VClaimProxy {
 
     @GetMapping("/referensi/faskes/{param}/{jenisFaskes}")
     public VClaimResponse<List<VClaimMappingDto>> getFaskes(@PathVariable("param") String parameter,
-            @PathVariable("jenisFaskes") String jenisFaskes, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            @PathVariable("jenisFaskes") String jenisFaskes,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/dokter/pelayanan/{jenisPelayanan}/tglPelayanan/{tglPelayanan}/Spesialis/{spesialis}")
-    public VClaimResponse<List<VClaimMappingDto>> getDokterDPJP(@PathVariable("jenisPelayanan") String jenisPelayanan,
+    public VClaimResponse<List<VClaimMappingDto>> getDokterDPJP(
+            @PathVariable("jenisPelayanan") String jenisPelayanan,
             @PathVariable("tglPelayanan") String tglPelayanan, @PathVariable("spesialis") String spesialis,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -89,11 +91,13 @@ public interface VClaimProxy {
 
     @GetMapping("/Peserta/nokartu/{noKartu}/tglSEP/{tglSEP}")
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNoKartu(@PathVariable("noKartu") String noKartu,
-            @PathVariable("tglSEP") String tglSEP, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            @PathVariable("tglSEP") String tglSEP,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/Peserta/nik/{nik}/tglSEP/{tglSEP}")
     public VClaimResponse<BpjsPesertaResponseDto> getPesertaByNik(@PathVariable("nik") String nik,
-            @PathVariable("tglSEP") String tglSEP, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            @PathVariable("tglSEP") String tglSEP,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
 
@@ -180,7 +184,8 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/SEP/Internal/delete")
-    public VClaimResponse2<String> deleteSepInternal(@RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
+    public VClaimResponse2<String> deleteSepInternal(
+            @RequestBody BpjsRequestDto<RequestSepInternal> requestSepInternal,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/SEP/FingerPrint/Peserta/{noKartu}/TglPelayanan/{tglPelayanan}")
@@ -190,6 +195,15 @@ public interface VClaimProxy {
 
     @GetMapping("/SEP/FingerPrint/List/Peserta/TglPelayanan/{tglPelayanan}")
     public VClaimResponse<List<BpjsFingerPrintDto>> getFingerPrintList(
+            @PathVariable("tglPelayanan") String tglPelayanan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/sep/KllInduk/List/{noKartu}")
+    public VClaimResponse<Object> getDataKecelakaanInduk(@PathVariable("noKartu") String noKartu,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/sep/JasaRaharja/Suplesi/{noKartu}/tglPelayanan/{tglPelayanan}")
+    public VClaimResponse<Object> getPotensiSuplesiJasaRaharja(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglPelayanan") String tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -271,7 +285,8 @@ public interface VClaimProxy {
             @PathVariable("tahun") String tahun, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Rujukan/Khusus/insert")
-    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
+    public VClaimResponse<RujukanKhususDto> insertRujukanKhusus(
+            @RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/Rujukan/Khusus/delete")
@@ -308,12 +323,14 @@ public interface VClaimProxy {
 
     @GetMapping("/RencanaKontrol/JadwalPraktekDokter/JnsKontrol/{jnsKontrol}/KdPoli/{kdPoli}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<DataDokterDto>> getDataDokter(@PathVariable("jnsKontrol") String jnsKontrol,
-            @PathVariable("kdPoli") String kdPoli, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
+            @PathVariable("kdPoli") String kdPoli,
+            @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/RencanaKontrol/ListSpesialistik/JnsKontrol/{jnsKontrol}/nomor/{nomor}/TglRencanaKontrol/{tglRencanaKontrol}")
     public VClaimResponse<List<SpesialistikDto>> getSpesialistik(@PathVariable("jnsKontrol") String jnsKontrol,
-            @PathVariable("nomor") String nomor, @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
+            @PathVariable("nomor") String nomor,
+            @PathVariable("tglRencanaKontrol") String tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/RencanaKontrol/noSuratKontrol/{noSuratKontrol}")
@@ -372,7 +389,8 @@ public interface VClaimProxy {
 
     @GetMapping("/prb/tglMulai/{tglMulai}/tglAkhir/{tglAkhir}")
     public VClaimResponse<BpjsRujukBalikListDto> getRujukBalikList(@PathVariable("tglMulai") String tglMulai,
-            @PathVariable("tglAkhir") String tglAkhir, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            @PathVariable("tglAkhir") String tglAkhir,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
 }
