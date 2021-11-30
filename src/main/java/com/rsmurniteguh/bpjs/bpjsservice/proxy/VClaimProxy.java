@@ -148,7 +148,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/Sep/pengajuanSep")
+    @PostMapping("/Sep/pengajuanSEP")
     public VClaimResponse2<String> pengajuanSEP(
             @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
