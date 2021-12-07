@@ -263,7 +263,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/Rujukan/2.0/update")
+    @PutMapping("/Rujukan/2.0/Update")
     public VClaimResponse<String> updateRujukanV2(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
