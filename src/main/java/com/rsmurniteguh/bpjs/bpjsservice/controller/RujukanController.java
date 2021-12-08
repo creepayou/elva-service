@@ -110,7 +110,7 @@ public class RujukanController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
-            if(!StringUtils.hasText(requestRujukanDto.getPpkDirujuk()) && StringUtils.hasText(bpjsConsumerDto.getProviderCode())) {
+            if(!StringUtils.hasText(requestRujukanDto.getPpkDirujuk())) {
                 requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
             }
 
