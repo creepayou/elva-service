@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
-import org.springframework.util.StreamUtils;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
@@ -17,6 +15,9 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimEncResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DecryptUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
+
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
 
 import feign.Client;
 import feign.Request;
@@ -53,17 +54,25 @@ public class FeignClientConfig extends Client.Default {
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
         
         if(bpjsResponse.getMetaData().getCode().equals(Constant.HTTP_OK)) {
-        	try {
-        		String decrypted = DecryptUtil.decrypt(bpjsResponse.getResponse().toString(), key);
-        		LinkedHashMap<String, Object> decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<LinkedHashMap<String, Object>>() {});
-        		bpjsResponse.setResponse(decryptedResult);
-			} catch (Exception e) {
-				log.error(e.getMessage());
-			}
+            String decrypted = decryptResponse(bpjsResponse.getResponse().toString(), key);
+            LinkedHashMap<String, Object> decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<LinkedHashMap<String, Object>>() {});
+            bpjsResponse.setResponse(decryptedResult);
         } else {
+            if(!ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
+                log.info(decryptResponse(bpjsResponse.getResponse().toString(), key));
+            }
             bpjsResponse.setResponse(null);
         }
         String jsonResult = JsonUtil.toJsonString(bpjsResponse);
         return response.toBuilder().body(jsonResult, StandardCharsets.UTF_8).build();
+    }
+    
+    private String decryptResponse(String response, String key) {
+        try {
+            return DecryptUtil.decrypt(response, key);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return response;
+        }
     }
 }
