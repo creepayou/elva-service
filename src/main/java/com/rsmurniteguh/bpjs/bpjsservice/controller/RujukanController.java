@@ -48,6 +48,8 @@ public class RujukanController extends BaseController {
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
 
+    private static final String KEY_RUJUKAN = "rujukan"; 
+
     @GetMapping("/getRujukanByNoRujukan/{jenisRujukan}/{noRujukan}")
     public ResponseSts<BpjsRujukanDto> getRujukanByNoRujukan(@PathVariable("jenisRujukan") JenisRujukan jenisRujukan,
             @PathVariable("noRujukan") String noRujukan, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -108,7 +110,7 @@ public class RujukanController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
-            if(StringUtils.hasText(bpjsConsumerDto.getProviderCode())) {
+            if(!StringUtils.hasText(requestRujukanDto.getPpkDirujuk()) && StringUtils.hasText(bpjsConsumerDto.getProviderCode())) {
                 requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
             }
 
@@ -121,12 +123,13 @@ public class RujukanController extends BaseController {
             }
 
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
 
     @PutMapping("/update")
-    public ResponseSts<String> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+    public ResponseSts<Object> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
@@ -134,15 +137,15 @@ public class RujukanController extends BaseController {
             if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(
-                                vClaimProxy.updateRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                        .get("rujukan"));
+                                vClaimProxy.updateRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(
                                 vClaimProxy.updateRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                        .get("rujukan"));
+                        .get(KEY_RUJUKAN));
             }
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
@@ -154,8 +157,9 @@ public class RujukanController extends BaseController {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(
                             vClaimProxy.deleteRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                    .get("rujukan"));
+                    .get(KEY_RUJUKAN));
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
@@ -198,7 +202,7 @@ public class RujukanController extends BaseController {
         try {
             return ResponseSts.onSuccess(
                     VClaimResponseUtil.handleVClaimResponse(
-                            vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get("rujukan"));
+                            vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get(KEY_RUJUKAN));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -210,7 +214,7 @@ public class RujukanController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.insertRujukanKhusus(rqRujukanKhususDto, entityCode)).get("rujukan"));
+                    vClaimProxy.insertRujukanKhusus(rqRujukanKhususDto, entityCode)).get(KEY_RUJUKAN));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
@@ -230,7 +234,7 @@ public class RujukanController extends BaseController {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
                     vClaimProxy.deleteRujukanKhusus(createBpjsRequestRencanaKontrol(rqRujukanKhususDto), entityCode))
-                    .get("rujukan"));
+                    .get(KEY_RUJUKAN));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

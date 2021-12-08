@@ -60,6 +60,8 @@ public class FeignClientConfig extends Client.Default {
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
+        } else {
+            bpjsResponse.setResponse(null);
         }
         String jsonResult = JsonUtil.toJsonString(bpjsResponse);
         return response.toBuilder().body(jsonResult, StandardCharsets.UTF_8).build();
