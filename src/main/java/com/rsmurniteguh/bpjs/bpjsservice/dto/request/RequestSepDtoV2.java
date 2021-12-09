@@ -16,6 +16,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Penjamin;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TujuanKunjungan;
@@ -89,7 +90,7 @@ public class RequestSepDtoV2 {
     @Accessors(chain = true)
     public static class Jaminan{
         @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-        private Indikator lakaLantas;
+        private Lakalantas lakaLantas;
         private PenjaminJaminan penjamin;
     }
 

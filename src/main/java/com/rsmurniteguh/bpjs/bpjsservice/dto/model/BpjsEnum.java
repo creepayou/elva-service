@@ -421,7 +421,8 @@ public class BpjsEnum {
     @AllArgsConstructor
     public enum KodePenunjang {
         RADIOTERAPI("1"), KEMOTERAPI("2"), REHAB_MEDIK("3"), REHAB_PSIKOSOSIAL("4"), TRANSFUSI_DARAH("5"),
-        PELAYANAN_GIGI("6"), LABORATORIUM("7"), USG("8"), FARMASI("9"), LAIN_LAIN("10"), MRI("11"), HEMODIALISA("12"), NONE("");
+        PELAYANAN_GIGI("6"), LABORATORIUM("7"), USG("8"), FARMASI("9"), LAIN_LAIN("10"), MRI("11"), HEMODIALISA("12"),
+        NONE("");
 
         @Getter
         private String kode;
@@ -536,6 +537,38 @@ public class BpjsEnum {
                 return BY_VALUE.get(jenis);
             else
                 throw new BpjsServiceException("Jenis Pengajuan tidak sesuai");
+        }
+    }
+
+    @AllArgsConstructor
+    public enum Lakalantas {
+        BKLL(new VClaimMappingDto("0", "Bukan Kecelakaan Lalu Lintas (BKLL)")),
+        KLL_BKK(new VClaimMappingDto("1", "Kecelakaan Lalu Lintas (KLL) dan Bukan Kecelakaan Kerja (BKK)")),
+        KLL_KK(new VClaimMappingDto("2", "KLL dan KK")), KK(new VClaimMappingDto("3", "Kecelakaan Kerja (KK)"));
+
+        @Getter
+        private VClaimMappingDto value;
+
+        @JsonCreator
+        public static Lakalantas fromValue(String value) throws BpjsServiceException {
+            return getLakalantasByValue(value);
+        }
+
+        private static final Map<String, Lakalantas> BY_VALUE = new HashMap<>();
+
+        static {
+            for (Lakalantas pj : values()) {
+                BY_VALUE.put(pj.getValue().getKode(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static Lakalantas getLakalantasByValue(String filter) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(filter))
+                return BY_VALUE.get(filter);
+            else
+                throw new BpjsServiceException("Lakalantas tidak sesuai");
         }
     }
 }
