@@ -292,7 +292,7 @@ public class SepController extends BaseController {
     private List<VClaimMappingDto> loadKLL() {
     	List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
     	for(Lakalantas item : Lakalantas.values()) {
-    		VClaimMappingDto dto = new VClaimMappingDto(item.getValue().getKode(), item.getValue().getNama());
+    		VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getValue().getNama());
     		vclaimMappingDtoList.add(dto);
     	}
     	return vclaimMappingDtoList;
