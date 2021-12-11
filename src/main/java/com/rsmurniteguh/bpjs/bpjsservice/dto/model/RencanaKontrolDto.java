@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,7 +18,7 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RencanaKontrolDto{
     private String noSuratKontrol;
-    private String jnsPelayanan;
+    private JenisPelayanan jnsPelayanan;
     private String jnsKontrol;
     private String namaJnsKontrol;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
