@@ -16,7 +16,9 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Penjamin;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TujuanKunjungan;
 
 import lombok.Data;
@@ -88,15 +90,17 @@ public class RequestSepDtoV2 {
     @Accessors(chain = true)
     public static class Jaminan{
         @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-        private Indikator lakaLantas;
+        private Lakalantas lakaLantas;
         private PenjaminJaminan penjamin;
     }
 
     @Data
     @Accessors(chain = true)
     public static class PenjaminJaminan{
-        private String penjamin;
-        private String tglKejadian;
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        private Penjamin penjamin;
+        @JsonSerialize(using = CustomJsonDateSerializer.class)
+        private Timestamp tglKejadian;
         private String keterangan;
         private SuplesiJaminan suplesi;
     }

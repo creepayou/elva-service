@@ -3,20 +3,9 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisRujukan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
@@ -27,10 +16,24 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -44,6 +47,8 @@ public class RujukanController extends BaseController {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
+
+    private static final String KEY_RUJUKAN = "rujukan"; 
 
     @GetMapping("/getRujukanByNoRujukan/{jenisRujukan}/{noRujukan}")
     public ResponseSts<BpjsRujukanDto> getRujukanByNoRujukan(@PathVariable("jenisRujukan") JenisRujukan jenisRujukan,
@@ -104,24 +109,43 @@ public class RujukanController extends BaseController {
     public ResponseSts<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            String ppkDirujuk = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
-            requestRujukanDto.setPpkDirujuk(ppkDirujuk);
-            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.insertRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
+            BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+            if(!StringUtils.hasText(requestRujukanDto.getPpkDirujuk())) {
+                requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
+            }
+
+            if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
+                return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                        vClaimProxy.insertRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
+            } else {
+                return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                        vClaimProxy.insertRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
+            }
+
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
 
     @PutMapping("/update")
-    public ResponseSts<String> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
+    public ResponseSts<Object> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.updateRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                    .get("rujukan"));
+            BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+
+            if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
+                return ResponseSts.onSuccess(VClaimResponseUtil
+                        .handleVClaimResponse(
+                                vClaimProxy.updateRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
+            } else {
+                return ResponseSts.onSuccess(VClaimResponseUtil
+                        .handleVClaimResponse(
+                                vClaimProxy.updateRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
+                        .get(KEY_RUJUKAN));
+            }
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
@@ -132,80 +156,86 @@ public class RujukanController extends BaseController {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(
-                            vClaimProxy.deleteRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                    .get("rujukan"));
+                            vClaimProxy.deleteRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
-    
+
     @GetMapping("/getSarana")
     public ResponseSts<List<SaranaDto>> getSarana(@RequestParam("ppkRujukan") String ppkRujukan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(
                     VClaimResponseUtil.handleVClaimResponse(
-                    		vClaimProxy.getSarana(ppkRujukan, entityCode)).get("list"));
+                            vClaimProxy.getSarana(ppkRujukan, entityCode)).get("list"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
-    
+
     @GetMapping("/getSpesialistikRujukan")
-    public ResponseSts<List<SpesialistikRujukanDto>> getSpesialistikRujukan(@RequestParam("ppkRujukan") String ppkRujukan,
-    		@RequestParam("tglRujukan") Timestamp tglRujukan,
+    public ResponseSts<List<SpesialistikRujukanDto>> getSpesialistikRujukan(
+            @RequestParam("ppkRujukan") String ppkRujukan,
+            @RequestParam("tglRujukan") Timestamp tglRujukan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(
                     VClaimResponseUtil.handleVClaimResponse(
-                    		vClaimProxy.getSpesialistikRujukan(ppkRujukan, DateUtil.formatTimestampWithTimezone(tglRujukan, Constant.TIMEZONE_JKT), entityCode)).get("list"));
+                            vClaimProxy.getSpesialistikRujukan(ppkRujukan,
+                                    DateUtil.formatTimestampWithTimezone(tglRujukan, Constant.TIMEZONE_JKT),
+                                    entityCode))
+                            .get("list"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
-    
+
     @GetMapping("/getRujukanKhusus")
     public ResponseSts<List<RujukanKhususDto>> getRujukanKhusus(@RequestParam("bulan") String bulan,
-    		@RequestParam("tahun") String tahun,
+            @RequestParam("tahun") String tahun,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(
                     VClaimResponseUtil.handleVClaimResponse(
-                    		vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get("rujukan"));
+                            vClaimProxy.getRujukanKhusus(bulan, tahun, entityCode)).get(KEY_RUJUKAN));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
-    
+
     @PostMapping("/insertRujukanKhusus")
     public ResponseSts<RujukanKhususDto> insertRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.insertRujukanKhusus(rqRujukanKhususDto, entityCode)).get("rujukan"));
+                    vClaimProxy.insertRujukanKhusus(rqRujukanKhususDto, entityCode)).get(KEY_RUJUKAN));
         } catch (Exception e) {
-        	log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }
-    
-    private BpjsRequestDto<RequestRujukanKhususDto> createBpjsRequestRencanaKontrol(RequestRujukanKhususDto rqRujukanKhususDto) {
+
+    private BpjsRequestDto<RequestRujukanKhususDto> createBpjsRequestRencanaKontrol(
+            RequestRujukanKhususDto rqRujukanKhususDto) {
         BpjsRequestDto<RequestRujukanKhususDto> requestRujukanKhusus = new BpjsRequestDto<>();
         requestRujukanKhusus.getRequest().put("t_rujukan", rqRujukanKhususDto);
         return requestRujukanKhusus;
     }
-    
+
     @DeleteMapping("/deleteRujukanKhusus")
     public ResponseSts<String> deleteRujukanKhusus(@RequestBody RequestRujukanKhususDto rqRujukanKhususDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.deleteRujukanKhusus(createBpjsRequestRencanaKontrol(rqRujukanKhususDto), entityCode)).get("rujukan"));
+                    vClaimProxy.deleteRujukanKhusus(createBpjsRequestRencanaKontrol(rqRujukanKhususDto), entityCode))
+                    .get(KEY_RUJUKAN));
         } catch (Exception e) {
-        	log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
         }
     }

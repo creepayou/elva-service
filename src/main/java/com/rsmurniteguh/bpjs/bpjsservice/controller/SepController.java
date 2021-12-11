@@ -1,26 +1,8 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-
-import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
-import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
-import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
-import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
-import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +16,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
+import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
+import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+
 import lombok.extern.apachecommons.CommonsLog;
 
 @RestController
@@ -46,6 +49,8 @@ public class SepController extends BaseController {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
+
+    private static final String KEY_SEP = "sep";
 
     @GetMapping("/searchSEP/{sepNo}")
     public ResponseSts<BpjsSepDto> searchSEP(@PathVariable("sepNo") String sepNo,
@@ -96,12 +101,12 @@ public class SepController extends BaseController {
             if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(
                                 vClaimProxy.insertSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -117,12 +122,12 @@ public class SepController extends BaseController {
             if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(
                                 vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -138,12 +143,12 @@ public class SepController extends BaseController {
             if (vclaimVersion.equals(VClaimVersion.V2)) {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(
                                 vClaimProxy.deleteSEP(createBpjsRequestSepFromV2(requestSepDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -160,12 +165,12 @@ public class SepController extends BaseController {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy
                                 .updateTglPulangSEPV2(createBpjsRequestSep(requestUpdateTglPulangDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             } else {
                 return ResponseSts.onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy
                                 .updateTglPulangSEP(createBpjsRequestSep(requestUpdateTglPulangDto), entityCode))
-                        .get("sep"));
+                        .get(KEY_SEP));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -221,7 +226,7 @@ public class SepController extends BaseController {
         }
     }
 
-    @GetMapping(value = "/getFingerPrintStatus/{bpjsNo}")
+    @GetMapping("/getFingerPrintStatus/{bpjsNo}")
     public ResponseSts<BpjsFingerPrintStatusDto> getFingerPrintStatus(@PathVariable("bpjsNo") String bpjsNo,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -234,7 +239,7 @@ public class SepController extends BaseController {
         }
     }
 
-    @GetMapping(value = "/getFingerPrintList")
+    @GetMapping("/getFingerPrintList")
     public ResponseSts<List<BpjsFingerPrintDto>> getFingerPrintStatus(
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
@@ -246,6 +251,51 @@ public class SepController extends BaseController {
         } catch (Exception e) {
             return ResponseSts.onFail(e.getMessage());
         }
+    }
+
+    @GetMapping("/getSuplesiJasaRaharja/{bpjsNo}")
+    public ResponseSts<Object> getSuplesiJasaRaharja(@PathVariable("bpjsNo") String bpjsNo,
+            @RequestParam("tglPelayanan") Timestamp tglPelayanan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getPotensiSuplesiJasaRaharja(bpjsNo,
+                            DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), entityCode)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getDataKecelakaan/{bpjsNo}")
+    public ResponseSts<Object> getDataKecelakaan(@PathVariable("bpjsNo") String bpjsNo,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getDataKecelakaanInduk(bpjsNo, entityCode)));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/getLakaLantas")
+    public ResponseSts<List<VClaimMappingDto>> getLakaLantas(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(loadKLL());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+    
+    private List<VClaimMappingDto> loadKLL() {
+    	List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
+    	for(Lakalantas item : Lakalantas.values()) {
+    		VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getValue().getNama());
+    		vclaimMappingDtoList.add(dto);
+    	}
+    	return vclaimMappingDtoList;
     }
 
 }

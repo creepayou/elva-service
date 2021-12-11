@@ -7,12 +7,15 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmentPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterTanggalRencanaKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPengajuan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Penjamin;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
@@ -53,6 +56,12 @@ public class CustomBpjsEnumSerializer extends JsonSerializer<Object> {
             jsonGenerator.writeString(((KodePenunjang) bpjsEnum).getKode());
         } else if (bpjsEnum instanceof StatusPulang) {
             jsonGenerator.writeString(((StatusPulang) bpjsEnum).getStatus());
+        } else if (bpjsEnum instanceof JenisKontrol) {
+            jsonGenerator.writeString(((JenisKontrol) bpjsEnum).getJenis());
+        } else if (bpjsEnum instanceof FilterTanggalRencanaKontrol) {
+            jsonGenerator.writeString(((FilterTanggalRencanaKontrol) bpjsEnum).getFilter());
+        } else if (bpjsEnum instanceof Lakalantas) {
+            jsonGenerator.writeString(((Lakalantas) bpjsEnum).getValue().getKode());
         }
     }
 
