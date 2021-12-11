@@ -156,8 +156,7 @@ public class RujukanController extends BaseController {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(
-                            vClaimProxy.deleteRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                    .get(KEY_RUJUKAN));
+                            vClaimProxy.deleteRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
