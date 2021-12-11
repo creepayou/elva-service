@@ -547,7 +547,7 @@ public class BpjsEnum {
         KLL_KK(new VClaimMappingDto("2", "KLL dan KK")), KK(new VClaimMappingDto("3", "Kecelakaan Kerja (KK)"));
 
         @Getter
-        private VClaimMappingDto value;
+        private VClaimMappingDto kll;
 
         @JsonCreator
         public static Lakalantas fromValue(String value) throws BpjsServiceException {
@@ -557,16 +557,17 @@ public class BpjsEnum {
         private static final Map<String, Lakalantas> BY_VALUE = new HashMap<>();
 
         static {
-            for (Lakalantas pj : values()) {
-                BY_VALUE.put(pj.getValue().getKode(), pj);
-                BY_VALUE.put(pj.name(), pj);
+            for (Lakalantas sts : values()) {
+                BY_VALUE.put(sts.getKll().getKode(), sts);
+                BY_VALUE.put(sts.getKll().getNama(), sts);
+                BY_VALUE.put(sts.name(), sts);
             }
         }
 
         @JsonIgnore
-        public static Lakalantas getLakalantasByValue(String filter) throws BpjsServiceException {
-            if (BY_VALUE.containsKey(filter))
-                return BY_VALUE.get(filter);
+        public static Lakalantas getLakalantasByValue(String status) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(status))
+                return BY_VALUE.get(status);
             else
                 throw new BpjsServiceException("Lakalantas tidak sesuai");
         }

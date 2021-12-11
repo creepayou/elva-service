@@ -61,7 +61,7 @@ public class CustomBpjsEnumSerializer extends JsonSerializer<Object> {
         } else if (bpjsEnum instanceof FilterTanggalRencanaKontrol) {
             jsonGenerator.writeString(((FilterTanggalRencanaKontrol) bpjsEnum).getFilter());
         } else if (bpjsEnum instanceof Lakalantas) {
-            jsonGenerator.writeString(((Lakalantas) bpjsEnum).getValue().getKode());
+            jsonGenerator.writeString(((Lakalantas) bpjsEnum).getKll().getKode());
         }
     }
 
