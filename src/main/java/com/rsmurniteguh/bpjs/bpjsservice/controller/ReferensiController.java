@@ -153,4 +153,19 @@ public class ReferensiController extends BaseController {
             return ResponseSts.onFail(e.getMessage());
         }
     }
+
+    @GetMapping("/getProcedure")
+    public ResponseSts<List<VClaimMappingDto>> getProcedure(@RequestParam("procedure") String paramProcedure,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getProcedure(paramProcedure, entityCode));
+            return ResponseSts.onSuccess(response.get("procedure"));
+        } catch (BpjsServiceException e){
+            return ResponseSts.onFail(e.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
 }

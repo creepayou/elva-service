@@ -85,6 +85,10 @@ public interface VClaimProxy {
     public VClaimResponse<List<VClaimMappingDto>> getKecamatan(@PathVariable("kdKabupaten") String kdKabupaten,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @GetMapping("/referensi/procedure/{param}")
+    public VClaimResponse<List<VClaimMappingDto>> getProcedure(@PathVariable("param") String parameter,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
     // #endregion
 
     // #region Peserta
