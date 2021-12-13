@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawatNaik;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
@@ -58,6 +60,36 @@ public class EnumController {
             List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
             for(Lakalantas item : Lakalantas.values()) {
                 VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getKll().getNama());
+                vclaimMappingDtoList.add(dto);
+            }
+            return ResponseSts.onSuccess(vclaimMappingDtoList);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getPembiayaan")
+    public ResponseSts<List<VClaimMappingDto>> getPembiayaan(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
+            for(Pembiayaan item : Pembiayaan.values()) {
+                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getJenis());
+                vclaimMappingDtoList.add(dto);
+            }
+            return ResponseSts.onSuccess(vclaimMappingDtoList);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getKelasRawatNaik")
+    public ResponseSts<List<VClaimMappingDto>> getKelasRawatNaik(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
+            for(KelasRawatNaik item : KelasRawatNaik.values()) {
+                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getKode());
                 vclaimMappingDtoList.add(dto);
             }
             return ResponseSts.onSuccess(vclaimMappingDtoList);

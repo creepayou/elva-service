@@ -572,4 +572,29 @@ public class BpjsEnum {
                 throw new BpjsServiceException("Lakalantas tidak sesuai");
         }
     }
+
+    @AllArgsConstructor
+    public enum KelasRawatNaik {
+        VVIP("1"), VIP("2"), KELAS_I("3"), KELAS_II("4"), KELAS_III("5"), ICCU("6"), ICU("7");
+
+        @Getter
+        private String kode;
+
+        private static final Map<String, KelasRawatNaik> BY_VALUE = new HashMap<>();
+
+        static {
+            for (KelasRawatNaik krn : values()) {
+                BY_VALUE.put(krn.getKode(), krn);
+                BY_VALUE.put(krn.name(), krn);
+            }
+        }
+
+        @JsonIgnore
+        public static KelasRawatNaik getKelasRawatNaikByValue(String krn) throws BpjsServiceException {
+            if (BY_VALUE.containsKey(krn))
+                return BY_VALUE.get(krn);
+            else
+                throw new BpjsServiceException("Kelas Rawat Naik tidak sesuai");
+        }
+    }
 }
