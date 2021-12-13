@@ -15,6 +15,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
@@ -207,7 +208,7 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/sep/JasaRaharja/Suplesi/{noKartu}/tglPelayanan/{tglPelayanan}")
-    public VClaimResponse<Object> getPotensiSuplesiJasaRaharja(@PathVariable("noKartu") String noKartu,
+    public VClaimResponse<List<BpjsSepSuplesiDto>> getPotensiSuplesiJasaRaharja(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglPelayanan") String tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 

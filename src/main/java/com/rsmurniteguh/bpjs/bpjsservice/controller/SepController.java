@@ -11,6 +11,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
@@ -254,13 +255,13 @@ public class SepController extends BaseController {
     }
 
     @GetMapping("/getSuplesiJasaRaharja/{bpjsNo}")
-    public ResponseSts<Object> getSuplesiJasaRaharja(@PathVariable("bpjsNo") String bpjsNo,
+    public ResponseSts<List<BpjsSepSuplesiDto>> getSuplesiJasaRaharja(@PathVariable("bpjsNo") String bpjsNo,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPotensiSuplesiJasaRaharja(bpjsNo,
-                            DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), entityCode)));
+                            DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), entityCode)).get("jaminan"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

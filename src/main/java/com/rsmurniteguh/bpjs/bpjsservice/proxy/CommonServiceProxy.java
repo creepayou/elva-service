@@ -12,4 +12,7 @@ public interface CommonServiceProxy {
     
     @GetMapping("/parameter/getParameterValue")
     public ResponseSts<String> getParameterValue(@RequestParam("parameterName") String parameterName);
+
+    @GetMapping("/entity/getTimeZoneByCode")
+    public ResponseSts<String> getTimeZoneByCode();
 }
