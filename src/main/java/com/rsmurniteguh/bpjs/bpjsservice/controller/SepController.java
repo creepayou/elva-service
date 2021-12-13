@@ -11,6 +11,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepKllDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
@@ -269,11 +270,11 @@ public class SepController extends BaseController {
     }
 
     @GetMapping("/getDataKecelakaan/{bpjsNo}")
-    public ResponseSts<Object> getDataKecelakaan(@PathVariable("bpjsNo") String bpjsNo,
+    public ResponseSts<List<BpjsSepKllDto>> getDataKecelakaan(@PathVariable("bpjsNo") String bpjsNo,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getDataKecelakaanInduk(bpjsNo, entityCode)));
+                    .handleVClaimResponse(vClaimProxy.getDataKecelakaanInduk(bpjsNo, entityCode)).get("list"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());

@@ -15,6 +15,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepKllDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
@@ -204,7 +205,7 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/sep/KllInduk/List/{noKartu}")
-    public VClaimResponse<Object> getDataKecelakaanInduk(@PathVariable("noKartu") String noKartu,
+    public VClaimResponse<List<BpjsSepKllDto>> getDataKecelakaanInduk(@PathVariable("noKartu") String noKartu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/sep/JasaRaharja/Suplesi/{noKartu}/tglPelayanan/{tglPelayanan}")
