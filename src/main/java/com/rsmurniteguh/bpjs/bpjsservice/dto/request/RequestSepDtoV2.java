@@ -14,12 +14,11 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Penjamin;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TujuanKunjungan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKelasRawatDto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -36,7 +35,7 @@ public class RequestSepDtoV2 {
     private String ppkPelayanan;
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private JenisPelayanan jnsPelayanan;
-    private KlsRawat klsRawat;
+    private BpjsKelasRawatDto klsRawat;
     private String noMR;
     private Rujukan rujukan;
     private String catatan;
@@ -137,15 +136,4 @@ public class RequestSepDtoV2 {
         private String kodeDPJP;
     }
 
-    @Data
-    @Accessors(chain = true)
-    public static class KlsRawat{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-        private KelasRawat klsRawatHak;
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-        private KelasRawat klsRawatNaik;
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-        private Pembiayaan pembiayaan;
-        private String penanggungJawab;
-    }
 }
