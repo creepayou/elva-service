@@ -6,6 +6,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsJaminanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
@@ -316,6 +317,11 @@ public interface VClaimProxy {
     @GetMapping("/monitoring/HistoriPelayanan/NoKartu/{noKartu}/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}")
     public VClaimResponse<List<BpjsKunjunganDto>> getHistoriPelayanan(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglAwal") String tglAwal, @PathVariable("tglAkhir") String tglAkhir,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/monitoring/JasaRaharja/tglMulai/{tglMulai}/tglAkhir/{tglAkhir}")
+    public VClaimResponse<List<BpjsJaminanDto>> getDataKlaimJasaRaharja(@PathVariable("tglMulai") String tglMulai,
+            @PathVariable("tglAkhir") String tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion

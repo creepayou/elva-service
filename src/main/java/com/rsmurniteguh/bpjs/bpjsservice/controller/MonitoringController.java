@@ -7,6 +7,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsJaminanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.ResponseSts;
@@ -71,6 +72,22 @@ public class MonitoringController extends BaseController {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getHistoriPelayanan(noKartu,
                     DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),
                     DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), entityCode)).get("histori"));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseSts.onFail(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getDataKlaimJasaRaharja")
+    public ResponseSts<List<BpjsJaminanDto>> getDataKlaimJasaRaharja(@RequestParam("tglMulai") Timestamp tglMulai,
+            @RequestParam("tglAkhir") Timestamp tglAkhir,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        try {
+            return ResponseSts.onSuccess(VClaimResponseUtil
+                    .handleVClaimResponse(vClaimProxy.getDataKlaimJasaRaharja(
+                            DateUtil.customFormatTimestampWithTimezone(tglMulai, Constant.TIMEZONE_JKT, "yyyy-MMdd"),
+                            DateUtil.customFormatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT, "yyyy-MMdd"), entityCode))
+                    .get("klaim"));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
