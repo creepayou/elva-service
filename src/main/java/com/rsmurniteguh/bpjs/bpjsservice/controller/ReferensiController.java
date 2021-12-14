@@ -268,7 +268,7 @@ public class ReferensiController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy.getPascaPulang(entityCode));
+                    .handleVClaimResponse(vClaimProxy.getRuangRawat(entityCode));
             return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
