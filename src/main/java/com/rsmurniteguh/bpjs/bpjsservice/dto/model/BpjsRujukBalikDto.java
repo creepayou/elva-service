@@ -18,14 +18,15 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(value = Include.NON_NULL)
 public class BpjsRujukBalikDto {
-    private VClaimMappingDto DPJP;
+    @JsonAlias("DPJP")
+    private VClaimMappingDto dpjp;
     private String keterangan;
     private String noSEP;
     private String noSRB;
     private PesertaDto peserta;
     private VClaimMappingDto programPRB;
     @JsonAlias({ "programPRB" })
-    private String programPrb;
+    private String programPRBString;
     private String saran;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglSRB;
