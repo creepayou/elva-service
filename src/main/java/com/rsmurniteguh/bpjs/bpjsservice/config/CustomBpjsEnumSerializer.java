@@ -14,7 +14,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPengajuan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawatNaik;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KodePenunjang;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
@@ -63,8 +62,6 @@ public class CustomBpjsEnumSerializer extends JsonSerializer<Object> {
             jsonGenerator.writeString(((FilterTanggalRencanaKontrol) bpjsEnum).getFilter());
         } else if (bpjsEnum instanceof Lakalantas) {
             jsonGenerator.writeString(((Lakalantas) bpjsEnum).getKll().getKode());
-        } else if (bpjsEnum instanceof KelasRawatNaik) {
-            jsonGenerator.writeString(((KelasRawatNaik) bpjsEnum).getKode());
         }
     }
 

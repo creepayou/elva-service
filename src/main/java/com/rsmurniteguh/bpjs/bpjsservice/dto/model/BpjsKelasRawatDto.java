@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawatNaik;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 
 import lombok.Data;
@@ -19,8 +18,7 @@ import lombok.experimental.Accessors;
 public class BpjsKelasRawatDto {
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private KelasRawat klsRawatHak;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
-    private KelasRawatNaik klsRawatNaik;
+    private String klsRawatNaik;
     @JsonSerialize(using = CustomBpjsEnumSerializer.class)
     private Pembiayaan pembiayaan;
     private String penanggungJawab;
