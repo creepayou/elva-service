@@ -375,7 +375,7 @@ public interface VClaimProxy {
 
     // #region PRB
     @PostMapping("/PRB/insert")
-    public VClaimResponse<Object> insertRujukBalik(
+    public VClaimResponse2<BpjsRujukBalikDto> insertRujukBalik(
             @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 

@@ -41,7 +41,7 @@ public class RujukBalikController extends BaseController {
     }
 
     @PostMapping("/insert")
-    public ResponseSts<Object> insertRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
+    public ResponseSts<BpjsRujukBalikDto> insertRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
@@ -53,7 +53,7 @@ public class RujukBalikController extends BaseController {
     }
 
     @PutMapping("/update")
-    public ResponseSts<Object> updateRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
+    public ResponseSts<String> updateRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
@@ -65,7 +65,7 @@ public class RujukBalikController extends BaseController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseSts<Object> deleteRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
+    public ResponseSts<String> deleteRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
