@@ -186,8 +186,8 @@ public class RencanaKontrolController extends BaseController {
         return bpjsRequest;
     }
 
-    @PostMapping("/insertSpri")
-    public ResponseSts<SpriDto> insertSpri(@RequestBody RequestSpriDto rqSpriDto,
+    @PostMapping("/insertSPRI")
+    public ResponseSts<SpriDto> insertSPRI(@RequestBody RequestSpriDto rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
@@ -198,8 +198,8 @@ public class RencanaKontrolController extends BaseController {
         }
     }
 
-    @PutMapping("/updateSpri")
-    public ResponseSts<SpriDto> updateSpri(@RequestBody RequestSpriDto rqSpriDto,
+    @PutMapping("/updateSPRI")
+    public ResponseSts<SpriDto> updateSPRI(@RequestBody RequestSpriDto rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         try {
             return ResponseSts.onSuccess(VClaimResponseUtil
