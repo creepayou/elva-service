@@ -33,7 +33,7 @@ public class ReferensiController extends BaseController {
     @Autowired
     private VClaimProxy vClaimProxy;
 
-    private static final String list = "list";
+    private static final String LIST = "list";
 
     @GetMapping("/getDiagnosa")
     public ResponseSts<List<VClaimMappingDto>> getDiagnosa(@RequestParam("diagnosa") String paramDiagnosa,
@@ -90,7 +90,7 @@ public class ReferensiController extends BaseController {
                     vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(),
                             DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), spesialis,
                             entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPropinsi(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -119,7 +119,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKabupaten(kodePropinsi, entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -134,7 +134,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKecamatan(kodeKabupaten, entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -179,7 +179,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getKelasRawat(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -194,7 +194,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDokter(namaDokter, entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -209,7 +209,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getCaraKeluar(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -224,7 +224,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getDiagnosaPRB(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -239,7 +239,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getObatPRB(namaObat, entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPascaPulang(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -269,7 +269,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getPascaPulang(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
@@ -284,7 +284,7 @@ public class ReferensiController extends BaseController {
         try {
             Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy.getSpesialistik(entityCode));
-            return ResponseSts.onSuccess(response.get(list));
+            return ResponseSts.onSuccess(response.get(LIST));
         } catch (BpjsServiceException e) {
             return ResponseSts.onFail(e.getMessage());
         } catch (Exception e) {
