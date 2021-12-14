@@ -166,7 +166,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/SEP/2.0/Update")
+    @PutMapping("/SEP/2.0/update")
     public VClaimResponse<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
