@@ -92,6 +92,32 @@ public interface VClaimProxy {
     public VClaimResponse<List<VClaimMappingDto>> getProcedure(@PathVariable("param") String parameter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @GetMapping("/referensi/kelasrawat")
+    public VClaimResponse<List<VClaimMappingDto>> getKelasRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/dokter/{param}")
+    public VClaimResponse<List<VClaimMappingDto>> getDokter(@PathVariable("param") String namaDokter, 
+        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/carakeluar")
+    public VClaimResponse<List<VClaimMappingDto>> getCaraKeluar(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/diagnosaprb")
+    public VClaimResponse<List<VClaimMappingDto>> getDiagnosaPRB(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/obatprb/{param}")
+    public VClaimResponse<List<VClaimMappingDto>> getObatPRB(@PathVariable("param") String namaObat, 
+        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/pascapulang")
+    public VClaimResponse<List<VClaimMappingDto>> getPascaPulang(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/ruangrawat")
+    public VClaimResponse<List<VClaimMappingDto>> getRuangRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/spesialistik")
+    public VClaimResponse<List<VClaimMappingDto>> getSpesialistik(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
     // #endregion
 
     // #region Peserta

@@ -74,7 +74,7 @@ public class EnumController {
         try {
             List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
             for(Pembiayaan item : Pembiayaan.values()) {
-                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getJenis());
+                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.name());
                 vclaimMappingDtoList.add(dto);
             }
             return ResponseSts.onSuccess(vclaimMappingDtoList);
@@ -89,7 +89,7 @@ public class EnumController {
         try {
             List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
             for(KelasRawatNaik item : KelasRawatNaik.values()) {
-                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.getKode());
+                VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.name());
                 vclaimMappingDtoList.add(dto);
             }
             return ResponseSts.onSuccess(vclaimMappingDtoList);
