@@ -2,6 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,6 +24,7 @@ public class BpjsPesertaDto{
     private String kelamin;
     private String nama;
     private String noKartu;
+    @JsonAlias("noMR")
     private String noMr;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglLahir;

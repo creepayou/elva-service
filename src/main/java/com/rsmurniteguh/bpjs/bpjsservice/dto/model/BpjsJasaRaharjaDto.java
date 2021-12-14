@@ -1,5 +1,6 @@
 package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,14 +14,14 @@ import lombok.Data;
 @Data
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BpjsSepKllDto {
-    private String noSEP;
+public class BpjsJasaRaharjaDto {
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglKejadian;
-    private String ppkPelSEP;
-    private String kdProp;
-    private String kdKab;
-    private String kdKec;
-    private String ketKejadian;
-    private String noSEPSuplesi;
+    private String noRegister;
+    private String ketStatusDijamin;
+    private String ketStatusDikirim;
+    private BigDecimal biayaDijamin;
+    private BigDecimal plafon;
+    private BigDecimal jmlDibayar;
+    private String resultsJasaRaharja;
 }

@@ -2,6 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -11,6 +12,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(value = Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BpjsSepSuplesiDto {
     private String noRegister;
     private String noSep;

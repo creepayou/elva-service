@@ -6,6 +6,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsJaminanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
@@ -90,6 +91,32 @@ public interface VClaimProxy {
     @GetMapping("/referensi/procedure/{param}")
     public VClaimResponse<List<VClaimMappingDto>> getProcedure(@PathVariable("param") String parameter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/kelasrawat")
+    public VClaimResponse<List<VClaimMappingDto>> getKelasRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/dokter/{param}")
+    public VClaimResponse<List<VClaimMappingDto>> getDokter(@PathVariable("param") String namaDokter, 
+        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/carakeluar")
+    public VClaimResponse<List<VClaimMappingDto>> getCaraKeluar(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/diagnosaprb")
+    public VClaimResponse<List<VClaimMappingDto>> getDiagnosaPRB(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/obatprb/{param}")
+    public VClaimResponse<List<VClaimMappingDto>> getObatPRB(@PathVariable("param") String namaObat, 
+        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/pascapulang")
+    public VClaimResponse<List<VClaimMappingDto>> getPascaPulang(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/ruangrawat")
+    public VClaimResponse<List<VClaimMappingDto>> getRuangRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/referensi/spesialistik")
+    public VClaimResponse<List<VClaimMappingDto>> getSpesialistik(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
 
@@ -316,6 +343,11 @@ public interface VClaimProxy {
     @GetMapping("/monitoring/HistoriPelayanan/NoKartu/{noKartu}/tglAwal/{tglAwal}/tglAkhir/{tglAkhir}")
     public VClaimResponse<List<BpjsKunjunganDto>> getHistoriPelayanan(@PathVariable("noKartu") String noKartu,
             @PathVariable("tglAwal") String tglAwal, @PathVariable("tglAkhir") String tglAkhir,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/monitoring/JasaRaharja/tglMulai/{tglMulai}/tglAkhir/{tglAkhir}")
+    public VClaimResponse<List<BpjsJaminanDto>> getDataKlaimJasaRaharja(@PathVariable("tglMulai") String tglMulai,
+            @PathVariable("tglAkhir") String tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
