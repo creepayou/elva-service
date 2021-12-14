@@ -379,8 +379,10 @@ public class LZStringUtil {
 		String entry = "";
 		StringBuilder result = new StringBuilder();
 		String w;
-		int bits, resb;
-		int maxpower, power;
+		int bits;
+		int resb;
+		int maxpower;
+		int power;
 		String c = null;
 		DecData data = new DecData();
 		data.val = getNextValue.doFunc(0);
@@ -515,7 +517,7 @@ public class LZStringUtil {
 			if (cc < dictionary.size() && dictionary.get(cc) != null) {
 				entry = dictionary.get(cc);
 			} else {
-				if (cc == dictSize) {
+				if (cc == dictSize && w != null) {
 					entry = w + w.charAt(0);
 				} else {
 					return null;
