@@ -55,7 +55,7 @@ public class FeignClientConfig extends Client.Default {
         
         if(bpjsResponse.getMetaData().getCode().equals(Constant.HTTP_OK)) {
             String decrypted = decryptResponse(bpjsResponse.getResponse().toString(), key);
-            LinkedHashMap<String, Object> decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<LinkedHashMap<String, Object>>() {});
+            Object decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<Object>() {});
             bpjsResponse.setResponse(decryptedResult);
         } else {
             if(!ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
