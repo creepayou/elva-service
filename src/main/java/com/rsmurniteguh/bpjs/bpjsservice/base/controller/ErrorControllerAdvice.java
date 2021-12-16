@@ -19,7 +19,6 @@ public class ErrorControllerAdvice {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ResponseSts<Object>> handleBusinessException(
             Exception e) {
-        log.error(e.getMessage(), e);
         return ResponseEntity.ok().body(ResponseSts.onFail(e.getMessage()));
     }
 
