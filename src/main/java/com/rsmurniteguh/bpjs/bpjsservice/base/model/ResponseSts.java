@@ -1,4 +1,7 @@
-package com.rsmurniteguh.bpjs.bpjsservice.dto.response;
+package com.rsmurniteguh.bpjs.bpjsservice.base.model;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,6 +12,7 @@ public class ResponseSts<T> {
 	private boolean success;
 	private T data;
 	private String message;
+	private ErrorDto error;
 	
 	public static <T> ResponseSts<T> onFail(String message) {
 		return onFail(message, null);
@@ -32,5 +36,9 @@ public class ResponseSts<T> {
 
 	public static <T> ResponseSts<T> onSuccess(T data, ResponseSts<T> response) {
 		return onSuccess(response).setData(data);
+	}
+
+	public static ResponseSts<Object> onError(String message, String path, String stackTrace) {
+		return new ResponseSts<>().setSuccess(false).setError(new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace));
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class BpjsEnum {
         protected String jenisText;
 
         @JsonCreator
-        public static JenisPelayanan fromValue(String value) throws BpjsServiceException {
+        public static JenisPelayanan fromValue(String value) throws BusinessException {
             return getJenisPelayanan(value);
         }
 
@@ -38,11 +38,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static JenisPelayanan getJenisPelayanan(String jenis) throws BpjsServiceException {
+        public static JenisPelayanan getJenisPelayanan(String jenis) throws BusinessException {
             if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
-                throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
+                throw new BusinessException("Jenis Pelayanan tidak sesuai");
         }
     }
 
@@ -58,7 +58,7 @@ public class BpjsEnum {
         private String tipe;
 
         @JsonCreator
-        public static TipeRujukan fromValue(String value) throws BpjsServiceException {
+        public static TipeRujukan fromValue(String value) throws BusinessException {
             return getTipeRujukan(value);
         }
 
@@ -73,11 +73,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static TipeRujukan getTipeRujukan(String tipe) throws BpjsServiceException {
+        public static TipeRujukan getTipeRujukan(String tipe) throws BusinessException {
             if (BY_TIPE.containsKey(tipe))
                 return BY_TIPE.get(tipe);
             else
-                throw new BpjsServiceException("Tipe Rujukan tidak sesuai");
+                throw new BusinessException("Tipe Rujukan tidak sesuai");
         }
     }
 
@@ -90,7 +90,7 @@ public class BpjsEnum {
         private VClaimMappingDto kelas;
 
         @JsonCreator
-        public static KelasRawat fromValue(String value) throws BpjsServiceException {
+        public static KelasRawat fromValue(String value) throws BusinessException {
             return getKelasRawat(value);
         }
 
@@ -106,11 +106,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static KelasRawat getKelasRawat(String kelas) throws BpjsServiceException {
+        public static KelasRawat getKelasRawat(String kelas) throws BusinessException {
             if (BY_VALUE.containsKey(kelas))
                 return BY_VALUE.get(kelas);
             else
-                throw new BpjsServiceException("Kelas Rawat tidak sesuai");
+                throw new BusinessException("Kelas Rawat tidak sesuai");
         }
     }
 
@@ -122,7 +122,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static Faskes fromValue(String value) throws BpjsServiceException {
+        public static Faskes fromValue(String value) throws BusinessException {
             return getJenisByValue(value);
         }
 
@@ -137,11 +137,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Faskes getJenisByValue(String jenis) throws BpjsServiceException {
+        public static Faskes getJenisByValue(String jenis) throws BusinessException {
             if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
-                throw new BpjsServiceException("Faskes tidak sesuai");
+                throw new BusinessException("Faskes tidak sesuai");
         }
     }
 
@@ -153,7 +153,7 @@ public class BpjsEnum {
         private VClaimMappingDto ind;
 
         @JsonCreator
-        public static Indikator fromValue(String value) throws BpjsServiceException {
+        public static Indikator fromValue(String value) throws BusinessException {
             return getIndByValue(value);
         }
 
@@ -168,11 +168,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Indikator getIndByValue(String ind) throws BpjsServiceException {
+        public static Indikator getIndByValue(String ind) throws BusinessException {
             if (BY_VALUE.containsKey(ind))
                 return BY_VALUE.get(ind);
             else
-                throw new BpjsServiceException("Jenis Pelayanan tidak sesuai");
+                throw new BusinessException("Jenis Pelayanan tidak sesuai");
         }
     }
 
@@ -185,7 +185,7 @@ public class BpjsEnum {
         private VClaimMappingDto status;
 
         @JsonCreator
-        public static StatusKlaim fromValue(String value) throws BpjsServiceException {
+        public static StatusKlaim fromValue(String value) throws BusinessException {
             return getStatusByValue(value);
         }
 
@@ -200,11 +200,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static StatusKlaim getStatusByValue(String status) throws BpjsServiceException {
+        public static StatusKlaim getStatusByValue(String status) throws BusinessException {
             if (BY_VALUE.containsKey(status))
                 return BY_VALUE.get(status);
             else
-                throw new BpjsServiceException("Status Klaim tidak sesuai");
+                throw new BusinessException("Status Klaim tidak sesuai");
         }
     }
 
@@ -216,7 +216,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static Penjamin fromValue(String value) throws BpjsServiceException {
+        public static Penjamin fromValue(String value) throws BusinessException {
             return getJenisByValue(value);
         }
 
@@ -230,11 +230,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Penjamin getJenisByValue(String jenis) throws BpjsServiceException {
+        public static Penjamin getJenisByValue(String jenis) throws BusinessException {
             if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
-                throw new BpjsServiceException("Penjamin tidak sesuai");
+                throw new BusinessException("Penjamin tidak sesuai");
         }
     }
 
@@ -246,7 +246,7 @@ public class BpjsEnum {
         private String version;
 
         @JsonCreator
-        public static VclaimVersion fromVersion(String version) throws BpjsServiceException {
+        public static VclaimVersion fromVersion(String version) throws BusinessException {
             return getVersion(version);
         }
 
@@ -260,11 +260,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static VclaimVersion getVersion(String version) throws BpjsServiceException {
+        public static VclaimVersion getVersion(String version) throws BusinessException {
             if (BY_VERSION.containsKey(version))
                 return BY_VERSION.get(version);
             else
-                throw new BpjsServiceException("Version tidak sesuai");
+                throw new BusinessException("Version tidak sesuai");
         }
     }
 
@@ -276,7 +276,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static JenisKontrol fromValue(String value) throws BpjsServiceException {
+        public static JenisKontrol fromValue(String value) throws BusinessException {
             return getJenisByValue(value);
         }
 
@@ -290,11 +290,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static JenisKontrol getJenisByValue(String jenis) throws BpjsServiceException {
+        public static JenisKontrol getJenisByValue(String jenis) throws BusinessException {
             if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
-                throw new BpjsServiceException("Jenis kontrol tidak sesuai");
+                throw new BusinessException("Jenis kontrol tidak sesuai");
         }
     }
 
@@ -306,7 +306,7 @@ public class BpjsEnum {
         private String filter;
 
         @JsonCreator
-        public static FilterTanggalRencanaKontrol fromValue(String value) throws BpjsServiceException {
+        public static FilterTanggalRencanaKontrol fromValue(String value) throws BusinessException {
             return getFilterByValue(value);
         }
 
@@ -320,11 +320,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static FilterTanggalRencanaKontrol getFilterByValue(String filter) throws BpjsServiceException {
+        public static FilterTanggalRencanaKontrol getFilterByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Filter tanggal rencana kontrol tidak sesuai");
+                throw new BusinessException("Filter tanggal rencana kontrol tidak sesuai");
         }
     }
 
@@ -336,7 +336,7 @@ public class BpjsEnum {
         private String status;
 
         @JsonCreator
-        public static StatusPulang fromValue(String value) throws BpjsServiceException {
+        public static StatusPulang fromValue(String value) throws BusinessException {
             return getFilterByValue(value);
         }
 
@@ -350,11 +350,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static StatusPulang getFilterByValue(String filter) throws BpjsServiceException {
+        public static StatusPulang getFilterByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Status pulang tidak sesuai");
+                throw new BusinessException("Status pulang tidak sesuai");
         }
     }
 
@@ -366,7 +366,7 @@ public class BpjsEnum {
         private String tujuan;
 
         @JsonCreator
-        public static TujuanKunjungan fromValue(String value) throws BpjsServiceException {
+        public static TujuanKunjungan fromValue(String value) throws BusinessException {
             return getTujuanByValue(value);
         }
 
@@ -380,11 +380,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static TujuanKunjungan getTujuanByValue(String filter) throws BpjsServiceException {
+        public static TujuanKunjungan getTujuanByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Tujuan kunjungan tidak sesuai");
+                throw new BusinessException("Tujuan kunjungan tidak sesuai");
         }
     }
 
@@ -396,7 +396,7 @@ public class BpjsEnum {
         private String flag;
 
         @JsonCreator
-        public static FlagProcedure fromValue(String value) throws BpjsServiceException {
+        public static FlagProcedure fromValue(String value) throws BusinessException {
             return getFlagByValue(value);
         }
 
@@ -410,11 +410,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static FlagProcedure getFlagByValue(String filter) throws BpjsServiceException {
+        public static FlagProcedure getFlagByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Flag procedure tidak sesuai");
+                throw new BusinessException("Flag procedure tidak sesuai");
         }
     }
 
@@ -428,7 +428,7 @@ public class BpjsEnum {
         private String kode;
 
         @JsonCreator
-        public static KodePenunjang fromValue(String value) throws BpjsServiceException {
+        public static KodePenunjang fromValue(String value) throws BusinessException {
             return getKodeByValue(value);
         }
 
@@ -442,11 +442,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static KodePenunjang getKodeByValue(String filter) throws BpjsServiceException {
+        public static KodePenunjang getKodeByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Kode penunjang tidak sesuai");
+                throw new BusinessException("Kode penunjang tidak sesuai");
         }
     }
 
@@ -458,7 +458,7 @@ public class BpjsEnum {
         private String assesmen;
 
         @JsonCreator
-        public static AssesmentPel fromValue(String value) throws BpjsServiceException {
+        public static AssesmentPel fromValue(String value) throws BusinessException {
             return getAssesmentPelByValue(value);
         }
 
@@ -472,11 +472,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static AssesmentPel getAssesmentPelByValue(String filter) throws BpjsServiceException {
+        public static AssesmentPel getAssesmentPelByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Assesmen pel tidak sesuai");
+                throw new BusinessException("Assesmen pel tidak sesuai");
         }
     }
 
@@ -488,7 +488,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static Pembiayaan fromValue(String value) throws BpjsServiceException {
+        public static Pembiayaan fromValue(String value) throws BusinessException {
             return getJenisByValue(value);
         }
 
@@ -502,11 +502,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Pembiayaan getJenisByValue(String filter) throws BpjsServiceException {
+        public static Pembiayaan getJenisByValue(String filter) throws BusinessException {
             if (BY_VALUE.containsKey(filter))
                 return BY_VALUE.get(filter);
             else
-                throw new BpjsServiceException("Pembiayaan tidak sesuai");
+                throw new BusinessException("Pembiayaan tidak sesuai");
         }
     }
 
@@ -518,7 +518,7 @@ public class BpjsEnum {
         private String jenis;
 
         @JsonCreator
-        public static JenisPengajuan fromValue(String value) throws BpjsServiceException {
+        public static JenisPengajuan fromValue(String value) throws BusinessException {
             return getJenisPengajuan(value);
         }
 
@@ -532,11 +532,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static JenisPengajuan getJenisPengajuan(String jenis) throws BpjsServiceException {
+        public static JenisPengajuan getJenisPengajuan(String jenis) throws BusinessException {
             if (BY_VALUE.containsKey(jenis))
                 return BY_VALUE.get(jenis);
             else
-                throw new BpjsServiceException("Jenis Pengajuan tidak sesuai");
+                throw new BusinessException("Jenis Pengajuan tidak sesuai");
         }
     }
 
@@ -550,7 +550,7 @@ public class BpjsEnum {
         private VClaimMappingDto kll;
 
         @JsonCreator
-        public static Lakalantas fromValue(String value) throws BpjsServiceException {
+        public static Lakalantas fromValue(String value) throws BusinessException {
             return getLakalantasByValue(value);
         }
 
@@ -565,11 +565,11 @@ public class BpjsEnum {
         }
 
         @JsonIgnore
-        public static Lakalantas getLakalantasByValue(String status) throws BpjsServiceException {
+        public static Lakalantas getLakalantasByValue(String status) throws BusinessException {
             if (BY_VALUE.containsKey(status))
                 return BY_VALUE.get(status);
             else
-                throw new BpjsServiceException("Lakalantas tidak sesuai");
+                throw new BusinessException("Lakalantas tidak sesuai");
         }
     }
 }

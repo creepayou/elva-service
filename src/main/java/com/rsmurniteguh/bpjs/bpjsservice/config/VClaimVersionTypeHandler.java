@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 
 import org.apache.ibatis.type.JdbcType;
@@ -25,7 +25,7 @@ public class VClaimVersionTypeHandler implements TypeHandler<VClaimVersion> {
     public VClaimVersion getResult(ResultSet rs, String param) throws SQLException {
         try {
             return VClaimVersion.fromVersion(rs.getString(param));
-        } catch (BpjsServiceException e) {
+        } catch (BusinessException e) {
             throw new SQLException(e.getMessage());
         }
     }
@@ -34,7 +34,7 @@ public class VClaimVersionTypeHandler implements TypeHandler<VClaimVersion> {
     public VClaimVersion getResult(CallableStatement cs, int col) throws SQLException {
         try {
             return VClaimVersion.fromVersion(cs.getString(col));
-        } catch (BpjsServiceException e) {
+        } catch (BusinessException e) {
             throw new SQLException(e.getMessage());
         }
     }
@@ -43,7 +43,7 @@ public class VClaimVersionTypeHandler implements TypeHandler<VClaimVersion> {
     public VClaimVersion getResult(ResultSet rs, int col) throws SQLException {
         try {
             return VClaimVersion.fromVersion(rs.getString(col));
-        } catch (BpjsServiceException e) {
+        } catch (BusinessException e) {
             throw new SQLException(e.getMessage());
         }
     }
