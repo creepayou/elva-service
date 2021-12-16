@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class ErrorControllerAdvice {
     public ResponseEntity<ResponseSts<Object>> handleAllUncaughtException(
             Exception e,
             HttpServletRequest request) {
+        if (e instanceof ServiceException) {
+            ServiceException se = (ServiceException) e;
+            return ResponseEntity.ok()
+                    .body(ResponseSts.onError(se.getError().getMessage(), se.getError().getPath(),
+                            se.getError().getStackTrace()));
+        }
         log.error(e.getMessage(), e);
         return ResponseEntity.ok()
                 .body(ResponseSts.onError(e.getMessage(), request.getRequestURI(), ExceptionUtils.getStackTrace(e)));

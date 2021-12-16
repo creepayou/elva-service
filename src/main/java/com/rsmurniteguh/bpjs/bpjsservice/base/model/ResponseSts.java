@@ -13,23 +13,25 @@ public class ResponseSts<T> {
 	private T data;
 	private String message;
 	private ErrorDto error;
-	
+
 	public static <T> ResponseSts<T> onFail(String message) {
 		return onFail(message, null);
 	}
 
 	public static <T> ResponseSts<T> onFail(String message, ResponseSts<T> response) {
-		if(response == null) response = new ResponseSts<>();
+		if (response == null)
+			response = new ResponseSts<>();
 		response.setSuccess(false).setMessage(message);
 		return response;
 	}
-	
+
 	private static <T> ResponseSts<T> onSuccess(ResponseSts<T> response) {
-		if(response == null) response = new ResponseSts<>();
+		if (response == null)
+			response = new ResponseSts<>();
 		response.setSuccess(true);
 		return response;
 	}
-	
+
 	public static <T> ResponseSts<T> onSuccess(T data) {
 		return onSuccess(data, null);
 	}
@@ -39,6 +41,10 @@ public class ResponseSts<T> {
 	}
 
 	public static ResponseSts<Object> onError(String message, String path, String stackTrace) {
-		return new ResponseSts<>().setSuccess(false).setError(new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace));
+		return onError(Timestamp.from(Instant.now()), message, path, stackTrace);
+	}
+
+	public static ResponseSts<Object> onError(Timestamp timestamp, String message, String path, String stackTrace) {
+		return new ResponseSts<>().setSuccess(false).setError(new ErrorDto(timestamp, message, path, stackTrace));
 	}
 }
