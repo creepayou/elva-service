@@ -41,10 +41,10 @@ public class ResponseSts<T> {
 	}
 
 	public static ResponseSts<Object> onError(String message, String path, String stackTrace) {
-		return onError(Timestamp.from(Instant.now()), message, path, stackTrace);
+		return onError(new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace));
 	}
 
-	public static ResponseSts<Object> onError(Timestamp timestamp, String message, String path, String stackTrace) {
-		return new ResponseSts<>().setSuccess(false).setError(new ErrorDto(timestamp, message, path, stackTrace));
+	public static ResponseSts<Object> onError(ErrorDto error) {
+		return new ResponseSts<>().setSuccess(false).setError(error);
 	}
 }

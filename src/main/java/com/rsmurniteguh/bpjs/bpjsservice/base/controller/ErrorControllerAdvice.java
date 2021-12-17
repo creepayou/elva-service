@@ -30,9 +30,7 @@ public class ErrorControllerAdvice {
         if (e instanceof ServiceException) {
             ServiceException se = (ServiceException) e;
             return ResponseEntity.ok()
-                    .body(ResponseSts.onError(se.getError().getTimestamp(), se.getError().getMessage(),
-                            se.getError().getPath(),
-                            se.getError().getStackTrace()));
+                    .body(ResponseSts.onError(se.getError()));
         }
         log.error(e.getMessage(), e);
         return ResponseEntity.ok()
