@@ -97,9 +97,9 @@ public class ReferensiController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         ResponseSts<List<VClaimMappingDto>> responseFaskes2 = ResponseSts.onFail("Data tidak ditemukan");
         try {
-                responseFaskes2 = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
+            responseFaskes2 = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
         } catch (Exception e) {
-                //ignore
+            // ignore
         }
         if (responseFaskes2.isSuccess()) {
             return ResponseSts.onSuccess(Faskes.FASKES_2);
