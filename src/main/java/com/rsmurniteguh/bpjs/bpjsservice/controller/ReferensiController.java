@@ -95,7 +95,12 @@ public class ReferensiController extends BaseController {
     @GetMapping("/getAsalFaskes/{providerCode}")
     public ResponseSts<Faskes> getAsalFaskes(@PathVariable("providerCode") String providerCode,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        ResponseSts<List<VClaimMappingDto>> responseFaskes2 = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
+        ResponseSts<List<VClaimMappingDto>> responseFaskes2 = ResponseSts.onFail("Data tidak ditemukan");
+        try {
+                responseFaskes2 = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
+        } catch (Exception e) {
+                //ignore
+        }
         if (responseFaskes2.isSuccess()) {
             return ResponseSts.onSuccess(Faskes.FASKES_2);
         }
