@@ -181,7 +181,7 @@ public interface VClaimProxy {
     public VClaimResponse<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @DeleteMapping("/SEP/2.0/Delete")
+    @DeleteMapping("/SEP/2.0/delete")
     public VClaimResponse<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
