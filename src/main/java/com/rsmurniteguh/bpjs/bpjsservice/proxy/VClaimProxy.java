@@ -178,11 +178,11 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @DeleteMapping("/SEP/Delete")
-    public VClaimResponse<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+    public VClaimResponse2<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/SEP/2.0/delete")
-    public VClaimResponse<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
+    public VClaimResponse2<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSEP")
@@ -411,12 +411,12 @@ public interface VClaimProxy {
             @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PutMapping("/PRB/update")
+    @PutMapping("/PRB/Update")
     public VClaimResponse2<String> updateRujukBalik(
             @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @DeleteMapping("/PRB/delete")
+    @DeleteMapping("/PRB/Delete")
     public VClaimResponse2<String> deleteRujukBalik(
             @RequestBody BpjsRequestDto<RequestRujukBalikDto> requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);

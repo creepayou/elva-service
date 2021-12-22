@@ -171,8 +171,10 @@ public class BpjsEnum {
         public static Indikator getIndByValue(String ind) throws BusinessException {
             if (BY_VALUE.containsKey(ind))
                 return BY_VALUE.get(ind);
+            else if(ind.equals("-"))
+                return Indikator.TIDAK;
             else
-                throw new BusinessException("Jenis Pelayanan tidak sesuai");
+                throw new BusinessException("Indikator tidak sesuai");
         }
     }
 
@@ -482,7 +484,7 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum Pembiayaan {
-        PRIBADI("1"), PEMBERI_KERJA("2"), ASURANSI("3");
+        PRIBADI("1"), PEMBERI_KERJA("2"), ASURANSI("3"), NONE("");
 
         @Getter
         private String jenis;

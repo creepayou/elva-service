@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.rsmurniteguh.bpjs</groupId>
 	<artifactId>bpjsservice</artifactId>
-	<version>1.3.32.0</version>
+	<version>1.3.34.0</version>
 	<name>bpjsservice</name>
 	<description>MT-BPJS Service API</description>
 	<properties>
