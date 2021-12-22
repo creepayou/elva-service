@@ -1,7 +1,6 @@
 package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,6 +29,5 @@ public class BpjsRujukBalikDto {
     private String saran;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglSRB;
-    @JsonAlias({ "obat" })
-    private List<ObatDto> list;
+    private ObatListDto obat;
 }
