@@ -36,8 +36,13 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getDiagnosa(@RequestParam("diagnosa") String paramDiagnosa,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDiagnosa(paramDiagnosa, entityCode));
-        return ResponseSts.onSuccess(response.get("diagnosa"));
+                .handleVClaimResponse(vClaimProxy.getDiagnosa(paramDiagnosa.trim(), entityCode));
+        
+        List<VClaimMappingDto> diagnosaList = response.get("diagnosa");
+        for(VClaimMappingDto diagnosa : diagnosaList) {
+        	diagnosa.setNama(diagnosa.getNama().replace(diagnosa.getKode() + " - ", ""));
+        }
+        return ResponseSts.onSuccess(diagnosaList);
     }
 
     @GetMapping("/getFaskes")
