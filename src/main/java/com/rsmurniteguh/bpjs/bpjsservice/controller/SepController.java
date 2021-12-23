@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.apachecommons.CommonsLog;
 
 @RestController
-@CommonsLog
 @RequestMapping("/sep")
 public class SepController extends BaseController {
 
