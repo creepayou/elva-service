@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
-import com.rsmurniteguh.bpjs.bpjsservice.config.EmptyIfNull;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomNullSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmentPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
@@ -29,17 +29,17 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 public class RequestSepDtoV2 {
     private String noKartu;
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
+    @JsonSerialize(using = CustomJsonDateSerializer.class, nullsUsing = CustomNullSerializer.class)
     private Timestamp tglSep;
-    @JsonSerialize(using = CustomJsonDateTimeSerializer.class)
+    @JsonSerialize(using = CustomJsonDateTimeSerializer.class, nullsUsing = CustomNullSerializer.class)
     private Timestamp tglPulangSep;
     private String ppkPelayanan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private JenisPelayanan jnsPelayanan;
     private BpjsKelasRawatDto klsRawat;
     private String noMR;
     private Rujukan rujukan;
-    private @EmptyIfNull String catatan;
+    private String catatan;
     private String diagAwal;
     private Asuransi cob;
     private KatarakInd katarak;
@@ -51,21 +51,21 @@ public class RequestSepDtoV2 {
     private String keterangan;
     private String user;
     private String dpjpLayan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private TujuanKunjungan tujuanKunj;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private FlagProcedure flagProcedure;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private KodePenunjang kdPenunjang;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private AssesmentPel assesmentPel;
 
     @Data
     @Accessors(chain = true)
     public static class Rujukan{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Faskes asalRujukan;
-        @JsonSerialize(using = CustomJsonDateSerializer.class)
+        @JsonSerialize(using = CustomJsonDateSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Timestamp tglRujukan;
         private String noRujukan;
         private String ppkRujukan;
@@ -75,21 +75,21 @@ public class RequestSepDtoV2 {
     @Accessors(chain = true)
     public static class Poli{
         private String tujuan;
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Indikator eksekutif;
     }
 
     @Data
     @Accessors(chain = true)
     public static class KatarakInd{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Indikator katarak;
     }
 
     @Data
     @Accessors(chain = true)
     public static class Jaminan{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Lakalantas lakaLantas;
         private PenjaminJaminan penjamin;
     }
@@ -97,36 +97,41 @@ public class RequestSepDtoV2 {
     @Data
     @Accessors(chain = true)
     public static class PenjaminJaminan{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Penjamin penjamin;
-        @JsonSerialize(using = CustomJsonDateSerializer.class)
-        private @EmptyIfNull Timestamp tglKejadian;
-        private @EmptyIfNull String keterangan;
+        @JsonSerialize(using = CustomJsonDateSerializer.class, nullsUsing = CustomNullSerializer.class)
+        private Timestamp tglKejadian;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String keterangan;
         private SuplesiJaminan suplesi;
     }
 
     @Data
     @Accessors(chain = true)
     public static class SuplesiJaminan{
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Indikator suplesi;
-        private @EmptyIfNull String noSepSuplesi;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String noSepSuplesi;
         private LokasiLakalantas lokasiLaka;
     }
 
     @Data
     @Accessors(chain = true)
     public static class LokasiLakalantas{
-        private @EmptyIfNull String kdPropinsi;
-        private @EmptyIfNull String kdKabupaten;
-        private @EmptyIfNull String kdKecamatan;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String kdPropinsi;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String kdKabupaten;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String kdKecamatan;
     }
 
     @Data
     @Accessors(chain = true)
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Asuransi {
-        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Indikator cob;
     }
 
