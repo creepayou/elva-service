@@ -39,6 +39,11 @@ public class FeignClientConfig extends Client.Default {
         String entityCode = request.requestTemplate().headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
         request.requestTemplate().removeHeader(Constant.MT_ENTITY_CODE);
         String reqTimestamp = request.requestTemplate().headers().get("X-timestamp").toArray()[0].toString();
+        try {
+            log.info(new String(request.body()));
+        } catch (Exception e) {
+            //ignore
+        }
         Response response = super.execute(request, options);
         InputStream bodyStream = response.body().asInputStream();
         String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);

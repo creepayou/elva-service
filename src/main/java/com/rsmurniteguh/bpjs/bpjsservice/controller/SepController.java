@@ -26,7 +26,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +86,6 @@ public class SepController extends BaseController {
     private <T> BpjsRequestDto<T> createBpjsRequestSep(T requestSep) {
         BpjsRequestDto<T> bpjsRequestDto = new BpjsRequestDto<>();
         bpjsRequestDto.getRequest().put("t_sep", requestSep);
-        try {
-            log.info(JsonUtil.toJsonString(bpjsRequestDto));
-        } catch (Exception e) {
-            // ignore
-        }
         return bpjsRequestDto;
     }
 
@@ -128,14 +122,12 @@ public class SepController extends BaseController {
         if (vclaimVersion.equals(VClaimVersion.V2)) {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy
-                            .updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
-                    .get(KEY_SEP));
+                            .updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
         } else {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(
                             vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto),
-                                    entityCode))
-                    .get(KEY_SEP));
+                                    entityCode)));
         }
 
     }

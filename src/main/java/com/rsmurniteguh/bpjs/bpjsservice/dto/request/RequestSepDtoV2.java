@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.config.EmptyIfNull;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.AssesmentPel;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FlagProcedure;
@@ -38,7 +39,7 @@ public class RequestSepDtoV2 {
     private BpjsKelasRawatDto klsRawat;
     private String noMR;
     private Rujukan rujukan;
-    private String catatan;
+    private @EmptyIfNull String catatan;
     private String diagAwal;
     private Asuransi cob;
     private KatarakInd katarak;
@@ -99,8 +100,8 @@ public class RequestSepDtoV2 {
         @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private Penjamin penjamin;
         @JsonSerialize(using = CustomJsonDateSerializer.class)
-        private Timestamp tglKejadian;
-        private String keterangan;
+        private @EmptyIfNull Timestamp tglKejadian;
+        private @EmptyIfNull String keterangan;
         private SuplesiJaminan suplesi;
     }
 
@@ -109,16 +110,16 @@ public class RequestSepDtoV2 {
     public static class SuplesiJaminan{
         @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private Indikator suplesi;
-        private String noSepSuplesi;
+        private @EmptyIfNull String noSepSuplesi;
         private LokasiLakalantas lokasiLaka;
     }
 
     @Data
     @Accessors(chain = true)
     public static class LokasiLakalantas{
-        private String kdPropinsi;
-        private String kdKabupaten;
-        private String kdKecamatan;
+        private @EmptyIfNull String kdPropinsi;
+        private @EmptyIfNull String kdKabupaten;
+        private @EmptyIfNull String kdKecamatan;
     }
 
     @Data

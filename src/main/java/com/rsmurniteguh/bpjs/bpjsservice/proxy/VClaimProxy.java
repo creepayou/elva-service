@@ -163,11 +163,11 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @PutMapping("/SEP/1.1/Update")
-    public VClaimResponse<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+    public VClaimResponse2<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/SEP/2.0/update")
-    public VClaimResponse<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
+    public VClaimResponse2<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     /**
