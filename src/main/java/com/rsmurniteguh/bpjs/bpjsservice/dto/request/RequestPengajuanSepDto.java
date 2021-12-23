@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomNullSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPengajuan;
 
@@ -20,11 +21,11 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestPengajuanSepDto {
     private String noKartu;
-    @JsonSerialize(using = CustomJsonDateSerializer.class)
+    @JsonSerialize(using = CustomJsonDateSerializer.class, nullsUsing = CustomNullSerializer.class)
     private Timestamp tglSep;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private JenisPelayanan jnsPelayanan;
-    @JsonSerialize(using = CustomBpjsEnumSerializer.class)
+    @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private JenisPengajuan jnsPengajuan;
     private String keterangan;
     private String user;
