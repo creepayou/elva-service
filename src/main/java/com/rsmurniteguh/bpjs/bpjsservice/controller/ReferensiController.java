@@ -63,11 +63,11 @@ public class ReferensiController extends BaseController {
     }
 
     @GetMapping("/getDokterDPJP")
-    public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") String jenisPelayanan,
+    public ResponseSts<List<VClaimMappingDto>> getDokterDPJP(@RequestParam("jenisPelayanan") JenisPelayanan jenisPelayanan,
             @RequestParam("tglPelayanan") Timestamp tglPelayanan, @RequestParam("spesialis") String spesialis,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil.handleVClaimResponse(
-                vClaimProxy.getDokterDPJP(JenisPelayanan.getJenisPelayanan(jenisPelayanan).getJenis().getKode(),
+                vClaimProxy.getDokterDPJP(jenisPelayanan.getJenis().getKode(),
                         DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), spesialis,
                         entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
