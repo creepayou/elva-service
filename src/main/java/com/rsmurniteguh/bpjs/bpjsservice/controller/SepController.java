@@ -157,15 +157,13 @@ public class SepController extends BaseController {
                     .handleVClaimResponse(vClaimProxy
                             .updateTglPulangSEPV2(
                                     createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode))
-                    .get(KEY_SEP));
+                                    entityCode)));
         } else {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy
                             .updateTglPulangSEP(
                                     createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode))
-                    .get(KEY_SEP));
+                                    entityCode)));
         }
 
     }

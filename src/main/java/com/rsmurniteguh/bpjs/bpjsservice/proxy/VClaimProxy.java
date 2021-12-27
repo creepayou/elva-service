@@ -203,12 +203,12 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @PutMapping("/Sep/updtglplg")
-    public VClaimResponse<String> updateTglPulangSEP(
+    public VClaimResponse2<String> updateTglPulangSEP(
             @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/SEP/2.0/updtglplg")
-    public VClaimResponse<String> updateTglPulangSEPV2(
+    public VClaimResponse2<String> updateTglPulangSEPV2(
             @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
