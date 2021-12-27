@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.apachecommons.CommonsLog;
 
 @RestController
-@CommonsLog
 @RequestMapping("/sep")
 public class SepController extends BaseController {
 
@@ -158,15 +157,13 @@ public class SepController extends BaseController {
                     .handleVClaimResponse(vClaimProxy
                             .updateTglPulangSEPV2(
                                     createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode))
-                    .get(KEY_SEP));
+                                    entityCode)));
         } else {
             return ResponseSts.onSuccess(VClaimResponseUtil
                     .handleVClaimResponse(vClaimProxy
                             .updateTglPulangSEP(
                                     createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode))
-                    .get(KEY_SEP));
+                                    entityCode)));
         }
 
     }
