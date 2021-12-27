@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 
 import lombok.Data;
@@ -19,7 +20,7 @@ import lombok.experimental.Accessors;
 public class RencanaKontrolDto{
     private String noSuratKontrol;
     private JenisPelayanan jnsPelayanan;
-    private String jnsKontrol;
+    private JenisKontrol jnsKontrol;
     private String namaJnsKontrol;
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Timestamp tglRencanaKontrol;
