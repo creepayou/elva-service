@@ -574,4 +574,35 @@ public class BpjsEnum {
                 throw new BusinessException("Lakalantas tidak sesuai");
         }
     }
+    
+    @AllArgsConstructor
+    public enum BpjsInfoType {
+    	CARD("CARD"),NIK("NIK"),REFERENCE_I("REF1"),REFERENCE_II("REF2");
+
+        @Getter
+        private String bpjsInfo;
+
+        @JsonCreator
+        public static BpjsInfoType fromValue(String value) throws BusinessException {
+            return getBpjsInfoTypeByValue(value);
+        }
+
+        @JsonIgnore
+        private static final Map<String, BpjsInfoType> BY_VALUE = new HashMap<>();
+
+        static {
+            for (BpjsInfoType fk : values()) {
+                BY_VALUE.put(fk.getBpjsInfo(), fk);
+                BY_VALUE.put(fk.name(), fk);
+            }
+        }
+
+        @JsonIgnore
+        public static BpjsInfoType getBpjsInfoTypeByValue(String bpjsInfo) throws BusinessException {
+            if (BY_VALUE.containsKey(bpjsInfo))
+                return BY_VALUE.get(bpjsInfo);
+            else
+                throw new BusinessException("BpjsInfoType tidak sesuai");
+        }
+    }
 }

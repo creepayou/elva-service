@@ -243,7 +243,14 @@ public interface VClaimProxy {
     // #endregion
 
     // #region Rujukan
+    @GetMapping("/Rujukan/{noRujukI}")
+    public VClaimResponse2<BpjsRujukanDto> GetBpjsInfobyReferenceI(@PathVariable("noRujukan") String noRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+    @GetMapping("/Rujukan/RS/{noRujukII}")
+    public VClaimResponse2<BpjsRujukanDto> GetBpjsInfobyReferenceII(@PathVariable("noRujukan") String noRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
     @GetMapping("/Rujukan/{noRujukan}")
     public VClaimResponse2<BpjsRujukanDto> getRujukanPCareByNoRujukan(@PathVariable("noRujukan") String noRujukan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);

@@ -5,7 +5,9 @@ import java.sql.Timestamp;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.BpjsInfoType;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
@@ -49,4 +51,35 @@ public class PesertaController extends BaseController {
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                 .get("peserta"));
     }
+    @GetMapping("/GetBpjsInfobyType")
+    public ResponseSts<BpjsPesertaResponseDto> GetBpjsInfobyType(@RequestParam("type") String type,
+            @RequestParam("target") String target,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+    	Timestamp tglSEP = new Timestamp(System.currentTimeMillis());
+    	BpjsRujukanDto rujukanResponse = null;
+    	BpjsPesertaResponseDto peserta = null;
+       if(type.equals("CARD")) {
+    	   peserta = VClaimResponseUtil
+                   .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(target,
+                           DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                   .get("peserta");
+       }else if(type.equals("NIK")) {
+    	   peserta = (VClaimResponseUtil
+                   .handleVClaimResponse(vClaimProxy.getPesertaByNik(target,
+                           DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                   .get("peserta"));
+       }else if(type.equals("REFERENCE_I")) {
+    	   rujukanResponse =VClaimResponseUtil
+                   .handleVClaimResponse(vClaimProxy.GetBpjsInfobyReferenceI(target,entityCode));
+    	   peserta = rujukanResponse.getRujukan().getPeserta();
+    	   return ResponseSts.onSuccess(peserta);
+       }else if(type.equals("REFERENCE_II")){
+    	   rujukanResponse =VClaimResponseUtil
+                   .handleVClaimResponse(vClaimProxy.GetBpjsInfobyReferenceII(target,entityCode));
+    	   peserta = rujukanResponse.getRujukan().getPeserta();
+    	   return ResponseSts.onSuccess(peserta);
+       }
+       return ResponseSts.onSuccess(peserta);
+    }
+    
 }

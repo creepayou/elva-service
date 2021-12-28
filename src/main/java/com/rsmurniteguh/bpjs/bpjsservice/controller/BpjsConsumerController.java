@@ -28,4 +28,5 @@ public class BpjsConsumerController extends BaseController {
     public ResponseSts<Boolean> isBpjsConsumerAvailable(@RequestParam("entityCode") String entityCode) {
         return ResponseSts.onSuccess(bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode) != null);
     }
+    
 }
