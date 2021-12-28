@@ -70,12 +70,12 @@ public class PesertaController extends BaseController {
                    .get("peserta"));
        }else if(type.equals("REFERENCE_I")) {
     	   rujukanResponse =VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.GetBpjsInfobyReferenceI(target,entityCode));
+                   .handleVClaimResponse(vClaimProxy.getRujukanPCareByNoRujukan(target,entityCode));
     	   peserta = rujukanResponse.getRujukan().getPeserta();
     	   return ResponseSts.onSuccess(peserta);
        }else if(type.equals("REFERENCE_II")){
     	   rujukanResponse =VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.GetBpjsInfobyReferenceII(target,entityCode));
+                   .handleVClaimResponse(vClaimProxy.getRujukanRsByNoRujukan(target,entityCode));
     	   peserta = rujukanResponse.getRujukan().getPeserta();
     	   return ResponseSts.onSuccess(peserta);
        }
