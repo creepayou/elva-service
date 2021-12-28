@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.BpjsInfoType;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
@@ -25,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/peserta")
 public class PesertaController extends BaseController {
 
+    private static final String PESERTA = "peserta";
+
     @Autowired
     private VClaimProxy vClaimProxy;
 
@@ -37,7 +38,7 @@ public class PesertaController extends BaseController {
         return ResponseSts.onSuccess(VClaimResponseUtil
                 .handleVClaimResponse(vClaimProxy.getPesertaByNik(nik,
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
-                .get("peserta"));
+                .get(PESERTA));
     }
 
     @GetMapping("/getPesertaByBpjsNo/{bpjsNo}")
@@ -49,10 +50,10 @@ public class PesertaController extends BaseController {
         return ResponseSts.onSuccess(VClaimResponseUtil
                 .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(bpjsNo,
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
-                .get("peserta"));
+                .get(PESERTA));
     }
     @GetMapping("/GetBpjsInfobyType")
-    public ResponseSts<BpjsPesertaResponseDto> GetBpjsInfobyType(@RequestParam("type") String type,
+    public ResponseSts<BpjsPesertaResponseDto> getBpjsInfobyType(@RequestParam("type") String type,
             @RequestParam("target") String target,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
     	Timestamp tglSEP = new Timestamp(System.currentTimeMillis());
@@ -62,12 +63,12 @@ public class PesertaController extends BaseController {
     	   peserta = VClaimResponseUtil
                    .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(target,
                            DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
-                   .get("peserta");
+                   .get(PESERTA);
        }else if(type.equals("NIK")) {
     	   peserta = (VClaimResponseUtil
                    .handleVClaimResponse(vClaimProxy.getPesertaByNik(target,
                            DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
-                   .get("peserta"));
+                   .get(PESERTA));
        }else if(type.equals("REFERENCE_I")) {
     	   rujukanResponse =VClaimResponseUtil
                    .handleVClaimResponse(vClaimProxy.getRujukanPCareByNoRujukan(target,entityCode));
