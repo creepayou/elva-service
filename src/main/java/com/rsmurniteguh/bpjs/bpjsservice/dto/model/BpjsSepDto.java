@@ -12,6 +12,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto.Informasi;
 
 import lombok.Data;
@@ -45,14 +46,14 @@ public class BpjsSepDto {
     private String nmstatusKecelakaan;
     private LokasiKejadian lokasiKejadian;
     private DokterDPJP dpjp;
-    private BpjsKelasRawatDto klsRawat;
+    private KelasRawatDto klsRawat;
     private DokterDPJP kontrol;
     private Indikator cob;
     private Indikator katarak;
 
     @Data
     @Accessors(chain = true)
-    public static class LokasiKejadian{
+    public static class LokasiKejadian {
         private String kdProp;
         private String kdKab;
         private String kdKec;
@@ -64,12 +65,23 @@ public class BpjsSepDto {
 
     @Data
     @Accessors(chain = true)
-    public static class DokterDPJP{
+    public static class DokterDPJP {
         @JsonAlias("kdDPJP")
         private String kdDokter;
         @JsonAlias("nmDPJP")
         private String nmDokter;
         private String noSurat;
+    }
+
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class KelasRawatDto {
+        private KelasRawat klsRawatHak;
+        private String klsRawatNaik;
+        private Pembiayaan pembiayaan;
+        private String penanggungJawab;
     }
 
 }
