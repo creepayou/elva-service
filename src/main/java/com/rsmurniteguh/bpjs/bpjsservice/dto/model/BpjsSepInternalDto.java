@@ -63,9 +63,8 @@ public class BpjsSepInternalDto {
     private String flagSep;
     @JsonAlias("fuser")
     private String fUser;
-    @JsonAlias("fdate")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp fDate;
+    private Timestamp fdate;
     @JsonAlias("nmdiag")
     private String nmDiag;
 }
