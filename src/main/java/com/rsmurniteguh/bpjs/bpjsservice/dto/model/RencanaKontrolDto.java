@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RencanaKontrolDto{
+public class RencanaKontrolDto {
     private String noSuratKontrol;
     private JenisPelayanan jnsPelayanan;
     private JenisKontrol jnsKontrol;
@@ -43,5 +43,5 @@ public class RencanaKontrolDto{
     private BpjsSepDto sep;
     private ProvUmumDto provUmum;
     private ProvPerujukDto provPerujuk;
-    
+
 }
