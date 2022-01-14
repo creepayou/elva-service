@@ -123,5 +123,15 @@
     "name": "proxy.vclaimrest.url",
     "type": "java.lang.String",
     "description": "A description for 'proxy.vclaimrest.url'"
+  },
+  {
+    "name": "proxy.aplicaresrest.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.aplicaresrest.host'"
+  },
+  {
+    "name": "proxy.aplicaresrest.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.aplicaresrest.url'"
   }
 ]}
