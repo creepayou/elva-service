@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
-import feign.Client;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.apachecommons.CommonsLog;
@@ -26,7 +25,7 @@ public class BpjsRequestConfig {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
-
+    
     @Bean
     public RequestInterceptor requestInterceptor(){
         return (RequestTemplate requestTemplate) -> {
@@ -47,11 +46,6 @@ public class BpjsRequestConfig {
                 log.error(e.getMessage(), e);
             }
         };
-    }
-    
-    @Bean
-    public Client client() {
-        return new FeignClientConfig(null, null, bpjsConsumerService);
     }
 
     private String generateHmacSHA256Signature(String data, String key) throws GeneralSecurityException {
