@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rsmurniteguh.bpjs.bpjsservice.repository.BpjsConsumerRepository">
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="consumer_id" keyColumn="bpjsconsumer_id" parameterType="BpjsConsumer">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="bpjsconsumer_id" keyColumn="bpjsconsumer_id" parameterType="BpjsConsumer">
         INSERT INTO bpjsconsumer
         (
             consumer_id
