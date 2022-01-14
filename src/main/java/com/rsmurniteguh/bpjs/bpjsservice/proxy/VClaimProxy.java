@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 import java.util.List;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestClientConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
@@ -52,7 +53,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = BpjsRequestConfig.class)
+@FeignClient(name = "vclaim", url = "${proxy.vclaimrest.host}", configuration = {BpjsRequestConfig.class, BpjsRequestClientConfig.class})
 public interface VClaimProxy {
 
     // #region Referensi
