@@ -164,11 +164,11 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @PutMapping("/SEP/1.1/Update")
-    public VClaimResponse2<String> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+    public VClaimResponse2<Object> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/SEP/2.0/update")
-    public VClaimResponse2<String> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
+    public VClaimResponse<Object> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     /**
@@ -179,11 +179,11 @@ public interface VClaimProxy {
      */
     @Deprecated(forRemoval = true)
     @DeleteMapping("/SEP/Delete")
-    public VClaimResponse2<String> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
+    public VClaimResponse2<Object> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/SEP/2.0/delete")
-    public VClaimResponse2<String> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
+    public VClaimResponse2<Object> deleteSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/Sep/pengajuanSEP")

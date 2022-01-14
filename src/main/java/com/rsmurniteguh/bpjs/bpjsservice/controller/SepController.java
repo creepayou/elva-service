@@ -118,13 +118,12 @@ public class SepController extends BaseController {
         VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
         if (vclaimVersion.equals(VClaimVersion.V2)) {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy
+                    .handleVClaimResponseMessage(vClaimProxy
                             .updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
         } else {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto),
-                                    entityCode)));
+                    .handleVClaimResponseMessage(vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto),
+                            entityCode)));
         }
 
     }
@@ -135,13 +134,14 @@ public class SepController extends BaseController {
         VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
         if (vclaimVersion.equals(VClaimVersion.V2)) {
             return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy
+                    .handleVClaimResponseMessage(vClaimProxy
                             .deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
         } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.deleteSEP(createBpjsRequestSepFromV2(requestSepDto),
-                                    entityCode)));
+            return ResponseSts.onSuccess(
+                    VClaimResponseUtil
+                            .handleVClaimResponseMessage(
+                                    vClaimProxy.deleteSEP(createBpjsRequestSepFromV2(requestSepDto),
+                                            entityCode)));
         }
 
     }

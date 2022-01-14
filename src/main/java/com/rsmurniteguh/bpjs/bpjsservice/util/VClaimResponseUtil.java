@@ -26,4 +26,20 @@ public class VClaimResponseUtil {
             throw new BusinessException(vClaimResponse.getMetaData().getMessage());
         }
     }
+
+    public static String handleVClaimResponseMessage(VClaimResponse<Object> vClaimResponse) throws BusinessException {
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+            return vClaimResponse.getMetaData().getMessage();
+        } else {
+            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+        }
+    }
+
+    public static String handleVClaimResponseMessage(VClaimResponse2<Object> vClaimResponse) throws BusinessException {
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+            return vClaimResponse.getMetaData().getMessage();
+        } else {
+            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+        }
+    }
 }
