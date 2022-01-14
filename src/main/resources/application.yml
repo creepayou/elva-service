@@ -81,6 +81,9 @@ proxy:
   vclaimrest:
     host: ${VCLAIMREST_HOST:${proxy.vclaimrest.url}}
     url: https://new-api.bpjs-kesehatan.go.id:8080/new-vclaim-rest
+  aplicaresrest:
+    host: ${APLICARESREST_HOST:${proxy.aplicaresrest.url}}
+    url: https://new-api.bpjs-kesehatan.go.id/aplicaresws/rest
 
 logging:
   level:
