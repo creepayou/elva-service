@@ -18,6 +18,8 @@ public final class Constant {
 
 	public static final String HTTP_OK = "200";
 
+	public static final String HTTP_OK_APLICARE = "1";
+	
 	public enum EntityCode{
 		MTMH,
 		RSIAR,
