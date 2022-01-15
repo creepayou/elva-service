@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterTanggalRencanaKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
@@ -70,6 +71,17 @@ public class EnumController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
         List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
         for (StatusPulang item : StatusPulang.values()) {
+            VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.name());
+            vclaimMappingDtoList.add(dto);
+        }
+        return ResponseSts.onSuccess(vclaimMappingDtoList);
+    }
+
+    @GetMapping("/getFilterRencanaKontrol")
+    public ResponseSts<List<VClaimMappingDto>> getFilterRencanaKontrol(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
+        for (FilterTanggalRencanaKontrol item : FilterTanggalRencanaKontrol.values()) {
             VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.name());
             vclaimMappingDtoList.add(dto);
         }

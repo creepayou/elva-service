@@ -332,7 +332,7 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum StatusPulang {
-        PERSETUJUAN_DOKTER("1"), PERMINTAAN_SENDIRI("3"), MENINGGAL("4"), LAIN_LAIN("5");
+        PERSETUJUAN_DOKTER("1"), DIRUJUK("2"), PERMINTAAN_SENDIRI("3"), MENINGGAL("4"), LAIN_LAIN("5");
 
         @Getter
         private String status;
