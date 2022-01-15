@@ -22,20 +22,14 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class BpjsListKamarDto{
+public class BpjsAplicaresCrudDto{
 	
-	private List<BpjsListKamarDto> list;
-	private Long  tersediapriawanita;
-    private Long  kapasitas;
-    private String  namaruang;
-    private String  namakelas;
-    private String  koderuang;
-    private Long  tersedia;
-    private Long rownumber;
-    private Long  tersediawanita;
-    private Long tersediapria;
-    private String kodekelas;
-    @JsonDeserialize(using = CustomJsonDateDeserializer2.class)
-    private Timestamp lastupdate;
+	private String kodeKelas;
+	private String kodeRuang;
+	private String namaRuang;
+	private Long kapasitas;
+	private Long tersedia;
+	private Long tersediapria;
+	private Long tersediawanita;
+	private Long tersediapriawanita;     
 }
