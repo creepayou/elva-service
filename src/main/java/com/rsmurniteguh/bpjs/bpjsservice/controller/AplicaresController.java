@@ -26,6 +26,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAplicaresDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.AplicaresProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.AplicaresResponseUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
@@ -36,12 +37,15 @@ public class AplicaresController extends BaseController {
     @Autowired
     private AplicaresProxy aplicaresProxy;
     
+    @Autowired
+    private BpjsConsumerService bpjsConsumerService;
+    
     private static final String LIST = "list";
 
     @GetMapping("/listKamar")
     public ResponseSts<List<BpjsListKamarDto>> getListKamar(
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-    	Map<String, List<BpjsListKamarDto>> response = AplicaresResponseUtil.handleAplicaresResponse(aplicaresProxy.getListKamar(entityCode));
+    	Map<String, List<BpjsListKamarDto>> response = AplicaresResponseUtil.handleAplicaresResponse(aplicaresProxy.getListKamar(bpjsConsumerService.getProviderCodeByEntityCode(entityCode),entityCode));
     	return ResponseSts.onSuccess(response.get(LIST));
     }
     
@@ -65,7 +69,7 @@ public class AplicaresController extends BaseController {
     	requestAplicaresDto.setTersediapria("0");
     	requestAplicaresDto.setTersediapriawanita("0");
     	requestAplicaresDto.setTersediawanita("0");
-        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.createRoom(requestAplicaresDto,entityCode)));
+        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.createRoom(bpjsConsumerService.getProviderCodeByEntityCode(entityCode),requestAplicaresDto,entityCode)));
 
     }
     
@@ -76,7 +80,7 @@ public class AplicaresController extends BaseController {
     	requestAplicaresDto.setTersediapria("0");
     	requestAplicaresDto.setTersediapriawanita("0");
     	requestAplicaresDto.setTersediawanita("0");
-        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.updateRoom(requestAplicaresDto,entityCode)));
+        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.updateRoom(bpjsConsumerService.getProviderCodeByEntityCode(entityCode),requestAplicaresDto,entityCode)));
 
     }
     
@@ -84,7 +88,7 @@ public class AplicaresController extends BaseController {
     public ResponseSts<String> deleteRoom(
             @RequestBody RequestAplicaresDeleteDto requestAplicaresDeleteDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.deleteRoom(requestAplicaresDeleteDto,entityCode)));
+        return ResponseSts.onSuccess(AplicaresResponseUtil.handleAplicaresResponseMessage(aplicaresProxy.deleteRoom(bpjsConsumerService.getProviderCodeByEntityCode(entityCode),requestAplicaresDeleteDto,entityCode)));
 
     }
 }
