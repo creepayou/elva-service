@@ -28,7 +28,7 @@ public class AplicaresResponseUtil {
     }
     
     public static String handleAplicaresResponseMessage(AplicaresResponse<Object> aplicaresResponse) throws BpjsServiceException {
-        if(aplicaresResponse.getMetadata().getCode().equals(Constant.HTTP_OK)){
+        if(aplicaresResponse.getMetadata().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getMetadata().getMessage();
         } else {
             throw new BpjsServiceException(aplicaresResponse.getMetadata().getMessage());
@@ -36,7 +36,7 @@ public class AplicaresResponseUtil {
     }
 
     public static String handleAplicaresResponseMessage(AplicaresResponse2<Object> aplicaresResponse) throws BpjsServiceException {
-        if(aplicaresResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+        if(aplicaresResponse.getMetaData().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getMetaData().getMessage();
         } else {
             throw new BpjsServiceException(aplicaresResponse.getMetaData().getMessage());

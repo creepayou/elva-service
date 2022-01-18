@@ -58,7 +58,6 @@ public class AplicaresController extends BaseController {
             Map<String, List<BpjsKodeKamarDto>> response = AplicaresResponseUtil
                     .handleAplicaresResponse(aplicaresProxy.getKodeKamar(entityCode));
             return ResponseSts.onSuccess(response.get(LIST));
-
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return ResponseSts.onFail(e.getMessage());
