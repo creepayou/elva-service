@@ -31,7 +31,7 @@ public class BpjsRequestConfig {
         return (RequestTemplate requestTemplate) -> {
             try {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
-                String contentType = requestTemplate.headers().get("Content-Type").toArray()[0].toString();
+                String contentType = requestTemplate.headers().get("Content-Type") != null ? requestTemplate.headers().get("Content-Type").toArray()[0].toString() : null;
 
                 if (StringUtils.hasText(entityCode)) {
                     BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
