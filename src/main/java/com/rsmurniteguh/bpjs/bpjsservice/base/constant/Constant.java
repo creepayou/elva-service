@@ -20,12 +20,7 @@ public final class Constant {
 
 	public static final String HTTP_OK_APLICARE = "1";
 	
-	public enum EntityCode{
-		MTMH,
-		RSIAR,
-		MTSJ,
-		MTSW,
-		RSAMINAH,
-		MTTB
-	}
+	public static final String CONTENT_TYPE = "Content-Type";
+	public static final String VCLAIM_FEIGN_NAME = "vclaim";
+	public static final String APLICARES_FEIGN_NAME = "aplicares";
 }

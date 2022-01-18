@@ -31,7 +31,6 @@ public class BpjsRequestConfig {
         return (RequestTemplate requestTemplate) -> {
             try {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
-                String contentType = requestTemplate.headers().get("Content-Type").toArray()[0].toString();
 
                 if (StringUtils.hasText(entityCode)) {
                     BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
@@ -42,8 +41,11 @@ public class BpjsRequestConfig {
                     requestTemplate.header("X-signature",
                             generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
                     requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
-                    requestTemplate.header("Content-Type",
-                            StringUtils.hasText(contentType) ? contentType : MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+                    if (requestTemplate.feignTarget().name().equals(Constant.VCLAIM_FEIGN_NAME)) {
+                        requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+                    } else {
+                        requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    }
                 }
             } catch (IllegalStateException | GeneralSecurityException e) {
                 log.error(e.getMessage(), e);
