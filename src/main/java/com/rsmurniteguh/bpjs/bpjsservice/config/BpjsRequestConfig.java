@@ -25,22 +25,25 @@ public class BpjsRequestConfig {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
-    
+
     @Bean
-    public RequestInterceptor requestInterceptor(){
+    public RequestInterceptor requestInterceptor() {
         return (RequestTemplate requestTemplate) -> {
             try {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
+                String contentType = requestTemplate.headers().get("Content-Type").toArray()[0].toString();
 
-                if(StringUtils.hasText(entityCode)){
+                if (StringUtils.hasText(entityCode)) {
                     BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
                     final Long unixTime = System.currentTimeMillis() / 1000L;
                     final String salt = bpjsConsumerDto.getConsumerId() + "&" + unixTime;
                     requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
                     requestTemplate.header("X-timestamp", unixTime + "");
-                    requestTemplate.header("X-signature", generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
+                    requestTemplate.header("X-signature",
+                            generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
                     // requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
-                    requestTemplate.header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+                    requestTemplate.header("Content-Type",
+                            StringUtils.hasText(contentType) ? contentType : MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                 }
             } catch (IllegalStateException | GeneralSecurityException e) {
                 log.error(e.getMessage(), e);
