@@ -5,8 +5,6 @@ import java.util.Map;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse2;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 
 public class AplicaresResponseUtil {
