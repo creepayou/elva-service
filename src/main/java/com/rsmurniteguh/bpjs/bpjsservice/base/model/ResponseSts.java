@@ -5,8 +5,10 @@ import java.time.Instant;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.extern.apachecommons.CommonsLog;
 
 @Data
+@CommonsLog
 @Accessors(chain = true)
 public class ResponseSts<T> {
 	private boolean success;
@@ -41,7 +43,9 @@ public class ResponseSts<T> {
 	}
 
 	public static ResponseSts<Object> onError(String message, String path, String stackTrace) {
-		return onError(new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace));
+		ErrorDto errorDto = new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace);
+		log.error(errorDto.toString());
+		return onError(errorDto);
 	}
 
 	public static ResponseSts<Object> onError(ErrorDto error) {

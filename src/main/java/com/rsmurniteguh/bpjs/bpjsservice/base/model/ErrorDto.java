@@ -9,10 +9,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 @JsonInclude(value = Include.NON_EMPTY)
 public class ErrorDto implements Serializable {
    private Timestamp timestamp;

@@ -11,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import lombok.extern.apachecommons.CommonsLog;
-
 @ControllerAdvice
-@CommonsLog
 public class ErrorControllerAdvice {
 
     @ExceptionHandler(BusinessException.class)
@@ -32,7 +29,6 @@ public class ErrorControllerAdvice {
             return ResponseEntity.ok()
                     .body(ResponseSts.onError(se.getError()));
         }
-        log.error(e.getMessage(), e);
         return ResponseEntity.ok()
                 .body(ResponseSts.onError(e.getMessage(), request.getRequestURI(), ExceptionUtils.getStackTrace(e)));
     }
