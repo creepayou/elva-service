@@ -49,7 +49,7 @@ springdoc:
 server:
   port: ${BPJSSERVICE_PORT:${default.server.port}}
   servlet:
-    context-path: /bpjsservice
+    context-path: /${BPJSSERVICE_CONTEXT_PATH:bpjsservice}
 
 spring:
   application:
