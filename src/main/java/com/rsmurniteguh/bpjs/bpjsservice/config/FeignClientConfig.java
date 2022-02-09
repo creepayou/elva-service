@@ -60,7 +60,7 @@ public class FeignClientConfig extends Client.Default {
 
         if (bpjsResponse.getMetaData().getCode().equals(Constant.HTTP_OK)
                 && !ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
-            String decrypted = decryptResponse(bpjsResponse.getResponse().toString(), key);
+            String decrypted = decryptResponse(JsonUtil.toJsonString(bpjsResponse.getResponse()), key);
 
             try {
                 Object decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<Object>() {
@@ -81,9 +81,8 @@ public class FeignClientConfig extends Client.Default {
 
     private String decryptResponse(String response, String key) {
         try {
-            return DecryptUtil.decrypt(response, key);
+            return DecryptUtil.decrypt(response.replaceAll("\"", ""), key);
         } catch (Exception e) {
-            log.error(e.getMessage());
             return response;
         }
     }
