@@ -53,6 +53,7 @@ public class RequestSepDto {
     @Accessors(chain = true)
     @JsonInclude(value = Include.NON_EMPTY)
     public class Jaminan{
+        @JsonSerialize(using = CustomBpjsEnumSerializer.class)
         private Indikator lakaLantas;
         private PenjaminJaminan penjamin;
     }
