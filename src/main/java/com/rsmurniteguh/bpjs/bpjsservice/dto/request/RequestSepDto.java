@@ -8,11 +8,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBpjsEnumSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateSerializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateTimeSerializer;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.Asuransi;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.Jaminan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.KatarakInd;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.PenjaminJaminan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.Poli;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.Rujukan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2.SKDP;
@@ -48,4 +49,11 @@ public class RequestSepDto {
     private String keterangan;
     private String user;
 
+    @Data
+    @Accessors(chain = true)
+    @JsonInclude(value = Include.NON_EMPTY)
+    public class Jaminan{
+        private Indikator lakaLantas;
+        private PenjaminJaminan penjamin;
+    }
 }
