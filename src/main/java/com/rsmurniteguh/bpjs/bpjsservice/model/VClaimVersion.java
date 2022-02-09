@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public enum VClaimVersion {
     private String version;
 
     @JsonCreator
-    public static VClaimVersion fromVersion(String version) throws BpjsServiceException {
+    public static VClaimVersion fromVersion(String version) throws BusinessException {
         return getVersion(version);
     }
 
@@ -32,10 +32,10 @@ public enum VClaimVersion {
     }
 
     @JsonIgnore
-    public static VClaimVersion getVersion(String version) throws BpjsServiceException {
+    public static VClaimVersion getVersion(String version) throws BusinessException {
         if (BY_VERSION.containsKey(version))
             return BY_VERSION.get(version);
         else
-            throw new BpjsServiceException("Version tidak sesuai!");
+            throw new BusinessException("Version tidak sesuai!");
     }
 }

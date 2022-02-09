@@ -40,7 +40,7 @@ public class BpjsRequestConfig {
                     requestTemplate.header("X-timestamp", unixTime + "");
                     requestTemplate.header("X-signature",
                             generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
-                    // requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
+                    requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
                     if (requestTemplate.feignTarget().name().equals(Constant.VCLAIM_FEIGN_NAME)) {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                     } else {

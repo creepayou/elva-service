@@ -5,41 +5,41 @@ import java.util.Map;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse2;
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BpjsServiceException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 
 public class AplicaresResponseUtil {
     
     private AplicaresResponseUtil(){}
 
-    public static <T> Map<String, T> handleAplicaresResponse(AplicaresResponse<T> aplicaresResponse) throws BpjsServiceException {
+    public static <T> Map<String, T> handleAplicaresResponse(AplicaresResponse<T> aplicaresResponse) throws BusinessException {
         if(aplicaresResponse.getMetadata().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getResponse();
         } else {
-            throw new BpjsServiceException(aplicaresResponse.getMetadata().getMessage());
+            throw new BusinessException(aplicaresResponse.getMetadata().getMessage());
         }
     }
 
-    public static <T> T handleAplicaresResponse(AplicaresResponse2<T> aplicaresResponse) throws BpjsServiceException {
+    public static <T> T handleAplicaresResponse(AplicaresResponse2<T> aplicaresResponse) throws BusinessException {
         if(aplicaresResponse.getMetaData().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getResponse();
         } else {
-            throw new BpjsServiceException(aplicaresResponse.getMetaData().getMessage());
+            throw new BusinessException(aplicaresResponse.getMetaData().getMessage());
         }
     }
     
-    public static String handleAplicaresResponseMessage(AplicaresResponse<Object> aplicaresResponse) throws BpjsServiceException {
+    public static String handleAplicaresResponseMessage(AplicaresResponse<Object> aplicaresResponse) throws BusinessException {
         if(aplicaresResponse.getMetadata().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getMetadata().getMessage();
         } else {
-            throw new BpjsServiceException(aplicaresResponse.getMetadata().getMessage());
+            throw new BusinessException(aplicaresResponse.getMetadata().getMessage());
         }
     }
 
-    public static String handleAplicaresResponseMessage(AplicaresResponse2<Object> aplicaresResponse) throws BpjsServiceException {
+    public static String handleAplicaresResponseMessage(AplicaresResponse2<Object> aplicaresResponse) throws BusinessException {
         if(aplicaresResponse.getMetaData().getCode().equals(Constant.HTTP_OK_APLICARE)){
             return aplicaresResponse.getMetaData().getMessage();
         } else {
-            throw new BpjsServiceException(aplicaresResponse.getMetaData().getMessage());
+            throw new BusinessException(aplicaresResponse.getMetaData().getMessage());
         }
     }
 }

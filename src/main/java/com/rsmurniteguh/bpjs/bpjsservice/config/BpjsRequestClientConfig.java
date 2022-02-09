@@ -12,8 +12,8 @@ public class BpjsRequestClientConfig {
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
     
-    // @Bean
-    // public Client client() {
-    //     return new FeignClientConfig(null, null, bpjsConsumerService);
-    // }
+    @Bean
+    public Client client() {
+        return new FeignClientConfig(null, null, bpjsConsumerService);
+    }
 }

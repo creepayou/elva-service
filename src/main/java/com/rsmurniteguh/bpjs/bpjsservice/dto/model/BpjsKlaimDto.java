@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BpjsKlaimDto {
-
-    private VClaimMappingDto Inacbg;
+    @JsonAlias({"Inacbg"})
+    private VClaimMappingDto inacbg;
     private Biaya biaya;
     private KelasRawat kelasRawat;
     private String noFPK;
@@ -40,7 +40,6 @@ public class BpjsKlaimDto {
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 final class Biaya {
-
     private String byPengajuan;
     private String bySetujui;
     private String byTarifGruper;
