@@ -109,7 +109,24 @@ public class SepController extends BaseController {
                                     entityCode))
                     .get(KEY_SEP));
         }
+    }
 
+    /**
+     * @deprecated migrate to V2 (insert)
+     * @param requestSepDto
+     * @return
+     */
+    @Deprecated(forRemoval = true)
+    @PostMapping("/insertSEP")
+    public ResponseSts<BpjsSepDto> insertSEPV1(@RequestBody RequestSepDto requestSepDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+        String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
+        requestSepDto.setPpkPelayanan(providerCode);
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponse(
+                        vClaimProxy.insertSEP(createBpjsRequestSep(requestSepDto),
+                                entityCode))
+                .get(KEY_SEP));
     }
 
     @PutMapping("/update")

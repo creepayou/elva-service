@@ -141,13 +141,6 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    /**
-     * @deprecated migrate to V2
-     * @param requestSepDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
     @PostMapping("/SEP/1.1/insert")
     public VClaimResponse<BpjsSepDto> insertSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
