@@ -65,7 +65,7 @@ public class SepController extends BaseController {
         RequestSepDto requestSepDto = new RequestSepDto().setCatatan(requestSepDtoV2.getCatatan())
                 .setCob(requestSepDtoV2.getCob())
                 .setKlsRawat(requestSepDtoV2.getKlsRawat().getKlsRawatHak())
-                .setDiagAwal(requestSepDtoV2.getDiagAwal()).setJaminan(requestSepDtoV2.getJaminan())
+                .setDiagAwal(requestSepDtoV2.getDiagAwal())
                 .setJnsPelayanan(requestSepDtoV2.getJnsPelayanan())
                 .setKatarak(requestSepDtoV2.getKatarak())
                 .setKeterangan(requestSepDtoV2.getKeterangan()).setNoKartu(requestSepDtoV2.getNoSep())
