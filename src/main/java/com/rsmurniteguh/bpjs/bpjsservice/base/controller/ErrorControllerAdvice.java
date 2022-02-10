@@ -11,12 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import lombok.extern.apachecommons.CommonsLog;
+
 @ControllerAdvice
+@CommonsLog
 public class ErrorControllerAdvice {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ResponseSts<Object>> handleBusinessException(
-            Exception e) {
+            Exception e,
+            HttpServletRequest request) {
+        String errorFormat = "Message: %s, Path: %s";
+        log.warn(String.format(errorFormat, e.getMessage(), request.getRequestURI()));
         return ResponseEntity.ok().body(ResponseSts.onFail(e.getMessage()));
     }
 

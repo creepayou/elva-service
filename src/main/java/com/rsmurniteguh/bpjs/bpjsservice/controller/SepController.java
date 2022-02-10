@@ -95,24 +95,14 @@ public class SepController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
         requestSepDto.setPpkPelayanan(providerCode);
-
-        VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
-        if (vclaimVersion.equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy
-                            .insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
-                    .get(KEY_SEP));
-        } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.insertSEP(createBpjsRequestSepFromV2(requestSepDto),
-                                    entityCode))
-                    .get(KEY_SEP));
-        }
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponse(vClaimProxy
+                        .insertSEPV2(createBpjsRequestSep(requestSepDto), entityCode))
+                .get(KEY_SEP));
     }
 
     /**
-     * @deprecated migrate to V2 (insert)
+     * @deprecated migrate to V2 (insertSEP)
      * @param requestSepDto
      * @return
      */
