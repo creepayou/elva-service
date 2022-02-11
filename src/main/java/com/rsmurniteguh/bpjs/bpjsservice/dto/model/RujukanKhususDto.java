@@ -2,6 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -16,13 +17,20 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RujukanKhususDto{
-    private String idrujukan;
+    @JsonAlias("idrujukan")
+    private String idRujukan;
+    @JsonAlias("tglrujukan_awal")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp tglrujukan_awal;
-    private String norujukan;
-    private String nokapst;
-    private String nmpst;
-    private String diagppk;
+    private Timestamp tglRujukanAwal;
+    @JsonAlias("norujukan")
+    private String noRujukan;
+    @JsonAlias("nokapst")
+    private String noKartu;
+    @JsonAlias("nmpst")
+    private String nama;
+    @JsonAlias("diagppk")
+    private String diagPPK;
+    @JsonAlias("tglrujukan_akhir")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp tglrujukan_akhir;
+    private Timestamp tglRujukanAkhir;
 }

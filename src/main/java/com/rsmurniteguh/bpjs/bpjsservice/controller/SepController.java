@@ -58,7 +58,6 @@ public class SepController extends BaseController {
         return ResponseSts
                 .onSuccess(VClaimResponseUtil
                         .handleVClaimResponse(vClaimProxy.searchSEP(sepNo, entityCode)));
-
     }
 
     private BpjsRequestDto<RequestSepDto> createBpjsRequestSepFromV2(RequestSepDtoV2 requestSepDtoV2) {
