@@ -91,6 +91,8 @@ public class RequestSepDtoV2 {
     public static class Jaminan{
         @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
         private Lakalantas lakaLantas;
+        @JsonSerialize(nullsUsing = CustomNullSerializer.class)
+        private String nomorLP;
         private PenjaminJaminan penjamin;
     }
 
