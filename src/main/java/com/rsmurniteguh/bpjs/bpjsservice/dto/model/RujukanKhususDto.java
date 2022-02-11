@@ -30,7 +30,7 @@ public class RujukanKhususDto{
     private String nama;
     @JsonAlias("diagppk")
     private String diagPPK;
-    @JsonAlias("tglrujukan_akhir")
+    @JsonAlias("tglrujukan_berakhir")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp tglRujukanAkhir;
+    private Timestamp tglRujukanBerakhir;
 }
