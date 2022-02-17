@@ -9,6 +9,5 @@
     </typeHandlers>
     <mappers>
         <mapper resource="mybatis/mapper/BpjsConsumerMapper.xml" />
-        <mapper resource="mybatis/mapper/JknUserMapper.xml" />
     </mappers>
 </configuration>

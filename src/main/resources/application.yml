@@ -40,10 +40,10 @@ app:
   version: '@project.version@'
   desc: '@project.description@'
 
-# springdoc:
-#   swagger-ui:
-#     supported-submit-methods: 
-#     - get
+springdoc:
+  swagger-ui:
+    supported-submit-methods: 
+    - get
 
 ---
 server:
