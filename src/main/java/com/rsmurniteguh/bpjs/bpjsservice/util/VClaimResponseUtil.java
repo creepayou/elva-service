@@ -11,11 +11,13 @@ public class VClaimResponseUtil {
     
     private VClaimResponseUtil(){}
 
+    private static final String BPJS_MESSAGE = "BPJS: ";
+
     public static <T> Map<String, T> handleVClaimResponse(VClaimResponse<T> vClaimResponse) throws BusinessException {
         if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
             return vClaimResponse.getResponse();
         } else {
-            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+            throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
         }
     }
 
@@ -23,7 +25,7 @@ public class VClaimResponseUtil {
         if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
             return vClaimResponse.getResponse();
         } else {
-            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+            throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
         }
     }
 
@@ -31,7 +33,7 @@ public class VClaimResponseUtil {
         if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
             return vClaimResponse.getMetaData().getMessage();
         } else {
-            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+            throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
         }
     }
 
@@ -39,7 +41,7 @@ public class VClaimResponseUtil {
         if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
             return vClaimResponse.getMetaData().getMessage();
         } else {
-            throw new BusinessException(vClaimResponse.getMetaData().getMessage());
+            throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
         }
     }
 }

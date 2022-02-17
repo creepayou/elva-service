@@ -19,9 +19,6 @@ import lombok.experimental.Accessors;
 public class RujukanKhususDto{
     @JsonAlias("idrujukan")
     private String idRujukan;
-    @JsonAlias("tglrujukan_awal")
-    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp tglRujukanAwal;
     @JsonAlias("norujukan")
     private String noRujukan;
     @JsonAlias("nokapst")
@@ -30,7 +27,10 @@ public class RujukanKhususDto{
     private String nama;
     @JsonAlias("diagppk")
     private String diagPPK;
-    @JsonAlias("tglrujukan_akhir")
+    @JsonAlias("tglrujukan_awal")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-    private Timestamp tglRujukanAkhir;
+    private Timestamp tglRujukanAwal;
+    @JsonAlias("tglrujukan_berakhir")
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    private Timestamp tglRujukanBerakhir;
 }

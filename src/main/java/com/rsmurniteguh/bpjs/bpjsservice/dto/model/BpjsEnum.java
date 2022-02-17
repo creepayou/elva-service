@@ -52,7 +52,7 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum TipeRujukan {
-        PENUH("1"), PARTIAL("2"), RUJUK_BALIK("3");
+        PENUH("0"), PARTIAL("1"), RUJUK_BALIK("2");
 
         @Getter
         private String tipe;
