@@ -50,6 +50,8 @@ public class BpjsSepDto {
     private DokterDPJP kontrol;
     private Indikator cob;
     private Indikator katarak;
+    private ProvUmumDto provUmum;
+    private ProvPerujukDto provPerujuk;
 
     @Data
     @Accessors(chain = true)

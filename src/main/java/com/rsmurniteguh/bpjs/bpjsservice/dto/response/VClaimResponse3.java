@@ -1,6 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.dto.response;
 
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsMetaDataDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.ProvPerujukDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.ProvUmumDto;
 
@@ -13,9 +14,5 @@ public class VClaimResponse3 {
     
     private BpjsMetaDataDto metaData;
 
-    private Object response;
-    
-    private ProvUmumDto provUmum;
-    
-    private ProvPerujukDto provPerujuk;
+    private BpjsSepDto response;
 }

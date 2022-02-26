@@ -9,7 +9,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterTanggalRencanaKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
@@ -23,7 +22,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.ObjectUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,9 +87,7 @@ public class RencanaKontrolController extends BaseController {
         RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
         VClaimResponse3 responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
         if (responseBpjs.getMetaData().getCode().equals(Constant.HTTP_OK)) {
-            rencanaKontrolDto.setSep(ObjectUtil.convertObjectToClass(responseBpjs.getResponse(), BpjsSepDto.class));
-            rencanaKontrolDto.setProvUmum(responseBpjs.getProvUmum());
-            rencanaKontrolDto.setProvPerujuk(responseBpjs.getProvPerujuk());
+            rencanaKontrolDto.setSep(responseBpjs.getResponse());
         } else {
             throw new BusinessException(responseBpjs.getMetaData().getMessage());
         }

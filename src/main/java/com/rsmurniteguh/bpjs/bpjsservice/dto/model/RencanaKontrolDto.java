@@ -41,7 +41,4 @@ public class RencanaKontrolDto {
     private String kodeDokterPembuat;
     private String namaDokterPembuat;
     private BpjsSepDto sep;
-    private ProvUmumDto provUmum;
-    private ProvPerujukDto provPerujuk;
-
 }
