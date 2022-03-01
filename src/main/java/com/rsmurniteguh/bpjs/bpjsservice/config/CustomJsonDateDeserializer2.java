@@ -18,17 +18,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomJsonDateDeserializer2 extends JsonDeserializer<Timestamp> {
 
-  @Autowired
-  private HttpServletRequest request;
+    @Autowired
+    private HttpServletRequest request;
 
-  @Autowired
-  private Map<String, String> entityTimeZone;
+    @Autowired
+    private Map<String, String> entityTimeZone;
 
-  @Override
-  public Timestamp deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException {
-    String string = jsonParser.getText();
-    String entityCode = RequestUtil.getEntityCode(request);
-    return DateUtil.customFormatStringWithTimezone(string, entityTimeZone.get(entityCode), "dd MMM yyyy HH:mm:ss");
-  }
+    @Override
+    public Timestamp deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+            throws IOException {
+        String string = jsonParser.getText();
+        String entityCode = RequestUtil.getEntityCode(request);
+        return DateUtil.customFormatStringWithTimezone(string, entityTimeZone.get(entityCode), "dd MMM yyyy HH:mm:ss");
+    }
 }
