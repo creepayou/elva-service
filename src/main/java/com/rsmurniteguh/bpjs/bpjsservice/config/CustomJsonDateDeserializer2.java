@@ -2,29 +2,33 @@ package com.rsmurniteguh.bpjs.bpjsservice.config;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.RequestUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CustomJsonDateDeserializer2 extends JsonDeserializer<Timestamp> {
 
-    @Override
-    public Timestamp deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
-        String string = jsonParser.getText();
+  @Autowired
+  private HttpServletRequest request;
 
-        try {
-            SimpleDateFormat formatter6=new SimpleDateFormat("dd MMM yyyy HH:mm:ss");  
-            Date date6=formatter6.parse(string); 
-            Timestamp str =  new java.sql.Timestamp(date6.getTime());
-            return str;
-          } catch (ParseException e) {
-            System.out.println("Exception :" + e);
-            return null;
-          }
-    }
+  @Autowired
+  private Map<String, String> entityTimeZone;
+
+  @Override
+  public Timestamp deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+      throws IOException {
+    String string = jsonParser.getText();
+    String entityCode = RequestUtil.getEntityCode(request);
+    return DateUtil.customFormatStringWithTimezone(string, entityTimeZone.get(entityCode), "dd MMM yyyy HH:mm:ss");
   }
+}

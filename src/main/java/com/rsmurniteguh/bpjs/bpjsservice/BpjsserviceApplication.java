@@ -1,11 +1,20 @@
 package com.rsmurniteguh.bpjs.bpjsservice;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.EntityDto;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
+import com.rsmurniteguh.bpjs.bpjsservice.proxy.CommonServiceNoConfigProxy;
+import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +37,9 @@ public class BpjsserviceApplication {
 	@Value("${app.desc}")
 	private String applicationDescription;
 
+	@Autowired
+	private CommonServiceNoConfigProxy commonServiceNoConfigProxy;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BpjsserviceApplication.class, args);
 	}
@@ -43,5 +55,15 @@ public class BpjsserviceApplication {
 				.info(new Info().title(applicationName)
 				.description(applicationDescription)
 				.version(applicationVersion));
+	}
+
+	@Bean
+	public Map<String, String> entityTimeZone() throws BusinessException, ServiceException {
+		List<EntityDto> entityList = ResponseStsUtil.handleResponseSts(commonServiceNoConfigProxy.getEntityList());
+		Map<String, String> entityTimezone = new HashMap<>();
+		for(EntityDto entityDto : entityList) {
+			entityTimezone.put(entityDto.getEntityCode(), entityDto.getTimeZone());
+		}
+		return entityTimezone;
 	}
 }
