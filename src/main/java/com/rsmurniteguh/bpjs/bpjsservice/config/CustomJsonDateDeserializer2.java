@@ -29,6 +29,6 @@ public class CustomJsonDateDeserializer2 extends JsonDeserializer<Timestamp> {
             throws IOException {
         String string = jsonParser.getText();
         String entityCode = RequestUtil.getEntityCode(request);
-        return DateUtil.customFormatStringWithTimezone(string, entityTimeZone.get(entityCode), "dd MMM yyyy HH:mm:ss");
+        return DateUtil.customFormatStringWithTimezone(string, entityTimeZone.get(entityCode), "dd MMM yyyy HH:mm:ss:SSS");
     }
 }
