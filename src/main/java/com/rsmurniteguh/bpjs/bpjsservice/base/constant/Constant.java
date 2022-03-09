@@ -23,4 +23,5 @@ public final class Constant {
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String VCLAIM_FEIGN_NAME = "vclaim";
 	public static final String APLICARES_FEIGN_NAME = "aplicares";
+	public static final String ANTREAN_FEIGN_NAME = "antreanrs";
 }

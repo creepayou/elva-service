@@ -8,7 +8,8 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,20 @@ public class BpjsRequestConfig {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
 
                 if (StringUtils.hasText(entityCode)) {
-                    BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+                    BpjsConsumerCategoryType bpjsConsumerCategoryType = BpjsConsumerCategoryType
+                            .fromType(requestTemplate.feignTarget().name());
+                    BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = bpjsConsumerService
+                            .getBpjsConsumerWithCategory(bpjsConsumerCategoryType, entityCode);
                     final Long unixTime = System.currentTimeMillis() / 1000L;
-                    final String salt = bpjsConsumerDto.getConsumerId() + "&" + unixTime;
-                    requestTemplate.header("X-cons-id", bpjsConsumerDto.getConsumerId());
+                    final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
+                    requestTemplate.header("X-cons-id", bpjsConsumerWithCategoryDto.getConsumerId());
                     requestTemplate.header("X-timestamp", unixTime + "");
                     requestTemplate.header("X-signature",
-                            generateHmacSHA256Signature(salt, bpjsConsumerDto.getConsumerSecret()));
-                    requestTemplate.header("user_key", bpjsConsumerDto.getUserKey());
-                    if (requestTemplate.feignTarget().name().equals(Constant.VCLAIM_FEIGN_NAME)) {
+                            generateHmacSHA256Signature(salt, bpjsConsumerWithCategoryDto.getConsumerSecret()));
+                    if(bpjsConsumerWithCategoryDto.getUserKey() != null) {
+                        requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
+                    }
+                    if (bpjsConsumerCategoryType != null && bpjsConsumerCategoryType.equals(BpjsConsumerCategoryType.VCLAIM)) {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                     } else {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

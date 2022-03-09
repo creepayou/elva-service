@@ -4,11 +4,14 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.InsertBpjsConsumerCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -43,4 +46,10 @@ public class BpjsConsumerController extends BaseController {
                         .setCreatedBy(insertBpjsConsumerCategoryDto.getCreatedBy())));
     }
 
+    @GetMapping("/category/{categoryType}")
+    public ResponseSts<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategory(
+            @PathVariable("categoryType") BpjsConsumerCategoryType category,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        return ResponseSts.onSuccess(bpjsConsumerService.getBpjsConsumerWithCategory(category, entityCode));
+    }
 }
