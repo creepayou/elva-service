@@ -41,4 +41,21 @@
     <select id="getByEntityCode" resultType="BpjsConsumer">
         SELECT * FROM bpjsconsumer WHERE entity_code = #{entity_code} AND defunct_ind = 'N'
     </select>
+
+    <insert id="insertCategory" useGeneratedKeys="true" keyProperty="bpjsconsumer_category_id" keyColumn="bpjsconsumer_category_id" parameterType="BpjsConsumerCategory">
+        INSERT INTO bpjsconsumer_category
+        (
+            bpjsconsumer_id
+            ,user_key
+            ,created_by
+            ,created_datetime
+        )
+        VALUES 
+        (
+            #{bpjsconsumer_id}
+            ,#{user_key}
+            ,#{created_by}
+            ,current_timestamp
+        )
+    </insert>
 </mapper>

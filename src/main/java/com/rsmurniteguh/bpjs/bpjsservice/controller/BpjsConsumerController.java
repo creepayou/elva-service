@@ -3,10 +3,14 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.InsertBpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,5 +32,15 @@ public class BpjsConsumerController extends BaseController {
     public ResponseSts<Boolean> isBpjsConsumerAvailable(@RequestParam("entityCode") String entityCode) {
         return ResponseSts.onSuccess(bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode) != null);
     }
-    
+
+    @PostMapping("/category")
+    public ResponseSts<BpjsConsumerCategoryDto> insertCategory(
+            @RequestBody InsertBpjsConsumerCategoryDto insertBpjsConsumerCategoryDto) {
+        return ResponseSts.onSuccess(bpjsConsumerService.insertBpjsConsumerCategory(
+                new BpjsConsumerCategoryDto().setBpjsConsumerId(insertBpjsConsumerCategoryDto.getBpjsConsumerId())
+                        .setCategory(insertBpjsConsumerCategoryDto.getCategoryType())
+                        .setUserKey(insertBpjsConsumerCategoryDto.getUserKey())
+                        .setCreatedBy(insertBpjsConsumerCategoryDto.getCreatedBy())));
+    }
+
 }

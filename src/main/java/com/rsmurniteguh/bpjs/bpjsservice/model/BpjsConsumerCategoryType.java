@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +15,7 @@ public enum BpjsConsumerCategoryType {
     @Getter
     private String type;
 
-    public static BpjsConsumerCategoryType fromType(String version) throws BusinessException {
+    public static BpjsConsumerCategoryType fromType(String version) {
         return getType(version);
     }
 
@@ -30,7 +29,7 @@ public enum BpjsConsumerCategoryType {
     }
 
     @JsonIgnore
-    public static BpjsConsumerCategoryType getType(String version) throws BusinessException {
+    public static BpjsConsumerCategoryType getType(String version) {
         if (BY_TYPE.containsKey(version))
             return BY_TYPE.get(version);
         else
