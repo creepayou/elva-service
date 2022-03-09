@@ -9,6 +9,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterTanggalRencanaKontrol;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKontrol;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolDto;
@@ -18,7 +19,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
@@ -85,7 +86,7 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<RencanaKontrolDto> getRencanaKontrolByNoSep(@RequestParam("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException, IOException {
         RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
-        VClaimResponse3 responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
+        VClaimResponse2<BpjsSepDto> responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
         if (responseBpjs.getMetaData().getCode().equals(Constant.HTTP_OK)) {
             rencanaKontrolDto.setSep(responseBpjs.getResponse());
         } else {

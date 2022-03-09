@@ -42,7 +42,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse3;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -370,7 +369,7 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/RencanaKontrol/nosep/{noSep}")
-    public VClaimResponse3 getRencanaKontrolByNoSep(@PathVariable("noSep") String noSep,
+    public VClaimResponse2<BpjsSepDto> getRencanaKontrolByNoSep(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/RencanaKontrol/insert")
