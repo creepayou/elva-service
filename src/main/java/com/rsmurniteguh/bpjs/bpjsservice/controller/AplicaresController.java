@@ -52,7 +52,7 @@ public class AplicaresController extends BaseController {
         return ResponseSts.onSuccess(response.get(LIST));
     }
 
-    private String getProviderCodeByEntityCode(String entityCode) {
+    private String getProviderCodeByEntityCode(String entityCode) throws BusinessException {
         return bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
     }
 
