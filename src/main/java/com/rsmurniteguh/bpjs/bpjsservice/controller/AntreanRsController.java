@@ -25,4 +25,10 @@ public class AntreanRsController extends BaseController {
             throws BusinessException {
         return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiPoli(entityCode)));
     }
+
+    @GetMapping("/getReferensiDokter")
+    public ResponseSts<Object> getReferensiDokter(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
+            throws BusinessException {
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
+    }
 }

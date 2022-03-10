@@ -16,5 +16,7 @@ public interface AntreanRsProxy {
     
     @GetMapping(value="/ref/poli")
     public BpjsResponse2<Object> getReferensiPoli(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-    
+
+    @GetMapping(value="/ref/dokter")
+    public BpjsResponse2<Object> getReferensiDokter(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
