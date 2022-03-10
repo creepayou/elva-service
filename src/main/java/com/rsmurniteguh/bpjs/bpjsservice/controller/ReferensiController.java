@@ -11,8 +11,10 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ReferensiController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
+
+    @Autowired
+    private BpjsConsumerController bpjsConsumerController;
 
     private static final String LIST = "list";
 
@@ -52,6 +57,24 @@ public class ReferensiController extends BaseController {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
                 .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes.trim(), jenisFaskes.getJenis(), entityCode));
         return ResponseSts.onSuccess(response.get("faskes"));
+    }
+
+    @GetMapping("/getCurrentFaskes")
+    public ResponseSts<VClaimMappingDto> getCurrentFaskes(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException, ServiceException {
+        String providerCode = ResponseStsUtil.handleResponseSts(bpjsConsumerController.getProviderCode(entityCode));
+
+        ResponseSts<List<VClaimMappingDto>> faskesResponse = getFaskes(providerCode, Faskes.FASKES_2, entityCode);
+        if(faskesResponse.isSuccess()) {
+            return ResponseSts.onSuccess(faskesResponse.getData().get(0));
+        }
+
+        faskesResponse = getFaskes(providerCode, Faskes.FASKES_1, entityCode);
+        if(faskesResponse.isSuccess()) {
+            return ResponseSts.onSuccess(faskesResponse.getData().get(0));
+        }
+
+        throw new BusinessException(faskesResponse.getMessage());
     }
 
     @GetMapping("/getPoli")

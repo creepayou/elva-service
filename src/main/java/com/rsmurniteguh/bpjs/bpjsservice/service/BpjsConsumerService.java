@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.service;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 
 public interface BpjsConsumerService {
@@ -13,7 +14,7 @@ public interface BpjsConsumerService {
     
     BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode);
 
-    String getProviderCodeByEntityCode(String entityCode);
+    String getProviderCodeByEntityCode(String entityCode) throws BusinessException;
 
     BpjsConsumerCategoryDto insertBpjsConsumerCategory(BpjsConsumerCategoryDto bpjsConsumerCategoryDto);
 

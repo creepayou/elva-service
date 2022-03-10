@@ -6,6 +6,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerWithCategoryDtoM
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumer;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategory;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
@@ -40,8 +41,10 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService {
     }
 
     @Override
-    public String getProviderCodeByEntityCode(String entityCode) {
-        return getBpjsConsumerByEntityCode(entityCode).getProviderCode();
+    public String getProviderCodeByEntityCode(String entityCode) throws BusinessException {
+        BpjsConsumerDto bpjsConsumerDto = getBpjsConsumerByEntityCode(entityCode);
+        if(bpjsConsumerDto == null) throw new BusinessException("Invalid entity");
+        return bpjsConsumerDto.getProviderCode();
     }
 
     @Override

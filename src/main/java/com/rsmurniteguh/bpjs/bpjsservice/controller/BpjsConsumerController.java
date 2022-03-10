@@ -6,6 +6,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.InsertBpjsConsumerCategoryDto;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
@@ -27,7 +28,7 @@ public class BpjsConsumerController extends BaseController {
     private BpjsConsumerService bpjsConsumerService;
 
     @GetMapping("/getProviderCode")
-    public ResponseSts<String> getProviderCode(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+    public ResponseSts<String> getProviderCode(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         return ResponseSts.onSuccess(bpjsConsumerService.getProviderCodeByEntityCode(entityCode));
     }
 
