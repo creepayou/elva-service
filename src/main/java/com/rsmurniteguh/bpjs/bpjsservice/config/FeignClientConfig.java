@@ -10,7 +10,7 @@ import javax.net.ssl.SSLSocketFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimEncResponse;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsEncResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DecryptUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
@@ -47,9 +47,9 @@ public class FeignClientConfig extends Client.Default {
         Response response = super.execute(request, options);
         InputStream bodyStream = response.body().asInputStream();
         String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
-        VClaimEncResponse bpjsResponse = null;
+        BpjsEncResponse bpjsResponse = null;
         try {
-            bpjsResponse = JsonUtil.fromJson(responseBody, VClaimEncResponse.class);
+            bpjsResponse = JsonUtil.fromJson(responseBody, BpjsEncResponse.class);
         } catch (Exception e) {
             return response.toBuilder().body(responseBody, StandardCharsets.UTF_8).build();
         }
