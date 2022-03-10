@@ -87,7 +87,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException, IOException {
         RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
         VClaimResponse2<BpjsSepDto> responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
-        if (responseBpjs.getMetaData().getCode().equals(Constant.HTTP_OK)) {
+        if (responseBpjs.getMetaData().getCode().equals(Constant.METADATA_OK_200)) {
             rencanaKontrolDto.setSep(responseBpjs.getResponse());
         } else {
             throw new BusinessException(responseBpjs.getMetaData().getMessage());

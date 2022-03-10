@@ -42,7 +42,7 @@ public class FeignClientConfig extends Client.Default {
         try {
             log.info(new String(request.body()));
         } catch (Exception e) {
-            //ignore
+            // ignore
         }
         Response response = super.execute(request, options);
         InputStream bodyStream = response.body().asInputStream();
@@ -58,7 +58,8 @@ public class FeignClientConfig extends Client.Default {
 
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
 
-        if (bpjsResponse.getMetaData().getCode().equals(Constant.HTTP_OK)
+        if ((bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)
+                || bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_1))
                 && !ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
             String decrypted = decryptResponse(JsonUtil.toJsonString(bpjsResponse.getResponse()), key);
 

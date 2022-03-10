@@ -14,7 +14,7 @@ public class VClaimResponseUtil {
     private static final String BPJS_MESSAGE = "BPJS: ";
 
     public static <T> Map<String, T> handleVClaimResponse(VClaimResponse<T> vClaimResponse) throws BusinessException {
-        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)){
             return vClaimResponse.getResponse();
         } else {
             throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
@@ -22,7 +22,7 @@ public class VClaimResponseUtil {
     }
 
     public static <T> T handleVClaimResponse(VClaimResponse2<T> vClaimResponse) throws BusinessException {
-        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)){
             return vClaimResponse.getResponse();
         } else {
             throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
@@ -30,7 +30,7 @@ public class VClaimResponseUtil {
     }
 
     public static String handleVClaimResponseMessage(VClaimResponse<Object> vClaimResponse) throws BusinessException {
-        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)){
             return vClaimResponse.getMetaData().getMessage();
         } else {
             throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());
@@ -38,7 +38,7 @@ public class VClaimResponseUtil {
     }
 
     public static String handleVClaimResponseMessage(VClaimResponse2<Object> vClaimResponse) throws BusinessException {
-        if(vClaimResponse.getMetaData().getCode().equals(Constant.HTTP_OK)){
+        if(vClaimResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)){
             return vClaimResponse.getMetaData().getMessage();
         } else {
             throw new BusinessException(BPJS_MESSAGE + vClaimResponse.getMetaData().getMessage());

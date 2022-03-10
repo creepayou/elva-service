@@ -16,9 +16,8 @@ public final class Constant {
 
 	public static final String VCLAIM_VERSION = "VCLAIM_VERSION";
 
-	public static final String HTTP_OK = "200";
-
-	public static final String HTTP_OK_APLICARE = "1";
+	public static final String METADATA_OK_200 = "200";
+	public static final String METADATA_OK_1 = "1";
 	
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String VCLAIM_FEIGN_NAME = "vclaim";
