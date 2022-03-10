@@ -84,6 +84,9 @@ proxy:
   aplicaresrest:
     host: ${APLICARESREST_HOST:${proxy.aplicaresrest.url}}
     url: https://new-api.bpjs-kesehatan.go.id/aplicaresws/rest
+  antreanrs:
+    host: ${ANTREANRS_HOST:${proxy.antreanrs.url}}
+    url: https://apijkn-dev.bpjs-kesehatan.go.id/antreanrs_dev
 logging:
   level:
     org:
