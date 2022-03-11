@@ -7,14 +7,17 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.AntreanRsProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,4 +42,16 @@ public class AntreanRsController extends BaseController {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
     }
+    
+    @GetMapping("/getReferensiJadwalDokter")
+    public ResponseSts<List<BpjsAntreanScheduleDoctorDto>> getReferensiJadwalDokter(
+    		@RequestParam(value = "kodePoli", required = true) String kodePoli,
+    		@RequestParam(value = "tanggal", required = true) String tanggal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
+            throws BusinessException {
+        return ResponseSts
+                .onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiJadwalDokter(kodePoli, tanggal, entityCode)));
+    }
+    
+    
 }

@@ -7,10 +7,12 @@ import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestClientConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = Constant.ANTREAN_FEIGN_NAME, url = "${proxy.antreanrs.host}", configuration = {
@@ -24,4 +26,10 @@ public interface AntreanRsProxy {
     @GetMapping(value = "/ref/dokter")
     public BpjsResponse2<List<BpjsAntreanDoctorDto>> getReferensiDokter(
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
+    @GetMapping(value = "/jadwaldokter/kodepoli/{kodePoli}/tanggal/{tanggal}")
+    public BpjsResponse2<List<BpjsAntreanScheduleDoctorDto>> getReferensiJadwalDokter(@PathVariable("kodePoli") String kodePoli,
+    		@PathVariable("tanggal") String tanggal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    
 }
