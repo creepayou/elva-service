@@ -13,13 +13,15 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-
-@FeignClient(name = Constant.ANTREAN_FEIGN_NAME, url = "${proxy.antreanrs.host}", configuration = {BpjsRequestConfig.class, BpjsRequestClientConfig.class})
+@FeignClient(name = Constant.ANTREAN_FEIGN_NAME, url = "${proxy.antreanrs.host}", configuration = {
+        BpjsRequestConfig.class, BpjsRequestClientConfig.class })
 public interface AntreanRsProxy {
-    
-    @GetMapping(value="/ref/poli")
-    public BpjsResponse2<List<BpjsAntreanPoliDto>> getReferensiPoli(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @GetMapping(value="/ref/dokter")
-    public BpjsResponse2<List<BpjsAntreanDoctorDto>> getReferensiDokter(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    @GetMapping(value = "/ref/poli")
+    public BpjsResponse2<List<BpjsAntreanPoliDto>> getReferensiPoli(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/ref/dokter")
+    public BpjsResponse2<List<BpjsAntreanDoctorDto>> getReferensiDokter(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
