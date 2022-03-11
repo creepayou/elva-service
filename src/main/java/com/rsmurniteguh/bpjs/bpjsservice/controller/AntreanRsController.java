@@ -1,8 +1,12 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
+import java.util.List;
+
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.AntreanRsProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
@@ -21,14 +25,18 @@ public class AntreanRsController extends BaseController {
     private AntreanRsProxy antreanRsProxy;
 
     @GetMapping("/getReferensiPoli")
-    public ResponseSts<Object> getReferensiPoli(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
+    public ResponseSts<List<BpjsAntreanPoliDto>> getReferensiPoli(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
-        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiPoli(entityCode)));
+        return ResponseSts.onSuccess(
+                BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiPoli(entityCode)));
     }
 
     @GetMapping("/getReferensiDokter")
-    public ResponseSts<Object> getReferensiDokter(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
+    public ResponseSts<List<BpjsAntreanDoctorDto>> getReferensiDokter(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
-        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
+        return ResponseSts
+                .onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
     }
 }
