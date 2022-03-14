@@ -13,10 +13,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsBatalAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAntreanDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAplicaresDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestJadwalDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestListTaskModelDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
 import org.springframework.cloud.openfeign.FeignClient;
