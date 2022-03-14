@@ -52,7 +52,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = Constant.VCLAIM_FEIGN_NAME, url = "${proxy.vclaimrest.host}", configuration = {BpjsRequestConfig.class, BpjsRequestClientConfig.class})
+@FeignClient(name = Constant.VCLAIM_FEIGN_NAME, url = "${proxy.vclaimrest.host}", configuration = {
+        BpjsRequestConfig.class, BpjsRequestClientConfig.class })
 public interface VClaimProxy {
 
     // #region Referensi
@@ -93,30 +94,36 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/kelasrawat")
-    public VClaimResponse<List<VClaimMappingDto>> getKelasRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getKelasRawat(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/dokter/{param}")
-    public VClaimResponse<List<VClaimMappingDto>> getDokter(@PathVariable("param") String namaDokter, 
-        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getDokter(@PathVariable("param") String namaDokter,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/carakeluar")
-    public VClaimResponse<List<VClaimMappingDto>> getCaraKeluar(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getCaraKeluar(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/diagnosaprb")
-    public VClaimResponse<List<VClaimMappingDto>> getDiagnosaPRB(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getDiagnosaPRB(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/obatprb/{param}")
-    public VClaimResponse<List<VClaimMappingDto>> getObatPRB(@PathVariable("param") String namaObat, 
-        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getObatPRB(@PathVariable("param") String namaObat,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/pascapulang")
-    public VClaimResponse<List<VClaimMappingDto>> getPascaPulang(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getPascaPulang(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/ruangrawat")
-    public VClaimResponse<List<VClaimMappingDto>> getRuangRawat(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getRuangRawat(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/referensi/spesialistik")
-    public VClaimResponse<List<VClaimMappingDto>> getSpesialistik(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    public VClaimResponse<List<VClaimMappingDto>> getSpesialistik(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     // #endregion
 
@@ -229,7 +236,8 @@ public interface VClaimProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping("/sep/JasaRaharja/Suplesi/{noKartu}/tglPelayanan/{tglPelayanan}")
-    public VClaimResponse<List<BpjsSepSuplesiDto>> getPotensiSuplesiJasaRaharja(@PathVariable("noKartu") String noKartu,
+    public VClaimResponse<List<BpjsSepSuplesiDto>> getPotensiSuplesiJasaRaharja(
+            @PathVariable("noKartu") String noKartu,
             @PathVariable("tglPelayanan") String tglPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
@@ -317,6 +325,11 @@ public interface VClaimProxy {
     @DeleteMapping("/Rujukan/Khusus/delete")
     public VClaimResponse<String> deleteRujukanKhusus(
             @RequestBody BpjsRequestDto<RequestRujukanKhususDto> rqRujukanKhususDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping("/Rujukan/Keluar/{noRujukan}")
+    public VClaimResponse<Object> getRujukanKeluarByNoRujukan(
+            @PathVariable String noRujukan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
     // #endregion
 
