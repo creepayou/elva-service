@@ -184,4 +184,10 @@ public class RujukanController extends BaseController {
                 .get(KEY_RUJUKAN));
     }
 
+    @GetMapping("/getRujukanKeluarByNoRujukan/{noRujukan}")
+    public ResponseSts<Object> getRujukanKeluarByNoRujukan(@PathVariable String noRujukan,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponse(vClaimProxy.getRujukanKeluarByNoRujukan(noRujukan, entityCode)).get(KEY_RUJUKAN));
+    }
 }

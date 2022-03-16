@@ -11,8 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RequestAntreanDto {
-    private String kodebooking;
-    private Long taskid;
-    private Long waktu;
+public class BpjsBatalAntreanModelDto {
+    private String kodeBooking;
+    private String keterangan;   
 }

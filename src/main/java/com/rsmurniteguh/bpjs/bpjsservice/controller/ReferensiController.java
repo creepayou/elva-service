@@ -1,5 +1,8 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +40,16 @@ public class ReferensiController extends BaseController {
 
     private static final String LIST = "list";
 
+    private String trimParam(String param) {
+        String[] params = param.trim().split("/");
+        return params[0];
+    }
+
     @GetMapping("/getDiagnosa")
     public ResponseSts<List<VClaimMappingDto>> getDiagnosa(@RequestParam("diagnosa") String paramDiagnosa,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDiagnosa(paramDiagnosa.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getDiagnosa(trimParam(paramDiagnosa), entityCode));
         
         List<VClaimMappingDto> diagnosaList = response.get("diagnosa");
         for(VClaimMappingDto diagnosa : diagnosaList) {
@@ -55,7 +63,7 @@ public class ReferensiController extends BaseController {
             @RequestParam("jenisFaskes") Faskes jenisFaskes,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getFaskes(paramFaskes.trim(), jenisFaskes.getJenis(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getFaskes(trimParam(paramFaskes), jenisFaskes.getJenis(), entityCode));
         return ResponseSts.onSuccess(response.get("faskes"));
     }
 
@@ -81,7 +89,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getPoli(@RequestParam("poli") String paramPoli,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getPoli(paramPoli.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getPoli(trimParam(paramPoli), entityCode));
         return ResponseSts.onSuccess(response.get("poli"));
     }
 
@@ -108,7 +116,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getKabupaten(@RequestParam("kodePropinsi") String kodePropinsi,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getKabupaten(kodePropinsi.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getKabupaten(trimParam(kodePropinsi), entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
     }
 
@@ -116,7 +124,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getKecamatan(@RequestParam("kodeKabupaten") String kodeKabupaten,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getKecamatan(kodeKabupaten.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getKecamatan(trimParam(kodeKabupaten), entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
     }
 
@@ -140,7 +148,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getProcedure(@RequestParam("procedure") String paramProcedure,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getProcedure(paramProcedure.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getProcedure(trimParam(paramProcedure), entityCode));
         return ResponseSts.onSuccess(response.get("procedure"));
     }
 
@@ -156,7 +164,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getDokter(@RequestParam("namaDokter") String namaDokter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDokter(namaDokter.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getDokter(trimParam(namaDokter), entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
     }
 
@@ -180,7 +188,7 @@ public class ReferensiController extends BaseController {
     public ResponseSts<List<VClaimMappingDto>> getObatPRB(@RequestParam("namaObat") String namaObat,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getObatPRB(namaObat.trim(), entityCode));
+                .handleVClaimResponse(vClaimProxy.getObatPRB(trimParam(namaObat), entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
     }
 
