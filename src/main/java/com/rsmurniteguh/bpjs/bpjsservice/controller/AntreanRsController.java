@@ -53,7 +53,8 @@ public class AntreanRsController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
         return ResponseSts
-                .onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
+                .onSuccess(BpjsResponseUtil
+                        .handleBpjsResponse(antreanRsProxy.getReferensiDokter(entityCode)));
     }
 
     @GetMapping("/getReferensiJadwalDokter")
@@ -64,11 +65,13 @@ public class AntreanRsController extends BaseController {
             throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.getReferensiJadwalDokter(kodePoli, tanggal, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.getReferensiJadwalDokter(kodePoli,
+                                tanggal, entityCode)));
     }
 
     @PostMapping("/updateJadwalDokter")
-    public ResponseSts<Object> updateJadwalDokter(@RequestBody RequestJadwalDokterModelDto requestJadwalDokterModelDto,
+    public ResponseSts<Object> updateJadwalDokter(
+            @RequestBody RequestJadwalDokterModelDto requestJadwalDokterModelDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         RequestJadwalDokterDto requestJadwalDokterDto = new RequestJadwalDokterDto();
         requestJadwalDokterDto.setKodepoli(requestJadwalDokterModelDto.getKodePoli());
@@ -77,7 +80,8 @@ public class AntreanRsController extends BaseController {
         requestJadwalDokterDto.setJadwal(requestJadwalDokterModelDto.getJadwal());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.updateJadwalDokter(requestJadwalDokterDto, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.updateJadwalDokter(
+                                requestJadwalDokterDto, entityCode)));
 
     }
 
@@ -88,7 +92,8 @@ public class AntreanRsController extends BaseController {
         requestListTaskModelDto.setKodebooking(requestListTaskDto.getKodeBooking());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.getListTask(requestListTaskModelDto, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.getListTask(requestListTaskModelDto,
+                                entityCode)));
 
     }
 
@@ -100,7 +105,8 @@ public class AntreanRsController extends BaseController {
             throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.getDashboardPerTanggal(tanggal, waktu, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.getDashboardPerTanggal(tanggal,
+                                waktu, entityCode)));
     }
 
     @GetMapping("/getDashboardPerBulan")
@@ -112,7 +118,8 @@ public class AntreanRsController extends BaseController {
             throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.getDashboardPerBulan(bulan, tahun, waktu, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.getDashboardPerBulan(bulan, tahun,
+                                waktu, entityCode)));
     }
 
     @PostMapping("/updateWaktuAntrean")
@@ -124,39 +131,31 @@ public class AntreanRsController extends BaseController {
         requestAntreanDto.setWaktu(requestAntreanModelDto.getWaktu());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.updateWaktuAntrean(requestAntreanDto, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.updateWaktuAntrean(requestAntreanDto,
+                                entityCode)));
 
     }
 
     @PostMapping("/tambahAntrean")
     public ResponseSts<Object> tambahAntrean(@RequestBody BpjsAntreanModelDto model,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        BpjsAntreanDto bpjsDto = new BpjsAntreanDto();
-        bpjsDto.setKodebooking(model.getKodeBooking());
-        bpjsDto.setJenispasien(model.getJenisPasien());
-        bpjsDto.setNomorkartu(model.getNomorKartu());
-        bpjsDto.setNik(model.getNik());
-        bpjsDto.setNohp(model.getNoHp());
-        bpjsDto.setKodepoli(model.getKodePoli());
-        bpjsDto.setNamapoli(model.getNamaPoli());
-        bpjsDto.setPasienbaru(model.getPasienBaru());
-        bpjsDto.setNorm(model.getNorm());
-        bpjsDto.setTanggalperiksa(model.getTanggalPeriksa());
-        bpjsDto.setKodedokter(model.getKodeDokter());
-        bpjsDto.setNamadokter(model.getNamaDokter());
-        bpjsDto.setJampraktek(model.getJamPraktek());
-        bpjsDto.setJeniskunjungan(model.getJenisKunjungan());
-        bpjsDto.setNomorreferensi(model.getNomorReferensi());
-        bpjsDto.setNomorantrean(model.getNomorAntrean());
-        bpjsDto.setAngkaantrean(model.getAngkaAntrean());
-        bpjsDto.setEstimasidilayani(model.getEstimasiDilayani());
-        bpjsDto.setSisakuotajkn(model.getSisaKuotaJkn());
-        bpjsDto.setKuotajkn(model.getKuotaJkn());
-        bpjsDto.setSisakuotanonjkn(model.getSisakuotaNonJkn());
-        bpjsDto.setKuotanonjkn(model.getKuotaNonJkn());
-        bpjsDto.setKeterangan(model.getKeterangan());
+        BpjsAntreanDto bpjsDto = new BpjsAntreanDto().setKodebooking(model.getKodeBooking())
+                .setJenispasien(model.getJenisPasien()).setNomorkartu(model.getNomorKartu())
+                .setNik(model.getNik()).setNohp(model.getNoHp()).setKodepoli(model.getKodePoli())
+                .setNamapoli(model.getNamaPoli()).setPasienbaru(model.isPasienBaru() ? 1 : 0)
+                .setNorm(model.getNorm()).setTanggalperiksa(model.getTanggalPeriksa())
+                .setKodedokter(model.getKodeDokter()).setNamadokter(model.getNamaDokter())
+                .setJampraktek(model.getJamPraktek())
+                .setJeniskunjungan(model.getJenisKunjungan().getJenis())
+                .setNomorreferensi(model.getNomorReferensi()).setNomorantrean(model.getNomorAntrean())
+                .setAngkaantrean(model.getAngkaAntrean())
+                .setEstimasidilayani(model.getEstimasiDilayani())
+                .setSisakuotajkn(model.getSisaKuotaJkn()).setKuotajkn(model.getKuotaJkn())
+                .setSisakuotanonjkn(model.getSisakuotaNonJkn()).setKuotanonjkn(model.getKuotaNonJkn())
+                .setKeterangan(model.getKeterangan());
         return ResponseSts
-                .onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.tambahAntrean(bpjsDto, entityCode)));
+                .onSuccess(BpjsResponseUtil
+                        .handleBpjsResponse(antreanRsProxy.tambahAntrean(bpjsDto, entityCode)));
 
     }
 
@@ -168,7 +167,8 @@ public class AntreanRsController extends BaseController {
                 .setKeterangan(bpjsBatalAntreanModelDto.getKeterangan());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.batalAntrean(bpjsBatalAntreanDto, entityCode)));
+                        .handleBpjsResponse(antreanRsProxy.batalAntrean(bpjsBatalAntreanDto,
+                                entityCode)));
     }
 
 }

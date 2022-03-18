@@ -16,7 +16,9 @@ public class BpjsConsumerWithCategoryDtoMapper {
             return null;
         return new BpjsConsumerWithCategory().setConsumer_id(bpjsConsumerWithCategoryDto.getConsumerId())
                 .setConsumer_secret(bpjsConsumerWithCategoryDto.getConsumerSecret())
-                .setUser_key(bpjsConsumerWithCategoryDto.getUserKey());
+                .setUser_key(bpjsConsumerWithCategoryDto.getUserKey())
+                .setEntity_code(bpjsConsumerWithCategoryDto.getEntityCode())
+                .setCategory(bpjsConsumerWithCategoryDto.getCategory());
     }
 
     public static List<BpjsConsumerWithCategory> toBpjsConsumerWithCategoryList(
@@ -35,7 +37,9 @@ public class BpjsConsumerWithCategoryDtoMapper {
             return null;
         return new BpjsConsumerWithCategoryDto().setConsumerId(bpjsConsumerWithCategory.getConsumer_id())
                 .setConsumerSecret(bpjsConsumerWithCategory.getConsumer_secret())
-                .setUserKey(bpjsConsumerWithCategory.getUser_key());
+                .setUserKey(bpjsConsumerWithCategory.getUser_key())
+                .setEntityCode(bpjsConsumerWithCategory.getEntity_code())
+                .setCategory(bpjsConsumerWithCategory.getCategory());
     }
 
     public static List<BpjsConsumerWithCategoryDto> toBpjsConsumerWithCategoryDtoList(

@@ -59,9 +59,21 @@
         )
     </insert>
 
-    <select id="getWithCategoryByEntityCode" resultType="BpjsConsumerWithCategory">
-        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key FROM bpjsconsumer bc 
+    <select id="selectWithCategoryByEntityCode" resultType="BpjsConsumerWithCategory">
+        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category FROM bpjsconsumer bc 
         LEFT JOIN bpjsconsumer_category bcc ON bcc.bpjsconsumer_id = bc.bpjsconsumer_id AND bcc.category = #{category} AND bcc.defunct_ind = 'N'
         WHERE bc.entity_code = #{entity_code} AND bc.defunct_ind = 'N'
+    </select>
+
+    <select id="selectWithCategoryByEntityCodeList" resultType="BpjsConsumerWithCategory">
+        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category FROM bpjsconsumer bc 
+        LEFT JOIN bpjsconsumer_category bcc ON bcc.bpjsconsumer_id = bc.bpjsconsumer_id AND bcc.defunct_ind = 'N'
+        <if test="category != null">
+            AND bcc.category = #{category} 
+        </if>
+        WHERE bc.defunct_ind = 'N' 
+        <foreach collection="entity_code_list" item="item" open="AND bc.entity_code IN (" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

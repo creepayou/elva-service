@@ -8,8 +8,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKodeKamarDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsListKamarDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAplicaresDeleteDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAplicaresDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.AplicaresResponse2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,25 +22,25 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface AplicaresProxy {
 
 	@GetMapping("/bed/read/{param}/1/1000")
-	public AplicaresResponse<List<BpjsListKamarDto>> getListKamar(@PathVariable("param") String parameter,
+	public BpjsResponse<List<BpjsListKamarDto>> getListKamar(@PathVariable("param") String parameter,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 	@GetMapping("/ref/kelas")
-	public AplicaresResponse<List<BpjsKodeKamarDto>> getKodeKamar(
+	public BpjsResponse<List<BpjsKodeKamarDto>> getKodeKamar(
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 	@PostMapping("/bed/create/{param}")
-	public AplicaresResponse2<Object> createRoom(@PathVariable("param") String parameter,
+	public BpjsResponse2<Object> createRoom(@PathVariable("param") String parameter,
 			@RequestBody RequestAplicaresDto requestAplicaresDto,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 	@PostMapping("/bed/update/{param}")
-	public AplicaresResponse2<Object> updateRoom(@PathVariable("param") String parameter,
+	public BpjsResponse2<Object> updateRoom(@PathVariable("param") String parameter,
 			@RequestBody RequestAplicaresDto requestAplicaresDto,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 	@PostMapping("/bed/delete/{param}")
-	public AplicaresResponse2<Object> deleteRoom(@PathVariable("param") String parameter,
+	public BpjsResponse2<Object> deleteRoom(@PathVariable("param") String parameter,
 			@RequestBody RequestAplicaresDeleteDto requestAplicaresDeleteDto,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 

@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.dto.request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisKunjungan;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,20 +20,20 @@ public class BpjsAntreanModelDto {
     private String noHp;
     private String kodePoli;
     private String namaPoli;
-    private Long pasienBaru;
+    private boolean pasienBaru;
     private String norm;
     private String tanggalPeriksa;
     private Long kodeDokter;
     private String namaDokter;
     private String jamPraktek;
-    private Long jenisKunjungan;
+    private JenisKunjungan jenisKunjungan;
     private String nomorReferensi;
     private String nomorAntrean;
-    private Long angkaAntrean;
+    private Integer angkaAntrean;
     private Long estimasiDilayani;
-    private Long sisaKuotaJkn;
-    private Long kuotaJkn;
-    private Long sisakuotaNonJkn;
-    private Long kuotaNonJkn;
+    private Integer sisaKuotaJkn;
+    private Integer kuotaJkn;
+    private Integer sisakuotaNonJkn;
+    private Integer kuotaNonJkn;
     private String keterangan;
 }

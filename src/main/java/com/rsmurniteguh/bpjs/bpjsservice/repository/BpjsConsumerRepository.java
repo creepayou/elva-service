@@ -1,5 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.repository;
 
+import java.util.List;
+
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumer;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategory;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
@@ -19,5 +21,10 @@ public interface BpjsConsumerRepository {
 
     void insertCategory(BpjsConsumerCategory bpjsConsumerCategory);
 
-    BpjsConsumerWithCategory getWithCategoryByEntityCode(@Param("category") BpjsConsumerCategoryType category, @Param("entity_code") String entityCode);
+    BpjsConsumerWithCategory selectWithCategoryByEntityCode(@Param("category") BpjsConsumerCategoryType category,
+            @Param("entity_code") String entityCode);
+
+    List<BpjsConsumerWithCategory> selectWithCategoryByEntityCodeList(
+            @Param("category") BpjsConsumerCategoryType category,
+            @Param("entity_code_list") List<String> entityCodeList);
 }

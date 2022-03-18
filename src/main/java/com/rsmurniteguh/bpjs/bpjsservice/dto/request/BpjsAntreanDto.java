@@ -19,20 +19,20 @@ public class BpjsAntreanDto {
     private String nohp;
     private String kodepoli;
     private String namapoli;
-    private Long pasienbaru;
+    private Integer pasienbaru;
     private String norm;
     private String tanggalperiksa;
     private Long kodedokter;
     private String namadokter;
     private String jampraktek;
-    private Long jeniskunjungan;
+    private Integer jeniskunjungan;
     private String nomorreferensi;
     private String nomorantrean;
-    private Long angkaantrean;
+    private Integer angkaantrean;
     private Long estimasidilayani;
-    private Long sisakuotajkn;
-    private Long kuotajkn;
-    private Long sisakuotanonjkn;
-    private Long kuotanonjkn;
+    private Integer sisakuotajkn;
+    private Integer kuotajkn;
+    private Integer sisakuotanonjkn;
+    private Integer kuotanonjkn;
     private String keterangan;
 }

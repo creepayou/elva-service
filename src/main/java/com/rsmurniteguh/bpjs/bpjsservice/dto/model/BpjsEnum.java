@@ -605,4 +605,34 @@ public class BpjsEnum {
                 throw new BusinessException("BpjsInfoType tidak sesuai");
         }
     }
+
+    @AllArgsConstructor
+    public enum JenisKunjungan {
+        RUJUKAN_FKTP(1), RUJUKAN_INTERNAL(2), KONTROL(3), RUJUKAN_ANTAR_RS(4);
+
+        @Getter
+        private Integer jenis;
+
+        @JsonCreator
+        public static JenisKunjungan fromValue(Object value) throws BusinessException {
+            return getJenisByValue(value);
+        }
+
+        private static final Map<Object, JenisKunjungan> BY_VALUE = new HashMap<>();
+
+        static {
+            for (JenisKunjungan pj : values()) {
+                BY_VALUE.put(pj.getJenis(), pj);
+                BY_VALUE.put(pj.name(), pj);
+            }
+        }
+
+        @JsonIgnore
+        public static JenisKunjungan getJenisByValue(Object jenis) throws BusinessException {
+            if (BY_VALUE.containsKey(jenis))
+                return BY_VALUE.get(jenis);
+            else
+                throw new BusinessException("Jenis Kunjungan tidak sesuai");
+        }
+    }
 }

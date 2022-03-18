@@ -1,5 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.service.impl;
 
+import java.util.List;
+
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerCategoryDtoMapper;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerDtoMapper;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerWithCategoryDtoMapper;
@@ -58,7 +60,13 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService {
     public BpjsConsumerWithCategoryDto getBpjsConsumerWithCategory(BpjsConsumerCategoryType category,
             String entityCode) {
         return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDto(
-                bpjsConsumerRepository.getWithCategoryByEntityCode(category, entityCode));
+                bpjsConsumerRepository.selectWithCategoryByEntityCode(category, entityCode));
     }
 
+    @Override
+    public List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
+            List<String> entityCodeList) {
+        return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDtoList(
+                bpjsConsumerRepository.selectWithCategoryByEntityCodeList(category, entityCodeList));
+    }
 }
