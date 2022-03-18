@@ -15,6 +15,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsBatalAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestJadwalDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestListTaskModelDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -52,13 +53,13 @@ public interface AntreanRsProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping(value = "/dashboard/waktutunggu/tanggal/{tanggal}/waktu/{waktu}")
-    public BpjsResponse2<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerTanggal(
+    public BpjsResponse<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerTanggal(
             @PathVariable("tanggal") String tanggal,
             @PathVariable("waktu") String waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @GetMapping(value = "/dashboard/waktutunggu/bulan/{bulan}/tahun/{tahun}/waktu/{waktu}")
-    public BpjsResponse2<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerBulan(
+    public BpjsResponse<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerBulan(
             @PathVariable("bulan") String bulan,
             @PathVariable("tahun") String tahun,
             @PathVariable("waktu") String waktu,

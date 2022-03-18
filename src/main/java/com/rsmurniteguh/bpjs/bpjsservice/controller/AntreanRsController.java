@@ -10,6 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterWaktuAntrean;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanModelDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsBatalAntreanDto;
@@ -100,26 +101,26 @@ public class AntreanRsController extends BaseController {
     @GetMapping("/getDashboardPerTanggal")
     public ResponseSts<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerTanggal(
             @RequestParam(value = "tanggal", required = true) String tanggal,
-            @RequestParam(value = "waktu", required = true) String waktu,
+            @RequestParam(value = "waktu", required = true) FilterWaktuAntrean waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.getDashboardPerTanggal(tanggal,
-                                waktu, entityCode)));
+                                waktu.getWaktu(), entityCode)).get("list"));
     }
 
     @GetMapping("/getDashboardPerBulan")
     public ResponseSts<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerBulan(
             @RequestParam(value = "bulan", required = true) String bulan,
             @RequestParam(value = "tahun", required = true) String tahun,
-            @RequestParam(value = "waktu", required = true) String waktu,
+            @RequestParam(value = "waktu", required = true) FilterWaktuAntrean waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.getDashboardPerBulan(bulan, tahun,
-                                waktu, entityCode)));
+                                waktu.getWaktu(), entityCode)).get("list"));
     }
 
     @PostMapping("/updateWaktuAntrean")

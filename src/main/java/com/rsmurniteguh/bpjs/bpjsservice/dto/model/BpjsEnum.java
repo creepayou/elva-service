@@ -635,4 +635,12 @@ public class BpjsEnum {
                 throw new BusinessException("Jenis Kunjungan tidak sesuai");
         }
     }
+
+    @AllArgsConstructor
+    public enum FilterWaktuAntrean {
+        RS("rs"), SERVER("server");
+
+        @Getter
+        private String waktu;
+    }
 }
