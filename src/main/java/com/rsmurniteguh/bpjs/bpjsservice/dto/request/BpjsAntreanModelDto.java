@@ -33,7 +33,7 @@ public class BpjsAntreanModelDto {
     private Long estimasiDilayani;
     private Integer sisaKuotaJkn;
     private Integer kuotaJkn;
-    private Integer sisakuotaNonJkn;
+    private Integer sisaKuotaNonJkn;
     private Integer kuotaNonJkn;
     private String keterangan;
 }

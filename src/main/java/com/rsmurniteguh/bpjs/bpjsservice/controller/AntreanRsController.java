@@ -151,7 +151,7 @@ public class AntreanRsController extends BaseController {
                 .setAngkaantrean(model.getAngkaAntrean())
                 .setEstimasidilayani(model.getEstimasiDilayani())
                 .setSisakuotajkn(model.getSisaKuotaJkn()).setKuotajkn(model.getKuotaJkn())
-                .setSisakuotanonjkn(model.getSisakuotaNonJkn()).setKuotanonjkn(model.getKuotaNonJkn())
+                .setSisakuotanonjkn(model.getSisaKuotaNonJkn()).setKuotanonjkn(model.getKuotaNonJkn())
                 .setKeterangan(model.getKeterangan());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
