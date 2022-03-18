@@ -64,7 +64,7 @@ public class BpjsRequestConfig {
                     requestTemplate.header("X-timestamp", unixTime + "");
                     requestTemplate.header("X-signature",
                             generateHmacSHA256Signature(salt, bpjsConsumerWithCategoryDto.getConsumerSecret()));
-                    if (bpjsConsumerWithCategoryDto.getUserKey() != null) {
+                    if (StringUtils.hasText(bpjsConsumerWithCategoryDto.getUserKey())) {
                         requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
                     }
                     if (bpjsConsumerCategoryType != null
