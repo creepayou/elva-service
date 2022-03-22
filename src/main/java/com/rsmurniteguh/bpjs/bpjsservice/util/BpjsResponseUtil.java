@@ -45,8 +45,7 @@ public class BpjsResponseUtil {
     }
 
     public static String handleBpjsResponseMessage(BpjsResponse<Object> bpjsResponse) throws BusinessException {
-        if (StringUtils.hasText(bpjsResponse.getMetaData().getCode())
-                && bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)) {
+        if (validateBpjsResponse(bpjsResponse)) {
             return bpjsResponse.getMetaData().getMessage();
         } else {
             throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage());
@@ -54,8 +53,7 @@ public class BpjsResponseUtil {
     }
 
     public static String handleBpjsResponseMessage(BpjsResponse2<Object> bpjsResponse) throws BusinessException {
-        if (StringUtils.hasText(bpjsResponse.getMetaData().getCode())
-                && bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)) {
+        if (validateBpjsResponse(bpjsResponse)) {
             return bpjsResponse.getMetaData().getMessage();
         } else {
             throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage());
