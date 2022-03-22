@@ -22,7 +22,7 @@ public class BpjsResponseUtil {
                         || bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200))));
     }
 
-    private static <T> boolean validateBpjsResponse(BpjsResponse2<T> bpjsResponse) {
+    private static <T> boolean validateBpjsResponse2(BpjsResponse2<T> bpjsResponse) {
         return (bpjsResponse.getMetaData() == null || (bpjsResponse.getMetaData().getCode() != null
                 && (bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_1)
                         || bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200))));
@@ -37,7 +37,7 @@ public class BpjsResponseUtil {
     }
 
     public static <T> T handleBpjsResponse(BpjsResponse2<T> bpjsResponse) throws BusinessException {
-        if (validateBpjsResponse(bpjsResponse)) {
+        if (validateBpjsResponse2(bpjsResponse)) {
             return bpjsResponse.getResponse();
         } else {
             throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage());
@@ -53,7 +53,7 @@ public class BpjsResponseUtil {
     }
 
     public static String handleBpjsResponseMessage(BpjsResponse2<Object> bpjsResponse) throws BusinessException {
-        if (validateBpjsResponse(bpjsResponse)) {
+        if (validateBpjsResponse2(bpjsResponse)) {
             return bpjsResponse.getMetaData().getMessage();
         } else {
             throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage());
