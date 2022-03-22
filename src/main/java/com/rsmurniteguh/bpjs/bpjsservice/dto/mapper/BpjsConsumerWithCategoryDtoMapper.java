@@ -18,6 +18,7 @@ public class BpjsConsumerWithCategoryDtoMapper {
                 .setConsumer_secret(bpjsConsumerWithCategoryDto.getConsumerSecret())
                 .setUser_key(bpjsConsumerWithCategoryDto.getUserKey())
                 .setEntity_code(bpjsConsumerWithCategoryDto.getEntityCode())
+                .setProvider_code(bpjsConsumerWithCategoryDto.getProviderCode())
                 .setCategory(bpjsConsumerWithCategoryDto.getCategory());
     }
 
@@ -39,6 +40,7 @@ public class BpjsConsumerWithCategoryDtoMapper {
                 .setConsumerSecret(bpjsConsumerWithCategory.getConsumer_secret())
                 .setUserKey(bpjsConsumerWithCategory.getUser_key())
                 .setEntityCode(bpjsConsumerWithCategory.getEntity_code())
+                .setProviderCode(bpjsConsumerWithCategory.getProvider_code())
                 .setCategory(bpjsConsumerWithCategory.getCategory());
     }
 

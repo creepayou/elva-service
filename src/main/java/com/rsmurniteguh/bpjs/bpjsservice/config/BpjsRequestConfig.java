@@ -3,15 +3,17 @@ package com.rsmurniteguh.bpjs.bpjsservice.config;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
-import java.util.List;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.controller.BpjsConsumerController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
+import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
+import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,26 +27,11 @@ import lombok.extern.apachecommons.CommonsLog;
 @CommonsLog
 public class BpjsRequestConfig {
 
-    private final List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList;
+    private final BpjsConsumerController bpjsConsumerController;
 
     @Autowired
-    public BpjsRequestConfig(List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList) {
-        this.bpjsConsumerWithCategoryList = bpjsConsumerWithCategoryList;
-    }
-
-    private BpjsConsumerWithCategoryDto filterBpjsConsumerWithCategoryDto(
-            BpjsConsumerCategoryType bpjsConsumerCategoryType, String entityCode) throws BusinessException {
-        for (BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto : bpjsConsumerWithCategoryList) {
-            if (bpjsConsumerWithCategoryDto.getEntityCode().equals(entityCode)) {
-                if (bpjsConsumerCategoryType == null)
-                    return new BpjsConsumerWithCategoryDto().setConsumerId(bpjsConsumerWithCategoryDto.getConsumerId())
-                            .setConsumerSecret(bpjsConsumerWithCategoryDto.getConsumerSecret());
-                else if (bpjsConsumerWithCategoryDto.getCategory().equals(bpjsConsumerCategoryType)) {
-                    return bpjsConsumerWithCategoryDto;
-                }
-            }
-        }
-        throw new BusinessException("BPJS Cons Id not found! Entity: " + entityCode);
+    public BpjsRequestConfig(BpjsConsumerController bpjsConsumerController) {
+        this.bpjsConsumerController = bpjsConsumerController;
     }
 
     @Bean
@@ -54,10 +41,11 @@ public class BpjsRequestConfig {
                 String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
 
                 if (StringUtils.hasText(entityCode)) {
-                    BpjsConsumerCategoryType bpjsConsumerCategoryType = BpjsConsumerCategoryType
+                    BpjsConsumerCategoryType category = BpjsConsumerCategoryType
                             .fromType(requestTemplate.feignTarget().name());
-                    BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = filterBpjsConsumerWithCategoryDto(
-                            bpjsConsumerCategoryType, entityCode);
+
+                    BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = ResponseStsUtil.handleResponseSts(
+                            bpjsConsumerController.getBpjsConsumerWithCategory(category, entityCode));
                     final Long unixTime = System.currentTimeMillis() / 1000L;
                     final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
                     requestTemplate.header("X-cons-id", bpjsConsumerWithCategoryDto.getConsumerId());
@@ -67,14 +55,14 @@ public class BpjsRequestConfig {
                     if (StringUtils.hasText(bpjsConsumerWithCategoryDto.getUserKey())) {
                         requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
                     }
-                    if (bpjsConsumerCategoryType != null
-                            && bpjsConsumerCategoryType.equals(BpjsConsumerCategoryType.VCLAIM)) {
+                    if (category != null
+                            && category.equals(BpjsConsumerCategoryType.VCLAIM)) {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
                     } else {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                     }
                 }
-            } catch (IllegalStateException | GeneralSecurityException | BusinessException e) {
+            } catch (IllegalStateException | GeneralSecurityException | BusinessException | ServiceException e) {
                 log.error(e.getMessage(), e);
             }
         };

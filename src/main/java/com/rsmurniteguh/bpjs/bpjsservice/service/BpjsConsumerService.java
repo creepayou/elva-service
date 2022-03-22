@@ -20,8 +20,6 @@ public interface BpjsConsumerService {
 
     BpjsConsumerCategoryDto insertBpjsConsumerCategory(BpjsConsumerCategoryDto bpjsConsumerCategoryDto);
 
-    BpjsConsumerWithCategoryDto getBpjsConsumerWithCategory(BpjsConsumerCategoryType category, String entityCode);
-
     List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
             List<String> entityCodeList);
 }

@@ -10,5 +10,6 @@ public class BpjsConsumerWithCategory {
     private String consumer_secret;
     private String user_key;
     private String entity_code;
+    private String provider_code;
     private BpjsConsumerCategoryType category;
 }

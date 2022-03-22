@@ -57,13 +57,6 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService {
     }
 
     @Override
-    public BpjsConsumerWithCategoryDto getBpjsConsumerWithCategory(BpjsConsumerCategoryType category,
-            String entityCode) {
-        return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDto(
-                bpjsConsumerRepository.selectWithCategoryByEntityCode(category, entityCode));
-    }
-
-    @Override
     public List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
             List<String> entityCodeList) {
         return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDtoList(

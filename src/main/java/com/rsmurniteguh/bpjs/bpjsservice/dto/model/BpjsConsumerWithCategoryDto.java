@@ -17,5 +17,6 @@ public class BpjsConsumerWithCategoryDto {
     private String consumerSecret;
     private String userKey;
     private String entityCode;
+    private String providerCode;
     private BpjsConsumerCategoryType category;
 }

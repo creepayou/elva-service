@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 
-import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -18,6 +18,9 @@ import lombok.extern.apachecommons.CommonsLog;
 @Component
 @CommonsLog
 public class RequestLoggingInterceptor implements HandlerInterceptor {
+
+    @Value("${logging.threshold}")
+    private Long threshold;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -32,13 +35,13 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
         String logString = String.format(
-                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s, Body: %s",
+                "Method: %s, URI: %s, Entity: %s, Request Time: %d ms, Status: %d, Parameter: %s",
                 request.getMethod(), request.getRequestURI(), request.getHeader(Constant.MT_ENTITY_CODE), executeTime,
-                response.getStatus(), parameterString(request.getParameterMap()), bodyString(request));
-        if (!HttpStatus.valueOf(response.getStatus()).isError()) {
-            log.info(logString);
-        } else {
+                response.getStatus(), parameterString(request.getParameterMap()));
+        if (HttpStatus.valueOf(response.getStatus()).isError()) {
             log.error(logString);
+        } else if(executeTime > threshold){
+            log.info(logString);
         }
     }
 
@@ -55,16 +58,5 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             return "(" + parameterString.substring(0, parameterString.lastIndexOf(',')) + ")";
         }
         return stringBuilder.toString();
-    }
-
-    private String bodyString(HttpServletRequest request) {
-        try {
-            if (request.getMethod().equals("POST")) {
-                return IOUtils.toString(request.getReader());
-            }
-        } catch (Exception e) {
-            // ignore
-        }
-        return "";
     }
 }

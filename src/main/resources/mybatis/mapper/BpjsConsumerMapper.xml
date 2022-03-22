@@ -60,13 +60,13 @@
     </insert>
 
     <select id="selectWithCategoryByEntityCode" resultType="BpjsConsumerWithCategory">
-        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category FROM bpjsconsumer bc 
+        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category, bc.provider_code FROM bpjsconsumer bc 
         LEFT JOIN bpjsconsumer_category bcc ON bcc.bpjsconsumer_id = bc.bpjsconsumer_id AND bcc.category = #{category} AND bcc.defunct_ind = 'N'
         WHERE bc.entity_code = #{entity_code} AND bc.defunct_ind = 'N'
     </select>
 
     <select id="selectWithCategoryByEntityCodeList" resultType="BpjsConsumerWithCategory">
-        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category FROM bpjsconsumer bc 
+        SELECT bc.consumer_id, bc.consumer_secret, bcc.user_key, bc.entity_code, bcc.category, bc.provider_code FROM bpjsconsumer bc 
         LEFT JOIN bpjsconsumer_category bcc ON bcc.bpjsconsumer_id = bc.bpjsconsumer_id AND bcc.defunct_ind = 'N'
         <if test="category != null">
             AND bcc.category = #{category} 
