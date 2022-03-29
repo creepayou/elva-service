@@ -35,7 +35,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukBalikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
@@ -147,38 +146,12 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/SEP/1.1/insert")
-    public VClaimResponse<BpjsSepDto> insertSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
     @PostMapping("/SEP/2.0/insert")
     public VClaimResponse<BpjsSepDto> insertSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    /**
-     * @deprecated migrate to V2
-     * @param requestSepDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @PutMapping("/SEP/1.1/Update")
-    public VClaimResponse2<Object> updateSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
     @PutMapping("/SEP/2.0/update")
     public VClaimResponse<Object> updateSEPV2(@RequestBody BpjsRequestDto<RequestSepDtoV2> requestSepDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    /**
-     * @deprecated migrate to V2
-     * @param requestSepDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @DeleteMapping("/SEP/Delete")
-    public VClaimResponse2<Object> deleteSEP(@RequestBody BpjsRequestDto<RequestSepDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @DeleteMapping("/SEP/2.0/delete")
@@ -193,18 +166,6 @@ public interface VClaimProxy {
     @PostMapping("/Sep/aprovalSEP")
     public VClaimResponse2<String> approvalSEP(
             @RequestBody BpjsRequestDto<RequestPengajuanSepDto> requestPengajuanSepDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    /**
-     * @deprecated migrate to V2
-     * @param requestSepDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @PutMapping("/Sep/updtglplg")
-    public VClaimResponse2<String> updateTglPulangSEP(
-            @RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/SEP/2.0/updtglplg")
@@ -268,32 +229,9 @@ public interface VClaimProxy {
     public VClaimResponse2<BpjsRujukanListDto> getRujukanRsListByNoKartu(@PathVariable("noKartu") String noKartu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    /**
-     * @deprecated migrate to V2
-     * @param requestRujukanDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @PostMapping("/Rujukan/insert")
-    public VClaimResponse2<BpjsRujukanDto> insertRujukan(
-            @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
     @PostMapping("/Rujukan/2.0/insert")
     public VClaimResponse2<BpjsRujukanDto> insertRujukanV2(
             @RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    /**
-     * @deprecated migrate to V2
-     * @param requestRujukanDto
-     * @param entityCode
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @PutMapping("/Rujukan/update")
-    public VClaimResponse<String> updateRujukan(@RequestBody BpjsRequestDto<RequestRujukanDto> requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PutMapping("/Rujukan/2.0/Update")

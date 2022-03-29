@@ -17,7 +17,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukanKhususDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
-import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
@@ -98,30 +97,16 @@ public class RujukanController extends BaseController {
             requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
         }
 
-        if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.insertRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
-        } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
-                    vClaimProxy.insertRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
-        }
+        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+                vClaimProxy.insertRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
     }
 
     @PutMapping("/update")
     public ResponseSts<Object> updateRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
-
-        if (bpjsConsumerDto.getVclaimVersion().equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.updateRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
-        } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(
-                            vClaimProxy.updateRujukan(createBpjsRequestRujukan(requestRujukanDto), entityCode))
-                    .get(KEY_RUJUKAN));
-        }
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponse(
+                        vClaimProxy.updateRujukanV2(createBpjsRequestRujukan(requestRujukanDto), entityCode)));
     }
 
     @DeleteMapping("/delete")

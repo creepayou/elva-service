@@ -17,12 +17,10 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestPengajuanSepDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepDtoV2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSepInternal;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestUpdateTglPulangDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
-import com.rsmurniteguh.bpjs.bpjsservice.model.VClaimVersion;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
@@ -60,33 +58,10 @@ public class SepController extends BaseController {
                         .handleVClaimResponse(vClaimProxy.searchSEP(sepNo, entityCode)));
     }
 
-    private BpjsRequestDto<RequestSepDto> createBpjsRequestSepFromV2(RequestSepDtoV2 requestSepDtoV2) {
-        RequestSepDto requestSepDto = new RequestSepDto().setCatatan(requestSepDtoV2.getCatatan())
-                .setCob(requestSepDtoV2.getCob())
-                .setKlsRawat(requestSepDtoV2.getKlsRawat().getKlsRawatHak())
-                .setDiagAwal(requestSepDtoV2.getDiagAwal())
-                .setJnsPelayanan(requestSepDtoV2.getJnsPelayanan())
-                .setKatarak(requestSepDtoV2.getKatarak())
-                .setKeterangan(requestSepDtoV2.getKeterangan()).setNoKartu(requestSepDtoV2.getNoSep())
-                .setNoTelp(requestSepDtoV2.getNoTelp()).setPoli(requestSepDtoV2.getPoli())
-                .setPpkPelayanan(requestSepDtoV2.getPpkPelayanan())
-                .setRujukan(requestSepDtoV2.getRujukan())
-                .setSkdp(requestSepDtoV2.getSkdp()).setTglPulangSep(requestSepDtoV2.getTglPulangSep())
-                .setTglSep(requestSepDtoV2.getTglPulangSep()).setUser(requestSepDtoV2.getUser());
-
-        BpjsRequestDto<RequestSepDto> requestSep = new BpjsRequestDto<>();
-        requestSep.getRequest().put("t_sep", requestSepDto);
-        return requestSep;
-    }
-
     private <T> BpjsRequestDto<T> createBpjsRequestSep(T requestSep) {
         BpjsRequestDto<T> bpjsRequestDto = new BpjsRequestDto<>();
         bpjsRequestDto.getRequest().put("t_sep", requestSep);
         return bpjsRequestDto;
-    }
-
-    private VClaimVersion getVclaimVersion(String entityCode) {
-        return bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode).getVclaimVersion();
     }
 
     @PostMapping("/insert")
@@ -100,76 +75,30 @@ public class SepController extends BaseController {
                 .get(KEY_SEP));
     }
 
-    /**
-     * @deprecated migrate to V2 (insertSEP)
-     * @param requestSepDto
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @PostMapping("/insertSEP")
-    public ResponseSts<BpjsSepDto> insertSEPV1(@RequestBody RequestSepDto requestSepDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        String providerCode = bpjsConsumerService.getProviderCodeByEntityCode(entityCode);
-        requestSepDto.setPpkPelayanan(providerCode);
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(
-                        vClaimProxy.insertSEP(createBpjsRequestSep(requestSepDto),
-                                entityCode))
-                .get(KEY_SEP));
-    }
-
     @PutMapping("/update")
     public ResponseSts<String> updateSEP(@RequestBody RequestSepDtoV2 requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
-        if (vclaimVersion.equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponseMessage(vClaimProxy
-                            .updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
-        } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponseMessage(vClaimProxy.updateSEP(createBpjsRequestSepFromV2(requestSepDto),
-                            entityCode)));
-        }
-
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponseMessage(vClaimProxy
+                        .updateSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
     }
 
     @DeleteMapping("/delete")
     public ResponseSts<String> deleteSEP(@RequestBody RequestSepDtoV2 requestSepDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
-        if (vclaimVersion.equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponseMessage(vClaimProxy
-                            .deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
-        } else {
-            return ResponseSts.onSuccess(
-                    VClaimResponseUtil
-                            .handleVClaimResponseMessage(
-                                    vClaimProxy.deleteSEP(createBpjsRequestSepFromV2(requestSepDto),
-                                            entityCode)));
-        }
-
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponseMessage(vClaimProxy
+                        .deleteSEPV2(createBpjsRequestSep(requestSepDto), entityCode)));
     }
 
     @PutMapping("/updateTanggalPulang")
     public ResponseSts<String> updateTanggalPulang(@RequestBody RequestUpdateTglPulangDto requestUpdateTglPulangDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        VClaimVersion vclaimVersion = getVclaimVersion(entityCode);
-        if (vclaimVersion.equals(VClaimVersion.V2)) {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy
-                            .updateTglPulangSEPV2(
-                                    createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode)));
-        } else {
-            return ResponseSts.onSuccess(VClaimResponseUtil
-                    .handleVClaimResponse(vClaimProxy
-                            .updateTglPulangSEP(
-                                    createBpjsRequestSep(requestUpdateTglPulangDto),
-                                    entityCode)));
-        }
-
+        return ResponseSts.onSuccess(VClaimResponseUtil
+                .handleVClaimResponse(vClaimProxy
+                        .updateTglPulangSEPV2(
+                                createBpjsRequestSep(requestUpdateTglPulangDto),
+                                entityCode)));
     }
 
     @GetMapping("/getSepInternal/{sepNo}")
