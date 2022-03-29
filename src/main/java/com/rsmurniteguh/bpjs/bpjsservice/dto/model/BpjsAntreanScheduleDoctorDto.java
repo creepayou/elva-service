@@ -30,7 +30,7 @@ public class BpjsAntreanScheduleDoctorDto {
     @JsonAlias("namadokter")
     private String namaDokter;
     @JsonAlias("kodepoli")
-    private String KodePoli;
+    private String kodePoli;
     @JsonAlias("namapoli")
     private String namaPoli;
     @JsonAlias("kodedokter")

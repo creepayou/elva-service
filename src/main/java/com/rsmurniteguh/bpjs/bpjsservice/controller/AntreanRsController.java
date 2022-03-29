@@ -81,7 +81,7 @@ public class AntreanRsController extends BaseController {
         requestJadwalDokterDto.setJadwal(requestJadwalDokterModelDto.getJadwal());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
-                        .handleBpjsResponse(antreanRsProxy.updateJadwalDokter(
+                        .handleBpjsResponseMessage(antreanRsProxy.updateJadwalDokter(
                                 requestJadwalDokterDto, entityCode)));
 
     }
