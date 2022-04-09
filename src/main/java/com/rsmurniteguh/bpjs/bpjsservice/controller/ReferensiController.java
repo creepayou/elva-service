@@ -1,6 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Faskes;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
@@ -104,9 +106,9 @@ public class ReferensiController extends BaseController {
     @GetMapping("/getPropinsi")
     public ResponseSts<List<VClaimMappingDto>> getPropinsi(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
-        Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getPropinsi(entityCode));
-        return ResponseSts.onSuccess(response.get(LIST));
+        // Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
+        //         .handleVClaimResponse(vClaimProxy.getPropinsi(entityCode));
+        return ResponseSts.onSuccess(new ArrayList<>());
     }
 
     @GetMapping("/getKabupaten")
@@ -151,10 +153,13 @@ public class ReferensiController extends BaseController {
 
     @GetMapping("/getKelasRawat")
     public ResponseSts<List<VClaimMappingDto>> getKelasRawat(
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        Map<String, List<VClaimMappingDto>> response = VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getKelasRawat(entityCode));
-        return ResponseSts.onSuccess(response.get(LIST));
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        List<VClaimMappingDto> vclaimMappingDtoList = new ArrayList<>();
+        for (KelasRawat item : KelasRawat.values()) {
+            VClaimMappingDto dto = new VClaimMappingDto(item.name(), item.name());
+            vclaimMappingDtoList.add(dto);
+        }
+        return ResponseSts.onSuccess(vclaimMappingDtoList);
     }
 
     @GetMapping("/getDokter")
