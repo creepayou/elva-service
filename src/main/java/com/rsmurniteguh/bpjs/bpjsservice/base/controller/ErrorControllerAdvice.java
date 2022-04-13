@@ -22,8 +22,10 @@ import lombok.extern.apachecommons.CommonsLog;
 @CommonsLog
 public class ErrorControllerAdvice {
 
-    private static final List<String> BPJS_PROXY = Arrays.asList(Constant.VCLAIM_FEIGN_NAME,
+    private static final List<String> BPJS_PROXY_FEIGN_NAME = Arrays.asList(Constant.VCLAIM_FEIGN_NAME,
             Constant.ANTREAN_FEIGN_NAME, Constant.APLICARES_FEIGN_NAME);
+
+    private static final List<Integer> BPJS_UNAVAILABLE_STATUS = Arrays.asList(403, 503);
 
     private static final String ERROR_FORMAT = "Message: %s, Path: %s";
 
@@ -41,9 +43,15 @@ public class ErrorControllerAdvice {
             HttpServletRequest request) {
         if (e instanceof FeignException) {
             FeignException fe = (FeignException) e;
-            if (fe.status() >= 500 && BPJS_PROXY.contains(fe.request().requestTemplate().feignTarget().name())) {
-                log.warn(String.format(ERROR_FORMAT, e.getMessage(), request.getRequestURI()));
-                return ResponseEntity.ok().body(ResponseSts.onFail("BPJS API Temporarily Unavailable"));
+            if (BPJS_PROXY_FEIGN_NAME.contains(fe.request().requestTemplate().feignTarget().name())) {
+                if (BPJS_UNAVAILABLE_STATUS.contains(fe.status())) {
+                    log.warn(String.format(ERROR_FORMAT, e.getMessage(), request.getRequestURI()));
+                    return ResponseEntity.ok().body(ResponseSts.onFail("BPJS API Temporarily Unavailable"));
+                } else if (fe.getMessage().contains("Read timed out")) {
+                    log.warn(String.format(ERROR_FORMAT, e.getMessage(), request.getRequestURI()));
+                    return ResponseEntity.ok().body(ResponseSts.onFail(String
+                            .format("Request Timeout when connecting to BPJS API! (reason: %s)", fe.getMessage())));
+                }
             }
         } else if (e instanceof ServiceException) {
             ServiceException se = (ServiceException) e;
