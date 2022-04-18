@@ -44,9 +44,6 @@ public class FeignClientConfig extends Client.Default {
             // ignore
         }
         Response response = super.execute(request, options);
-        if (entityCode != null) {
-            return response.toBuilder().status(500).build();
-        }
         InputStream bodyStream = response.body().asInputStream();
         String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
         BpjsEncResponse bpjsResponse = null;
