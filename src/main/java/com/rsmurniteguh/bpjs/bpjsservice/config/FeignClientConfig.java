@@ -37,7 +37,6 @@ public class FeignClientConfig extends Client.Default {
     @Override
     public Response execute(Request request, Request.Options options) throws IOException {
         String entityCode = request.requestTemplate().headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
-        request.requestTemplate().removeHeader(Constant.MT_ENTITY_CODE);
         String reqTimestamp = request.requestTemplate().headers().get("X-timestamp").toArray()[0].toString();
         try {
             log.info(new String(request.body()));
