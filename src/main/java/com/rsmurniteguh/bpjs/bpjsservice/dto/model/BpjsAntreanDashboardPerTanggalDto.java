@@ -44,7 +44,7 @@ public class BpjsAntreanDashboardPerTanggalDto {
     @JsonAlias("waktu_task3")
     private Long waktuTask3;
     @JsonAlias("insertdate")
-    private Long insertDate;
+    private String insertDate;
     @JsonAlias("tanggal")
     private String tanggal;
     @JsonAlias("waktu_task2")
