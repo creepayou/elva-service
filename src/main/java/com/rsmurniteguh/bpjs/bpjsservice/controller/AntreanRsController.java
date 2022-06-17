@@ -2,6 +2,16 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
@@ -19,20 +29,10 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAntreanModelDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestJadwalDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestJadwalDokterModelDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestListTaskModelDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.AntreanRsProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/antreanrs")
@@ -86,16 +86,15 @@ public class AntreanRsController extends BaseController {
 
     }
 
-    @PostMapping("/getListTask")
-    public ResponseSts<List<BpjsAntreanListTaskDto>> getListTask(@RequestBody RequestListTaskDto requestListTaskDto,
+    @GetMapping("/getListTask/{kodeBooking}")
+    public ResponseSts<List<BpjsAntreanListTaskDto>> getListTask(@PathVariable("kodeBooking") String kodeBooking,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        RequestListTaskModelDto requestListTaskModelDto = new RequestListTaskModelDto();
-        requestListTaskModelDto.setKodebooking(requestListTaskDto.getKodeBooking());
+        RequestListTaskModelDto requestListTaskModelDto = new RequestListTaskModelDto()
+                .setKodebooking(kodeBooking);
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.getListTask(requestListTaskModelDto,
                                 entityCode)));
-
     }
 
     @GetMapping("/getDashboardPerTanggal")
