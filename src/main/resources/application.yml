@@ -87,15 +87,9 @@ proxy:
   antreanrs:
     host: ${ANTREANRS_HOST:${proxy.antreanrs.url}}
     url: https://apijkn-dev.bpjs-kesehatan.go.id/antreanrs_dev
+
 logging:
   threshold: ${LOGGING_THRESHOLD:5000}
-  level:
-    org:
-      springframework:
-        web: WARN
-      hibernate: INFO 
-    #'[com.rsmurniteguh.emr.bpjsservice.repository]': DEBUG #Uncomment untuk cek log mybatis
-    #'[com.zaxxer.hikari]': DEBUG
 ---
 spring:
   config:
@@ -108,6 +102,15 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 2
+
+logging:
+  level:
+    org:
+      springframework:
+        web: WARN
+      hibernate: INFO 
+    #'[com.rsmurniteguh.bpjs.bpjsservice.repository]': DEBUG #Uncomment untuk cek log mybatis
+    #'[com.zaxxer.hikari]': DEBUG
 ---
 spring:
   config:
@@ -119,3 +122,8 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 4
+
+logging:
+  level:
+    root: ERROR
+    '[com.rsmurniteguh.bpjs.bpjsservice.BpjsserviceApplication]': INFO
