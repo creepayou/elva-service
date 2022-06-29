@@ -57,31 +57,25 @@ public class FeignClientConfig extends Client.Default {
 
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
 
-        if ((bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_200)
-                || bpjsResponse.getMetaData().getCode().equals(Constant.METADATA_OK_1))
-                && !ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
-            String decrypted = decryptResponse(JsonUtil.toJsonString(bpjsResponse.getResponse()), key);
-
-            try {
-                Object decryptedResult = JsonUtil.fromJson(decrypted, new TypeReference<Object>() {
-                });
-                bpjsResponse.setResponse(decryptedResult);
-            } catch (Exception e) {
-                bpjsResponse.setResponse(decrypted);
-            }
+        if (!ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
+            Object decrypted = decryptedResponse(JsonUtil.toJsonString(bpjsResponse.getResponse()), key);
+            bpjsResponse.setResponse(decrypted);
         } else {
-            if (!ObjectUtils.isEmpty(bpjsResponse.getResponse())) {
-                log.info(decryptResponse(bpjsResponse.getResponse().toString(), key));
-            }
             bpjsResponse.setResponse(null);
         }
         String jsonResult = JsonUtil.toJsonString(bpjsResponse);
         return response.toBuilder().body(jsonResult, StandardCharsets.UTF_8).build();
     }
 
-    private String decryptResponse(String response, String key) {
+    private Object decryptedResponse(String response, String key) {
         try {
-            return DecryptUtil.decrypt(response.replaceAll("\"", ""), key);
+            response = DecryptUtil.decrypt(response.replaceAll("\"", ""), key);
+        } catch (Exception e) {
+            // ignore
+        }
+        try {
+            return JsonUtil.fromJson(response, new TypeReference<Object>() {
+            });
         } catch (Exception e) {
             return response;
         }

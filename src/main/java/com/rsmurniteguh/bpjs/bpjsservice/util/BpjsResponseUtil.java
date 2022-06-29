@@ -40,6 +40,9 @@ public class BpjsResponseUtil {
         if (validateBpjsResponse2(bpjsResponse)) {
             return bpjsResponse.getResponse();
         } else {
+            if(bpjsResponse.getResponse() != null && bpjsResponse.getResponse() instanceof String) {
+                throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage() + ", " + bpjsResponse.getResponse());
+            }
             throw new BusinessException(BPJS_MESSAGE + bpjsResponse.getMetaData().getMessage());
         }
     }

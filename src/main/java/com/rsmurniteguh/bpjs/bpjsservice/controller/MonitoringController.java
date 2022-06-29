@@ -14,7 +14,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +35,8 @@ public class MonitoringController extends BaseController {
     public ResponseSts<List<BpjsKunjunganDto>> getKunjungan(@RequestParam("tanggalSEP") Timestamp tglSEP,
             @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDataKunjungan(
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getDataKunjungan(
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT),
                         jnsPelayanan.getJenis().getKode(), entityCode))
                 .get("sep"));
@@ -48,8 +48,8 @@ public class MonitoringController extends BaseController {
             @RequestParam("jenisPelayanan") JenisPelayanan jnsPelayanan,
             @RequestParam("statusKlaim") StatusKlaim statusKlaim,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDataKlaim(
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getDataKlaim(
                         DateUtil.formatTimestampWithTimezone(tglPulang, Constant.TIMEZONE_JKT),
                         jnsPelayanan.getJenis().getKode(), statusKlaim.getStatus().getKode(), entityCode))
                 .get("klaim"));
@@ -60,7 +60,7 @@ public class MonitoringController extends BaseController {
     public ResponseSts<List<BpjsKunjunganDto>> getHistori(@PathVariable("bpjsNo") String noKartu,
             @RequestParam("tglAwal") Timestamp tglAwal, @RequestParam("tglAkhir") Timestamp tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy.getHistoriPelayanan(noKartu,
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(vClaimProxy.getHistoriPelayanan(noKartu,
                 DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),
                 DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), entityCode)).get("histori"));
 
@@ -70,8 +70,8 @@ public class MonitoringController extends BaseController {
     public ResponseSts<List<BpjsJaminanDto>> getDataKlaimJasaRaharja(@RequestParam("tglMulai") Timestamp tglMulai,
             @RequestParam("tglAkhir") Timestamp tglAkhir,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDataKlaimJasaRaharja(
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getDataKlaimJasaRaharja(
                         DateUtil.customFormatTimestampWithTimezone(tglMulai, Constant.TIMEZONE_JKT, "yyyy-MMdd"),
                         DateUtil.customFormatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT, "yyyy-MMdd"),
                         entityCode))

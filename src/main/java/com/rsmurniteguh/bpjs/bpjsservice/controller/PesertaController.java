@@ -10,7 +10,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +35,8 @@ public class PesertaController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         if (tglSEP == null)
             tglSEP = new Timestamp(System.currentTimeMillis());
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getPesertaByNik(nik,
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getPesertaByNik(nik,
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                 .get(PESERTA));
     }
@@ -47,8 +47,8 @@ public class PesertaController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         if (tglSEP == null)
             tglSEP = new Timestamp(System.currentTimeMillis());
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(bpjsNo,
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getPesertaByNoKartu(bpjsNo,
                         DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                 .get(PESERTA));
     }
@@ -60,23 +60,23 @@ public class PesertaController extends BaseController {
     	BpjsRujukanDto rujukanResponse = null;
     	BpjsPesertaResponseDto peserta = null;
        if(type.equals("CARD")) {
-    	   peserta = VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.getPesertaByNoKartu(target,
+    	   peserta = BpjsResponseUtil
+                   .handleBpjsResponse(vClaimProxy.getPesertaByNoKartu(target,
                            DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                    .get(PESERTA);
        }else if(type.equals("NIK")) {
-    	   peserta = (VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.getPesertaByNik(target,
+    	   peserta = (BpjsResponseUtil
+                   .handleBpjsResponse(vClaimProxy.getPesertaByNik(target,
                            DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
                    .get(PESERTA));
        }else if(type.equals("REFERENCE_I")) {
-    	   rujukanResponse =VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.getRujukanPCareByNoRujukan(target,entityCode));
+    	   rujukanResponse =BpjsResponseUtil
+                   .handleBpjsResponse(vClaimProxy.getRujukanPCareByNoRujukan(target,entityCode));
     	   peserta = rujukanResponse.getRujukan().getPeserta();
     	   return ResponseSts.onSuccess(peserta);
        }else if(type.equals("REFERENCE_II")){
-    	   rujukanResponse =VClaimResponseUtil
-                   .handleVClaimResponse(vClaimProxy.getRujukanRsByNoRujukan(target,entityCode));
+    	   rujukanResponse =BpjsResponseUtil
+                   .handleBpjsResponse(vClaimProxy.getRujukanRsByNoRujukan(target,entityCode));
     	   peserta = rujukanResponse.getRujukan().getPeserta();
     	   return ResponseSts.onSuccess(peserta);
        }

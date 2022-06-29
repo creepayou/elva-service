@@ -19,11 +19,11 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto2;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRencanaKontrolDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestSpriDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.response.VClaimResponse2;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +47,7 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<List<RencanaKontrolDto>> getRencanaKontrol(@RequestParam("tglAwal") Timestamp tglAwal,
             @RequestParam("tglAkhir") Timestamp tglAkhir, @RequestParam("filter") FilterTanggalRencanaKontrol filter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(
                 vClaimProxy.getRencanaKontrol(DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),
                         DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), filter.getFilter(),
                         entityCode))
@@ -58,8 +58,8 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<List<DataDokterDto>> getDataDokter(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol,
             @RequestParam("poli") String poli, @RequestParam("tglRencanaKontrol") Timestamp tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), poli,
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), poli,
                         DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
                 .get("list"));
     }
@@ -68,8 +68,8 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<List<SpesialistikDto>> getSpesialistik(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol,
             @RequestParam("nomor") String nomor, @RequestParam("tglRencanaKontrol") Timestamp tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getSpesialistik(jenisKontrol.getJenis(), nomor,
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getSpesialistik(jenisKontrol.getJenis(), nomor,
                         DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
                 .get("list"));
     }
@@ -78,15 +78,15 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<RencanaKontrolDto> getRencanaKontrolByNoSurat(
             @RequestParam("noSuratKontrol") String noSuratKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getRencanaKontrolByNoSurat(noSuratKontrol, entityCode)));
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getRencanaKontrolByNoSurat(noSuratKontrol, entityCode)));
     }
 
     @GetMapping("/getRencanaKontrolByNoSep")
     public ResponseSts<RencanaKontrolDto> getRencanaKontrolByNoSep(@RequestParam("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException, IOException {
         RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
-        VClaimResponse2<BpjsSepDto> responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
+        BpjsResponse2<BpjsSepDto> responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
         if (responseBpjs.getMetaData().getCode().equals(Constant.METADATA_OK_200)) {
             rencanaKontrolDto.setSep(responseBpjs.getResponse());
         } else {
@@ -99,8 +99,8 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<RencanaKontrolCrudDto> insertRencanaKontrol(
             @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.insertRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto),
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.insertRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto),
                         entityCode)));
 
     }
@@ -109,8 +109,8 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<RencanaKontrolCrudDto> updateRencanaKontrol(
             @RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.updateRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto),
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.updateRencanaKontrol(createRencanaKontrolRequest(rqRencanaKontrolDto),
                         entityCode)));
 
     }
@@ -125,7 +125,7 @@ public class RencanaKontrolController extends BaseController {
     @DeleteMapping("/delete")
     public ResponseSts<Object> deleteRencanaKontrol(@RequestBody RequestRencanaKontrolDto rqRencanaKontrolDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(vClaimProxy
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(vClaimProxy
                 .deleteRencanaKontrol(createBpjsRequestRencanaKontrol(rqRencanaKontrolDto), entityCode)));
 
     }
@@ -139,16 +139,16 @@ public class RencanaKontrolController extends BaseController {
     @PostMapping("/insertSPRI")
     public ResponseSts<SpriDto> insertSPRI(@RequestBody RequestSpriDto rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.insertSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.insertSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
 
     }
 
     @PutMapping("/updateSPRI")
     public ResponseSts<SpriDto> updateSPRI(@RequestBody RequestSpriDto rqSpriDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.updateSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.updateSpri(createRencanaKontrolRequest(rqSpriDto), entityCode)));
 
     }
 }

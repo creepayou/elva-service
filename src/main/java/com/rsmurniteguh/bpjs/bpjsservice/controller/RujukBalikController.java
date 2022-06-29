@@ -12,7 +12,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestRujukBalikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.proxy.VClaimProxy;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
-import com.rsmurniteguh.bpjs.bpjsservice.util.VClaimResponseUtil;
+import com.rsmurniteguh.bpjs.bpjsservice.util.BpjsResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +41,7 @@ public class RujukBalikController extends BaseController {
     @PostMapping("/insert")
     public ResponseSts<BpjsRujukBalikDto> insertRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(
                 vClaimProxy.insertRujukBalik(createRujukBalikRequest(requestRujukBalikDto), entityCode)));
 
     }
@@ -49,7 +49,7 @@ public class RujukBalikController extends BaseController {
     @PutMapping("/update")
     public ResponseSts<String> updateRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(
                 vClaimProxy.updateRujukBalik(createRujukBalikRequest(requestRujukBalikDto), entityCode)));
 
     }
@@ -57,7 +57,7 @@ public class RujukBalikController extends BaseController {
     @DeleteMapping("/delete")
     public ResponseSts<String> deleteRujukBalik(@RequestBody RequestRujukBalikDto requestRujukBalikDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil.handleVClaimResponse(
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(
                 vClaimProxy.updateRujukBalik(createRujukBalikRequest(requestRujukBalikDto), entityCode)));
 
     }
@@ -66,8 +66,8 @@ public class RujukBalikController extends BaseController {
     public ResponseSts<BpjsRujukBalikDto> getRujukBalik(@RequestParam("noSrb") String noSrb,
             @RequestParam("noSep") String noSep, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getRujukBalik(noSrb, noSep, entityCode)).get("prb"));
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getRujukBalik(noSrb, noSep, entityCode)).get("prb"));
 
     }
 
@@ -75,8 +75,8 @@ public class RujukBalikController extends BaseController {
     public ResponseSts<List<BpjsRujukBalikDto>> getRujukBalikList(@RequestParam("tglMulai") Timestamp tglMulai,
             @RequestParam("tglAkhir") Timestamp tglAkhir, @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException {
-        return ResponseSts.onSuccess(VClaimResponseUtil
-                .handleVClaimResponse(vClaimProxy.getRujukBalikList(
+        return ResponseSts.onSuccess(BpjsResponseUtil
+                .handleBpjsResponse(vClaimProxy.getRujukBalikList(
                         DateUtil.formatTimestampWithTimezone(tglMulai, Constant.TIMEZONE_JKT),
                         DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), entityCode))
                 .get("prb").getList());
