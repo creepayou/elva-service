@@ -171,7 +171,7 @@ public class BpjsEnum {
         public static Indikator getIndByValue(String ind) throws BusinessException {
             if (BY_VALUE.containsKey(ind))
                 return BY_VALUE.get(ind);
-            else if(ind.equals("-"))
+            else if (ind.equals("-"))
                 return Indikator.TIDAK;
             else
                 throw new BusinessException("Indikator tidak sesuai");
@@ -454,7 +454,8 @@ public class BpjsEnum {
 
     @AllArgsConstructor
     public enum AssesmentPel {
-        POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4"), NONE("");
+        POLI_TIDAK_TERSEDIA("1"), JAM_POLI_BERAKHIR("2"), DOKTER_TIDAK_PRAKTEK("3"), ATAS_INSTRUKSI_RS("4"),
+        TUJUAN_KONTROL("5"), NONE("");
 
         @Getter
         private String assesmen;
@@ -574,10 +575,10 @@ public class BpjsEnum {
                 throw new BusinessException("Lakalantas tidak sesuai");
         }
     }
-    
+
     @AllArgsConstructor
     public enum BpjsInfoType {
-    	CARD("CARD"),NIK("NIK"),REFERENCE_I("REF1"),REFERENCE_II("REF2");
+        CARD("CARD"), NIK("NIK"), REFERENCE_I("REF1"), REFERENCE_II("REF2");
 
         @Getter
         private String bpjsInfo;
