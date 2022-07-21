@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
@@ -42,14 +43,17 @@ public class RencanaKontrolController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
+    
+    @Autowired
+    private Map<String, String> entityTimeZone;
 
     @GetMapping("/getRencanaKontrol")
     public ResponseSts<List<RencanaKontrolDto>> getRencanaKontrol(@RequestParam("tglAwal") Timestamp tglAwal,
             @RequestParam("tglAkhir") Timestamp tglAkhir, @RequestParam("filter") FilterTanggalRencanaKontrol filter,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(
-                vClaimProxy.getRencanaKontrol(DateUtil.formatTimestampWithTimezone(tglAwal, Constant.TIMEZONE_JKT),
-                        DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), filter.getFilter(),
+                vClaimProxy.getRencanaKontrol(DateUtil.formatTimestampWithTimezone(tglAwal, entityTimeZone.get(entityCode)),
+                        DateUtil.formatTimestampWithTimezone(tglAkhir, entityTimeZone.get(entityCode)), filter.getFilter(),
                         entityCode))
                 .get("list"));
     }
@@ -58,9 +62,9 @@ public class RencanaKontrolController extends BaseController {
     public ResponseSts<List<DataDokterDto>> getDataDokter(@RequestParam("jenisKontrol") JenisKontrol jenisKontrol,
             @RequestParam("poli") String poli, @RequestParam("tglRencanaKontrol") Timestamp tglRencanaKontrol,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        return ResponseSts.onSuccess(BpjsResponseUtil
+                return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getDataDokter(jenisKontrol.getJenis(), poli,
-                        DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
+                        DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, entityTimeZone.get(entityCode)), entityCode))
                 .get("list"));
     }
 
@@ -70,7 +74,7 @@ public class RencanaKontrolController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getSpesialistik(jenisKontrol.getJenis(), nomor,
-                        DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, Constant.TIMEZONE_JKT), entityCode))
+                        DateUtil.formatTimestampWithTimezone(tglRencanaKontrol, entityTimeZone.get(entityCode)), entityCode))
                 .get("list"));
     }
 

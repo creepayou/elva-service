@@ -35,6 +35,9 @@ public class ReferensiController extends BaseController {
     @Autowired
     private BpjsConsumerController bpjsConsumerController;
 
+    @Autowired
+    private Map<String, String> entityTimeZone;
+
     private static final String LIST = "list";
 
     private String trimParam(String param) {
@@ -96,7 +99,7 @@ public class ReferensiController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         Map<String, List<VClaimMappingDto>> response = BpjsResponseUtil.handleBpjsResponse(
                 vClaimProxy.getDokterDPJP(jenisPelayanan.getJenis().getKode(),
-                        DateUtil.formatTimestampWithTimezone(tglPelayanan, Constant.TIMEZONE_JKT), spesialis,
+                        DateUtil.formatTimestampWithTimezone(tglPelayanan, entityTimeZone.get(entityCode)), spesialis,
                         entityCode));
         return ResponseSts.onSuccess(response.get(LIST));
     }

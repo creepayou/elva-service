@@ -2,6 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
@@ -31,6 +32,9 @@ public class RujukBalikController extends BaseController {
 
     @Autowired
     private VClaimProxy vClaimProxy;
+
+    @Autowired
+    private Map<String, String> entityTimeZone;
 
     private BpjsRequestDto<RequestRujukBalikDto> createRujukBalikRequest(RequestRujukBalikDto requestRujukBalikDto) {
         BpjsRequestDto<RequestRujukBalikDto> bpjsRequestDto = new BpjsRequestDto<>();
@@ -77,8 +81,8 @@ public class RujukBalikController extends BaseController {
             throws BusinessException {
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getRujukBalikList(
-                        DateUtil.formatTimestampWithTimezone(tglMulai, Constant.TIMEZONE_JKT),
-                        DateUtil.formatTimestampWithTimezone(tglAkhir, Constant.TIMEZONE_JKT), entityCode))
+                        DateUtil.formatTimestampWithTimezone(tglMulai, entityTimeZone.get(entityCode)),
+                        DateUtil.formatTimestampWithTimezone(tglAkhir, entityTimeZone.get(entityCode)), entityCode))
                 .get("prb").getList());
 
     }

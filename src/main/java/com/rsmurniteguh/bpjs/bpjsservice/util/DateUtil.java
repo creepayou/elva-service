@@ -47,7 +47,7 @@ public class DateUtil {
     }
 
     public static String customFormatTimestampWithTimezone(Timestamp timestamp, String timezone, String pattern) {
-        return ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.of(timezone)).toLocalDateTime()
+        return ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.of(timezone))
                 .format(DateTimeFormatter.ofPattern(pattern));
     }
 

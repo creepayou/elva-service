@@ -1,6 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
@@ -29,6 +30,9 @@ public class PesertaController extends BaseController {
     @Autowired
     private VClaimProxy vClaimProxy;
 
+    @Autowired
+    private Map<String, String> entityTimeZone;
+
     @GetMapping("/getPesertaByNIK/{nik}")
     public ResponseSts<BpjsPesertaResponseDto> getPesertaByNIK(@PathVariable("nik") String nik,
             @RequestParam(value = "tglSEP", required = false) Timestamp tglSEP,
@@ -37,7 +41,7 @@ public class PesertaController extends BaseController {
             tglSEP = new Timestamp(System.currentTimeMillis());
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getPesertaByNik(nik,
-                        DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                        DateUtil.formatTimestampWithTimezone(tglSEP, entityTimeZone.get(entityCode)), entityCode))
                 .get(PESERTA));
     }
 
@@ -49,7 +53,7 @@ public class PesertaController extends BaseController {
             tglSEP = new Timestamp(System.currentTimeMillis());
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getPesertaByNoKartu(bpjsNo,
-                        DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                        DateUtil.formatTimestampWithTimezone(tglSEP, entityTimeZone.get(entityCode)), entityCode))
                 .get(PESERTA));
     }
     @GetMapping("/GetBpjsInfobyType")
@@ -62,12 +66,12 @@ public class PesertaController extends BaseController {
        if(type.equals("CARD")) {
     	   peserta = BpjsResponseUtil
                    .handleBpjsResponse(vClaimProxy.getPesertaByNoKartu(target,
-                           DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                           DateUtil.formatTimestampWithTimezone(tglSEP, entityTimeZone.get(entityCode)), entityCode))
                    .get(PESERTA);
        }else if(type.equals("NIK")) {
     	   peserta = (BpjsResponseUtil
                    .handleBpjsResponse(vClaimProxy.getPesertaByNik(target,
-                           DateUtil.formatTimestampWithTimezone(tglSEP, Constant.TIMEZONE_JKT), entityCode))
+                           DateUtil.formatTimestampWithTimezone(tglSEP, entityTimeZone.get(entityCode)), entityCode))
                    .get(PESERTA));
        }else if(type.equals("REFERENCE_I")) {
     	   rujukanResponse =BpjsResponseUtil

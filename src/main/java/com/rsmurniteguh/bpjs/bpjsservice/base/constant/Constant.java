@@ -11,7 +11,6 @@ public final class Constant {
 
 	public static final String MT_ENTITY_CODE = "mt-entity-code";
 
-	public static final String TIMEZONE_JKT = "Asia/Jakarta";
 	public static final String TIMEZONE_UTC = "UTC";
 
 	public static final String VCLAIM_VERSION = "VCLAIM_VERSION";
