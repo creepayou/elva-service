@@ -2,6 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
@@ -44,6 +45,9 @@ public class RujukanController extends BaseController {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
+
+    @Autowired
+    private Map<String, String> entityTimeZone;
 
     private static final String KEY_RUJUKAN = "rujukan";
 
@@ -133,7 +137,7 @@ public class RujukanController extends BaseController {
         return ResponseSts.onSuccess(
                 BpjsResponseUtil.handleBpjsResponse(
                         vClaimProxy.getSpesialistikRujukan(ppkRujukan,
-                                DateUtil.formatTimestampWithTimezone(tglRujukan, Constant.TIMEZONE_JKT),
+                                DateUtil.formatTimestampWithTimezone(tglRujukan, entityTimeZone.get(entityCode)),
                                 entityCode))
                         .get("list"));
     }

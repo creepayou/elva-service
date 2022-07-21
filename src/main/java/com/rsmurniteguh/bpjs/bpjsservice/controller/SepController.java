@@ -3,6 +3,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,6 +48,9 @@ public class SepController extends BaseController {
 
     @Autowired
     private BpjsConsumerService bpjsConsumerService;
+
+    @Autowired
+    private Map<String, String> entityTimeZone;
 
     private static final String KEY_SEP = "sep";
 
@@ -142,7 +146,7 @@ public class SepController extends BaseController {
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(vClaimProxy.getFingerPrintStatus(bpjsNo,
                                 DateUtil.formatTimestampWithTimezone(tglPelayanan,
-                                        Constant.TIMEZONE_JKT),
+                                        entityTimeZone.get(entityCode)),
                                 entityCode)));
     }
 
@@ -153,7 +157,7 @@ public class SepController extends BaseController {
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getFingerPrintList(
                         DateUtil.formatTimestampWithTimezone(tglPelayanan,
-                                Constant.TIMEZONE_JKT),
+                                entityTimeZone.get(entityCode)),
                         entityCode))
                 .get("list"));
     }
@@ -165,7 +169,7 @@ public class SepController extends BaseController {
         return ResponseSts.onSuccess(BpjsResponseUtil
                 .handleBpjsResponse(vClaimProxy.getPotensiSuplesiJasaRaharja(bpjsNo,
                         DateUtil.formatTimestampWithTimezone(tglPelayanan,
-                                Constant.TIMEZONE_JKT),
+                                entityTimeZone.get(entityCode)),
                         entityCode))
                 .get("jaminan"));
 
