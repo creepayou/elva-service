@@ -1,0 +1,60 @@
+steps:
+  - name: 'asia.gcr.io/mthis-296015/xmlstarlet'
+    entrypoint: 'bash'
+    args: 
+    - -c
+    - |
+      xmlstarlet sel -t -m _:project -v _:version pom.xml > /workspace/version_pom.txt
+  - name: 'maven:3-jdk-11'
+    args:
+      - package
+      - '-Dmaven.test.skip=true'
+    entrypoint: mvn
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: 'bash'
+    # args: ['build', '-t', 'asia.gcr.io/mthis-296015/fileservice:$BRANCH_NAME-$_POM_VERSION', '.']
+    args: 
+    - -c
+    - |
+      pom_version=`cat /workspace/version_pom.txt`
+      echo $pom_version
+      docker build -t asia.gcr.io/mthis-296015/$_PACKAGE_NAME:$BRANCH_NAME-$pom_version --build-arg=JAR_FILE=target/*.jar .
+      docker push asia.gcr.io/mthis-296015/$_PACKAGE_NAME:$BRANCH_NAME-$pom_version
+  - name: 'gcr.io/cloud-builders/git'
+    secretEnv: ['SSH_KEY']
+    entrypoint: 'bash'
+    args:
+    - -c
+    - |
+      echo "$$SSH_KEY" >> /root/.ssh/id_rsa
+      chmod 400 /root/.ssh/id_rsa
+      ssh-keyscan -p 2022 source.developers.google.com > /root/.ssh/known_hosts
+    volumes:
+    - name: 'ssh'
+      path: /root/.ssh
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |       
+          pom_version=`cat /workspace/version_pom.txt`
+          cd ..
+          ssh-add /root/.ssh/id_rsa
+          git config --global user.name "Williandy"
+          git config --global user.email williandy@rsmurniteguh.com
+          git clone ssh://williandy@rsmurniteguh.com@source.developers.google.com:2022/p/mthis-296015/r/mtmh-cluster-config
+          cd mtmh-cluster-config/namespaces/storage
+          ls
+          sed -i s+mthis-296015/$_PACKAGE_NAME.*+mthis-296015/$_PACKAGE_NAME:$BRANCH_NAME-$pom_version+g deployment-$_PACKAGE_NAME.yaml
+          git add -A
+          git commit -m 'Update version'
+          git push
+    volumes:
+    - name: 'ssh'
+      path: /root/.ssh
+substitutions:
+  _PACKAGE_NAME: bpjsservice
+availableSecrets:
+  secretManager:
+  - versionName: projects/823932900680/secrets/GoogleSourceRepositorySsh/versions/latest
+    env: 'SSH_KEY'
