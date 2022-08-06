@@ -7,6 +7,10 @@ import java.util.Base64;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
+
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.controller.BpjsConsumerController;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
@@ -14,11 +18,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.ServiceException;
 import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.MediaType;
-import org.springframework.util.StringUtils;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -29,7 +28,6 @@ public class BpjsRequestConfig {
 
     private final BpjsConsumerController bpjsConsumerController;
 
-    @Autowired
     public BpjsRequestConfig(BpjsConsumerController bpjsConsumerController) {
         this.bpjsConsumerController = bpjsConsumerController;
     }
