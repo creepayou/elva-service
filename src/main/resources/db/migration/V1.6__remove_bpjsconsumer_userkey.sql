@@ -1,0 +1,1 @@
+ALTER TABLE bpjsconsumer DROP COLUMN user_key;
