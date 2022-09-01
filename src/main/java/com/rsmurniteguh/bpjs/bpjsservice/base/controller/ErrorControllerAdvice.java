@@ -59,6 +59,6 @@ public class ErrorControllerAdvice {
                     .body(ResponseSts.onError(se.getError()));
         }
         return ResponseEntity.ok()
-                .body(ResponseSts.onError(e.getMessage(), request.getRequestURI(), ExceptionUtils.getStackTrace(e)));
+                .body(ResponseSts.onError(request, e.getMessage(), ExceptionUtils.getStackTrace(e)));
     }
 }

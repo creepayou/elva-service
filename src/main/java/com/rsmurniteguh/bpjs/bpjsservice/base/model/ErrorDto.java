@@ -14,11 +14,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 @JsonInclude(value = Include.NON_EMPTY)
+@ToString
 public class ErrorDto implements Serializable {
    private Timestamp timestamp;
+   private String entityCode;
    private String message;
    private String path;
+   private String param;
    private String stackTrace;
 }

@@ -2,6 +2,11 @@ package com.rsmurniteguh.bpjs.bpjsservice.base.model;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -42,13 +47,31 @@ public class ResponseSts<T> {
 		return onSuccess(response).setData(data);
 	}
 
-	public static ResponseSts<Object> onError(String message, String path, String stackTrace) {
-		ErrorDto errorDto = new ErrorDto(Timestamp.from(Instant.now()), message, path, stackTrace);
+	public static ResponseSts<Object> onError(HttpServletRequest request, String message, String stackTrace) {
+		String path = request.getRequestURI();
+		String entityCode = request.getHeader(Constant.MT_ENTITY_CODE);
+		ErrorDto errorDto = new ErrorDto(Timestamp.from(Instant.now()), entityCode, message,
+				path, parameterString(request.getParameterMap()), stackTrace);
 		log.error(errorDto.toString());
 		return onError(errorDto);
 	}
 
 	public static ResponseSts<Object> onError(ErrorDto error) {
 		return new ResponseSts<>().setSuccess(false).setError(error);
+	}
+
+	private static String parameterString(Map<String, String[]> parameterMap) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (!parameterMap.isEmpty()) {
+			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+				stringBuilder.append(entry.getKey() + ": " + entry.getValue()[0] + ",");
+			}
+		}
+
+		String parameterString = stringBuilder.toString();
+		if (parameterString.lastIndexOf(',') != -1) {
+			return "(" + parameterString.substring(0, parameterString.lastIndexOf(',')) + ")";
+		}
+		return stringBuilder.toString();
 	}
 }
