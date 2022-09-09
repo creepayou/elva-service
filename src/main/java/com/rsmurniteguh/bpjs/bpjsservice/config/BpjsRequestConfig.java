@@ -60,7 +60,9 @@ public class BpjsRequestConfig {
                         requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                     }
                 }
-            } catch (IllegalStateException | GeneralSecurityException | BusinessException | ServiceException e) {
+            } catch (BusinessException e) {
+                log.error(e.getMessage());
+            } catch (IllegalStateException | GeneralSecurityException | ServiceException e) {
                 log.error(e.getMessage(), e);
             }
         };

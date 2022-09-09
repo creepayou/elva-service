@@ -80,6 +80,7 @@ public class BpjsConsumerController extends BaseController {
                 }
             }
         }
-        return ResponseSts.onFail("BPJS Cons Id not found! Entity: " + entityCode);
+        return ResponseSts
+                .onFail(String.format("BPJS Cons Id not found! Entity: %s, Category: %s", entityCode, category));
     }
 }
