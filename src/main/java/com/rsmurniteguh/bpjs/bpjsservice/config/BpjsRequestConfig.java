@@ -46,9 +46,9 @@ public class BpjsRequestConfig {
                             bpjsConsumerController.getBpjsConsumerWithCategory(category, entityCode));
                     final Long unixTime = System.currentTimeMillis() / 1000L;
                     final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
-                    requestTemplate.header("X-cons-id", bpjsConsumerWithCategoryDto.getConsumerId());
-                    requestTemplate.header("X-timestamp", unixTime + "");
-                    requestTemplate.header("X-signature",
+                    requestTemplate.header(Constant.X_CONS_ID, bpjsConsumerWithCategoryDto.getConsumerId());
+                    requestTemplate.header(Constant.X_TIMESTAMP, unixTime + "");
+                    requestTemplate.header(Constant.X_SIGNATURE,
                             generateHmacSHA256Signature(salt, bpjsConsumerWithCategoryDto.getConsumerSecret()));
                     if (StringUtils.hasText(bpjsConsumerWithCategoryDto.getUserKey())) {
                         requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
