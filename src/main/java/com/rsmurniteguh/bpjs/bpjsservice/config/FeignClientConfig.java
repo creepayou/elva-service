@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
@@ -14,9 +17,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsEncResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DecryptUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
-
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StreamUtils;
 
 import feign.Client;
 import feign.Request;
@@ -37,7 +37,10 @@ public class FeignClientConfig extends Client.Default {
     @Override
     public Response execute(Request request, Request.Options options) throws IOException {
         String entityCode = request.requestTemplate().headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
-        String reqTimestamp = request.requestTemplate().headers().get("X-timestamp").toArray()[0].toString();
+        if (request.requestTemplate().headers().get(Constant.X_TIMESTAMP) == null) {
+            throw new IOException("Bpjs Cons Id Not Found");
+        }
+        String reqTimestamp = request.requestTemplate().headers().get(Constant.X_TIMESTAMP).toArray()[0].toString();
         try {
             log.info(new String(request.body()));
         } catch (Exception e) {
