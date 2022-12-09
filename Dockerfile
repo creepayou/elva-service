@@ -1,8 +1,12 @@
-FROM openjdk:11.0.16
+FROM openjdk:17.0.2-slim-buster
 VOLUME /tmp
 EXPOSE 8000
 ADD target/*.jar app.jar
 ENV JAVA_OPTS=""
+
+RUN apt-get update -y
+
+RUN apt-get install wget -y
 
 RUN mkdir -p /opt/cprof && \
   wget -q -O- https://storage.googleapis.com/cloud-profiler/java/latest/profiler_java_agent.tar.gz \
