@@ -1,4 +1,4 @@
-FROM openjdk:11.0.11-jdk
+FROM openjdk:11-jdk-slim-buster
 VOLUME /tmp
 EXPOSE 8000
 ADD target/*.jar app.jar
