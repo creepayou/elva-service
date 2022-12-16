@@ -14,7 +14,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.ResponseStsUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,6 @@ public class BpjsConsumerController extends BaseController {
 
     private final List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList;
 
-    @Autowired
     public BpjsConsumerController(BpjsConsumerService bpjsConsumerService,
             List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList) {
         this.bpjsConsumerService = bpjsConsumerService;
