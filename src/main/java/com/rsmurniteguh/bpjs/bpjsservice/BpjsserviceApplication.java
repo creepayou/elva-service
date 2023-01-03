@@ -9,6 +9,7 @@ import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.EntityDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
@@ -84,5 +85,12 @@ public class BpjsserviceApplication {
 		entityList().forEach(entity -> entityCodeList.add(entity.getEntityCode()));
 		return bpjsConsumerService
 				.getBpjsConsumerWithCategoryList(null, entityCodeList);
+	}
+	
+	@Bean
+	public List<BpjsConsumerDto> bpjsConsumerList() throws BusinessException, ServiceException {
+		List<String> entityCodeList = new ArrayList<>();
+		entityList().forEach(entity -> entityCodeList.add(entity.getEntityCode()));
+		return bpjsConsumerService.getBpjsConsumerList(entityCodeList);
 	}
 }

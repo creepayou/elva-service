@@ -87,6 +87,9 @@ proxy:
   antreanrs:
     host: ${ANTREANRS_HOST:${proxy.antreanrs.url}}
     url: https://apijkn-dev.bpjs-kesehatan.go.id/antreanrs_dev
+  apotekrest:
+    host: ${APOTEKREST_HOST:${proxy.apotekrest.url}}
+    url: https://apijkn-dev.bpjs-kesehatan.go.id/apotek-rest-dev
 
 logging:
   threshold: ${LOGGING_THRESHOLD:5000}
