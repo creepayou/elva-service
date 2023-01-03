@@ -1,6 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +97,10 @@ public class RujukanController extends BaseController {
     @PostMapping("/insert")
     public ResponseSts<BpjsRujukanDto> insertRujukan(@RequestBody RequestRujukanDto requestRujukanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+    	Map<String, Object> param = new HashMap<>();
+		param.put("entity_code", entityCode);
+		
+        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(param);
         if (!StringUtils.hasText(requestRujukanDto.getPpkDirujuk())) {
             requestRujukanDto.setPpkDirujuk(bpjsConsumerDto.getProviderCode());
         }

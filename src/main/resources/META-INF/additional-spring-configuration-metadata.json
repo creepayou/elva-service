@@ -145,6 +145,16 @@
     "description": "A description for 'proxy.antreanrs.url'"
   },
   {
+    "name": "proxy.apotekrest.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.apotekrest.host'"
+  },
+  {
+    "name": "proxy.apotekrest.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.apotekrest.url'"
+  },
+  {
     "name": "logging.threshold",
     "type": "java.lang.Long",
     "description": "A description for 'logging.threshold'"

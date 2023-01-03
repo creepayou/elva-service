@@ -1,6 +1,8 @@
 package com.rsmurniteguh.bpjs.bpjsservice.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerCategoryDtoMapper;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerDtoMapper;
@@ -38,13 +40,21 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService {
     }
 
     @Override
-    public BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode) {
-        return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getByEntityCode(entityCode));
+    public BpjsConsumerDto getBpjsConsumerByEntityCode(Map<String, Object> param) {
+        return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getByEntityCode(param));
+    }
+    
+    @Override
+    public BpjsConsumerDto getBpjsConsumerByEntityCode2(Map<String, Object> param) {
+        return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getBpjsConsumerByEntityCode(param));
     }
 
     @Override
     public String getProviderCodeByEntityCode(String entityCode) throws BusinessException {
-        BpjsConsumerDto bpjsConsumerDto = getBpjsConsumerByEntityCode(entityCode);
+    	Map<String, Object> param = new HashMap<>();
+		param.put("entity_code", entityCode);
+		
+        BpjsConsumerDto bpjsConsumerDto = getBpjsConsumerByEntityCode(param);
         if(bpjsConsumerDto == null) throw new BusinessException("Invalid entity");
         return bpjsConsumerDto.getProviderCode();
     }
@@ -61,5 +71,11 @@ public class BpjsConsumerServiceImpl implements BpjsConsumerService {
             List<String> entityCodeList) {
         return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDtoList(
                 bpjsConsumerRepository.selectWithCategoryByEntityCodeList(category, entityCodeList));
+    }
+    
+    @Override
+    public List<BpjsConsumerDto> getBpjsConsumerList(List<String> entityCodeList) {
+        return BpjsConsumerDtoMapper.toBpjsConsumerDtoList(
+                bpjsConsumerRepository.getBpjsConsumerList(entityCodeList));
     }
 }

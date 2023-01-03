@@ -3,6 +3,8 @@ package com.rsmurniteguh.bpjs.bpjsservice.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
@@ -41,6 +43,7 @@ public class FeignClientConfig extends Client.Default {
             throw new IOException("Bpjs Cons Id Not Found");
         }
         String reqTimestamp = request.requestTemplate().headers().get(Constant.X_TIMESTAMP).toArray()[0].toString();
+        String consId = request.requestTemplate().headers().get(Constant.X_CONS_ID).toArray()[0].toString();
         try {
             log.info(new String(request.body()));
         } catch (Exception e) {
@@ -56,7 +59,14 @@ public class FeignClientConfig extends Client.Default {
             return response.toBuilder().body(responseBody, StandardCharsets.UTF_8).build();
         }
 
-        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+		Map<String, Object> param = new HashMap<>();
+		param.put("entity_code", entityCode);
+		param.put("consumer_id", consId);
+        
+		BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(param);
+        if (bpjsConsumerDto == null) {
+        	bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode2(param);
+        }
 
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
 
