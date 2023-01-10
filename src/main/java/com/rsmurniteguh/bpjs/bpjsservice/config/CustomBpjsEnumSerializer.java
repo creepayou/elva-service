@@ -20,6 +20,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Penjamin;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusKlaim;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.StatusPulang;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TaskIdAntrean;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TipeRujukan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.TujuanKunjungan;
 
@@ -62,6 +63,8 @@ public class CustomBpjsEnumSerializer extends JsonSerializer<Object> {
             jsonGenerator.writeString(((FilterTanggalRencanaKontrol) bpjsEnum).getFilter());
         } else if (bpjsEnum instanceof Lakalantas) {
             jsonGenerator.writeString(((Lakalantas) bpjsEnum).getKll().getKode());
+        } else if (bpjsEnum instanceof TaskIdAntrean) {
+            jsonGenerator.writeNumber(((TaskIdAntrean) bpjsEnum).getTaskId());
         }
     }
 

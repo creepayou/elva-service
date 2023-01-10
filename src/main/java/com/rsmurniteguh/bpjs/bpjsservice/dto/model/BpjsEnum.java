@@ -644,4 +644,36 @@ public class BpjsEnum {
         @Getter
         private String waktu;
     }
+
+    @AllArgsConstructor
+    public enum TaskIdAntrean {
+        TUNGGU_ADMISI(1), MULAI_LAYANAN_ADMISI(2), TUNGGU_POLI(3),
+        MULAI_LAYANAN_POLI(4), TUNGGU_FARMASI(5), MULAI_LAYANAN_FARMASI(6),
+        SELESAI_FARMASI(7), BATAL_ANTRIAN(99);
+
+        @Getter
+        private Integer taskId;
+
+        @JsonCreator
+        public static TaskIdAntrean fromValue(Integer value) throws BusinessException {
+            return getTaskIdAntrean(value);
+        }
+
+        @JsonIgnore
+        private static final Map<Integer, TaskIdAntrean> BY_VALUE = new HashMap<>();
+
+        static {
+            for (TaskIdAntrean taskIdAntrean : values()) {
+                BY_VALUE.put(taskIdAntrean.getTaskId(), taskIdAntrean);
+            }
+        }
+
+        @JsonIgnore
+        public static TaskIdAntrean getTaskIdAntrean(Integer value) throws BusinessException {
+            if (BY_VALUE.containsKey(value))
+                return BY_VALUE.get(value);
+            else
+                throw new BusinessException("Task Id tidak sesuai");
+        }
+    }
 }
