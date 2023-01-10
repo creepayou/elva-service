@@ -1,6 +1,5 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +87,7 @@ public class RencanaKontrolController extends BaseController {
 
     @GetMapping("/getRencanaKontrolByNoSep")
     public ResponseSts<RencanaKontrolDto> getRencanaKontrolByNoSep(@RequestParam("noSep") String noSep,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException, IOException {
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         RencanaKontrolDto rencanaKontrolDto = new RencanaKontrolDto();
         BpjsResponse2<BpjsSepDto> responseBpjs = vClaimProxy.getRencanaKontrolByNoSep(noSep, entityCode);
         if (responseBpjs.getMetaData().getCode().equals(Constant.METADATA_OK_200)) {
