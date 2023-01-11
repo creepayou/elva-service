@@ -655,21 +655,22 @@ public class BpjsEnum {
         private Integer taskId;
 
         @JsonCreator
-        public static TaskIdAntrean fromValue(Integer value) throws BusinessException {
+        public static TaskIdAntrean fromValue(Object value) throws BusinessException {
             return getTaskIdAntrean(value);
         }
 
         @JsonIgnore
-        private static final Map<Integer, TaskIdAntrean> BY_VALUE = new HashMap<>();
+        private static final Map<Object, TaskIdAntrean> BY_VALUE = new HashMap<>();
 
         static {
             for (TaskIdAntrean taskIdAntrean : values()) {
                 BY_VALUE.put(taskIdAntrean.getTaskId(), taskIdAntrean);
+                BY_VALUE.put(taskIdAntrean.name(), taskIdAntrean);
             }
         }
 
         @JsonIgnore
-        public static TaskIdAntrean getTaskIdAntrean(Integer value) throws BusinessException {
+        public static TaskIdAntrean getTaskIdAntrean(Object value) throws BusinessException {
             if (BY_VALUE.containsKey(value))
                 return BY_VALUE.get(value);
             else
