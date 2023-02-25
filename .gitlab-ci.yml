@@ -52,7 +52,7 @@ sonarqube-job:   # This job also runs in the test stage.
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     SONAR_TOKEN: $SONAR_TOKEN
-    SONAR_HOST_URL: "http://192.168.222.167:9000"
+    SONAR_HOST_URL: "http://192.168.222.182:9000"
     GIT_DEPTH: 0
   script:
     - mvn verify sonar:sonar -Dsonar.projectKey=${SONAR_PROJECT_KEY} '-Dmaven.test.skip=true' $MAVEN_OPTS
