@@ -6,7 +6,6 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 import com.rsmurniteguh.bpjs.bpjsservice.base.controller.BaseController;
 import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.InsertBpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.exception.BusinessException;
@@ -31,14 +30,11 @@ public class BpjsConsumerController extends BaseController {
     private final BpjsConsumerService bpjsConsumerService;
 
     private final List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList;
-    private final List<BpjsConsumerDto> bpjsConsumerList;
 
     public BpjsConsumerController(BpjsConsumerService bpjsConsumerService,
-            List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList,
-            List<BpjsConsumerDto> bpjsConsumerList) {
+            List<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryList) {
         this.bpjsConsumerService = bpjsConsumerService;
         this.bpjsConsumerWithCategoryList = bpjsConsumerWithCategoryList;
-		this.bpjsConsumerList = bpjsConsumerList;
     }
 
     @GetMapping("/getProviderCode")
@@ -84,17 +80,5 @@ public class BpjsConsumerController extends BaseController {
         }
         return ResponseSts
                 .onFail(String.format("BPJS Cons Id not found! Entity: %s, Category: %s", entityCode, category));
-    }
-    
-    @GetMapping("/getBpjsConsumer")
-    public ResponseSts<BpjsConsumerDto> getBpjsConsumer(
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
-        for (BpjsConsumerDto bpjsConsumerDto : bpjsConsumerList) {
-            if (bpjsConsumerDto.getEntityCode().equals(entityCode)) {
-            	return ResponseSts.onSuccess(bpjsConsumerDto);
-            }
-        }
-        return ResponseSts
-                .onFail(String.format("BPJS Cons Id not found! Entity: %s", entityCode));
     }
 }
