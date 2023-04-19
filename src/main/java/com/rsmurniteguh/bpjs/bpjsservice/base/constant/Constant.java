@@ -22,7 +22,6 @@ public final class Constant {
 	public static final String VCLAIM_FEIGN_NAME = "vclaim";
 	public static final String APLICARES_FEIGN_NAME = "aplicares";
 	public static final String ANTREAN_FEIGN_NAME = "antreanrs";
-	public static final String APOTEK_FEIGN_NAME = "apotek";
 
 	public static final String X_CONS_ID = "X-cons-id";
 	public static final String X_TIMESTAMP = "X-timestamp";

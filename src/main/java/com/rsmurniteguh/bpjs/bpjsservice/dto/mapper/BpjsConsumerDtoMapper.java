@@ -41,8 +41,7 @@ public class BpjsConsumerDtoMapper {
                 .setCreatedBy(bpjsConsumer.getCreated_by()).setCreatedDateTime(bpjsConsumer.getCreated_datetime())
                 .setUpdatedBy(bpjsConsumer.getUpdated_by()).setUpdatedDateTime(bpjsConsumer.getUpdated_datetime())
                 .setDefunctInd(bpjsConsumer.getDefunct_ind()).setProviderCode(bpjsConsumer.getProvider_code())
-                .setVclaimVersion(bpjsConsumer.getVclaim_version()).setUserKey(bpjsConsumer.getUser_key())
-                .setEntityCode(bpjsConsumer.getEntity_code());
+                .setVclaimVersion(bpjsConsumer.getVclaim_version()).setUserKey(bpjsConsumer.getUser_key());
     }
 
     public static List<BpjsConsumerDto> toBpjsConsumerDtoList(List<BpjsConsumer> bpjsConsumerList) {

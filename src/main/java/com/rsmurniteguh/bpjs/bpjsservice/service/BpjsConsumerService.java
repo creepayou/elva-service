@@ -1,7 +1,6 @@
 package com.rsmurniteguh.bpjs.bpjsservice.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
@@ -15,9 +14,7 @@ public interface BpjsConsumerService {
 
     void updateBpjsConsumer(BpjsConsumerDto bpjsConsumerDto);
 
-    BpjsConsumerDto getBpjsConsumerByEntityCode(Map<String, Object> param);
-    
-    BpjsConsumerDto getBpjsConsumerByEntityCode2(Map<String, Object> param);
+    BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode);
 
     String getProviderCodeByEntityCode(String entityCode) throws BusinessException;
 
@@ -25,6 +22,4 @@ public interface BpjsConsumerService {
 
     List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
             List<String> entityCodeList);
-    
-    List<BpjsConsumerDto> getBpjsConsumerList(List<String> entityCodeList);
 }

@@ -38,18 +38,8 @@
         </where>
     </update>
 
-    <select id="getByEntityCode" parameterType="java.util.Map" resultType="BpjsConsumer">
+    <select id="getByEntityCode" resultType="BpjsConsumer">
         SELECT * FROM bpjsconsumer WHERE entity_code = #{entity_code} AND defunct_ind = 'N'
-        <if test="consumer_id != null">
-            AND consumer_id = #{consumer_id} 
-        </if>
-    </select>
-    
-    <select id="getBpjsConsumerByEntityCode" parameterType="java.util.Map" resultType="BpjsConsumer">
-        SELECT * FROM bpjsconsumer_pharmacy WHERE entity_code = #{entity_code} AND defunct_ind = 'N'
-        <if test="consumer_id != null">
-            AND consumer_id = #{consumer_id} 
-        </if>
     </select>
 
     <insert id="insertCategory" useGeneratedKeys="true" keyProperty="bpjsconsumer_category_id" keyColumn="bpjsconsumer_category_id" parameterType="BpjsConsumerCategory">
@@ -83,13 +73,6 @@
         </if>
         WHERE bc.defunct_ind = 'N' 
         <foreach collection="entity_code_list" item="item" open="AND bc.entity_code IN (" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
-    
-    <select id="getBpjsConsumerList" resultType="BpjsConsumer">
-        SELECT * FROM bpjsconsumer_pharmacy WHERE defunct_ind = 'N' 
-        <foreach collection="entity_code_list" item="item" open="AND entity_code IN (" separator="," close=")">
             #{item}
         </foreach>
     </select>
