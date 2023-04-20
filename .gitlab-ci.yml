@@ -15,6 +15,7 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - publish
   - deploy
+  - deploy-prd
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -84,3 +85,30 @@ deploy-job:
   only:
     - /QA-.+/
   script: echo "successfully deploy"
+
+deploy-prod-job:      # This job runs in the deploy stage.
+  stage: deploy-prd  # It only runs when *both* jobs in the test stage complete successfully.
+  image:
+    name: alpine/git:latest
+  variables:
+    _PACKAGE_NAME: bpjsservice
+  script:
+    - echo "Deploying application bpjsservice"
+    - mkdir /root/.ssh
+    - echo "$SSH_KEY" > /root/.ssh/id_rsa
+    - chmod 400 /root/.ssh/id_rsa
+    - eval `ssh-agent -s`
+    - ssh-add /root/.ssh/id_rsa
+    - ssh-keyscan -p 2022 source.developers.google.com > /root/.ssh/known_hosts
+    - cd /home
+    - git config --global user.email "williandy@rsmurniteguh.com"
+    - git config --global user.name "Williandy"
+    - git clone --depth 1 ssh://williandy@rsmurniteguh.com@source.developers.google.com:2022/p/mthis-296015/r/mtmh-cluster-config
+    - cd mtmh-cluster-config/namespaces/his-services
+    - sed -i s+mthis-296015/bpjsservice.*+mthis-296015/bpjsservice:$CI_COMMIT_TAG+g deployment-$_PACKAGE_NAME.yaml
+    - git add -A
+    - git commit -m 'Update version'
+    - git push
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^PRD-/'
+      when: manual 
