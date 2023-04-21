@@ -90,6 +90,10 @@ deploy-prod-job:      # This job runs in the deploy stage.
   stage: deploy-prd  # It only runs when *both* jobs in the test stage complete successfully.
   image:
     name: alpine/git:latest
+  environment:
+    name: bpjsservice 
+    url: https://app.rsmurniteguh.app/bpjsservice
+    deployment_tier: production
   variables:
     _PACKAGE_NAME: bpjsservice
   script:
