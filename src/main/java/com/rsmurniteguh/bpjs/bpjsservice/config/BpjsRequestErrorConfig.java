@@ -18,7 +18,7 @@ public class BpjsRequestErrorConfig implements ErrorDecoder {
         if (exception instanceof RetryableException) {
             return exception;
         }
-        if (arg1.status() == 500) {
+        if (arg1.status() == 500 || arg1.status() == 503) {
             return new RetryableException(arg1.status(), arg1.reason(), arg1.request().httpMethod(),
                     new Date(new Timestamp(2000L).getTime()), arg1.request());
         }

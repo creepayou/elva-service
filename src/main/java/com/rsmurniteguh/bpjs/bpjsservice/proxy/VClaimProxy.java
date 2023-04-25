@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestClientConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsFeignClientConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestErrorConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsJaminanDto;
@@ -52,7 +53,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
 @FeignClient(name = Constant.VCLAIM_FEIGN_NAME, url = "${proxy.vclaimrest.host}", configuration = {
-        BpjsRequestConfig.class, BpjsRequestClientConfig.class })
+        BpjsRequestConfig.class, BpjsFeignClientConfig.class, BpjsRequestErrorConfig.class })
 public interface VClaimProxy {
 
     // #region Referensi
