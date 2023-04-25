@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSocketFactory;
-
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
 
@@ -24,13 +21,11 @@ import feign.Response;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
-public class FeignClientConfig extends Client.Default {
+public class BpjsFeignClientConfig implements Client {
 
-    private BpjsConsumerService bpjsConsumerService;
+    private final BpjsConsumerService bpjsConsumerService;
 
-    public FeignClientConfig(SSLSocketFactory sslContextFactory, HostnameVerifier hostnameVerifier,
-            BpjsConsumerService bpjsConsumerService) {
-        super(sslContextFactory, hostnameVerifier);
+    public BpjsFeignClientConfig(BpjsConsumerService bpjsConsumerService) {
         this.bpjsConsumerService = bpjsConsumerService;
     }
 
@@ -46,7 +41,8 @@ public class FeignClientConfig extends Client.Default {
         } catch (Exception e) {
             // ignore
         }
-        Response response = super.execute(request, options);
+        Response response = new Client.Default(null, null).execute(request, options);
+
         InputStream bodyStream = response.body().asInputStream();
         String responseBody = StreamUtils.copyToString(bodyStream, StandardCharsets.UTF_8);
         BpjsEncResponse bpjsResponse = null;
@@ -72,7 +68,7 @@ public class FeignClientConfig extends Client.Default {
 
     private Object decryptedResponse(String response, String key) {
         try {
-            response = DecryptUtil.decrypt(response.replaceAll("\"", ""), key);
+            response = DecryptUtil.decrypt(response.replace("\"", ""), key);
         } catch (Exception e) {
             // ignore
         }

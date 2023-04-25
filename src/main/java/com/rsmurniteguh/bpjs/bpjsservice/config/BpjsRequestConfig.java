@@ -7,7 +7,6 @@ import java.util.Base64;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
@@ -24,7 +23,7 @@ import feign.RequestTemplate;
 import lombok.extern.apachecommons.CommonsLog;
 
 @CommonsLog
-public class BpjsRequestConfig {
+public class BpjsRequestConfig implements RequestInterceptor {
 
     private final BpjsConsumerController bpjsConsumerController;
 
@@ -32,40 +31,38 @@ public class BpjsRequestConfig {
         this.bpjsConsumerController = bpjsConsumerController;
     }
 
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return (RequestTemplate requestTemplate) -> {
-            try {
-                String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
+    @Override
+    public void apply(RequestTemplate requestTemplate) {
+        try {
+            String entityCode = requestTemplate.headers().get(Constant.MT_ENTITY_CODE).toArray()[0].toString();
 
-                if (StringUtils.hasText(entityCode)) {
-                    BpjsConsumerCategoryType category = BpjsConsumerCategoryType
-                            .fromType(requestTemplate.feignTarget().name());
+            if (StringUtils.hasText(entityCode)) {
+                BpjsConsumerCategoryType category = BpjsConsumerCategoryType
+                        .fromType(requestTemplate.feignTarget().name());
 
-                    BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = ResponseStsUtil.handleResponseSts(
-                            bpjsConsumerController.getBpjsConsumerWithCategory(category, entityCode));
-                    final Long unixTime = System.currentTimeMillis() / 1000L;
-                    final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
-                    requestTemplate.header(Constant.X_CONS_ID, bpjsConsumerWithCategoryDto.getConsumerId());
-                    requestTemplate.header(Constant.X_TIMESTAMP, unixTime + "");
-                    requestTemplate.header(Constant.X_SIGNATURE,
-                            generateHmacSHA256Signature(salt, bpjsConsumerWithCategoryDto.getConsumerSecret()));
-                    if (StringUtils.hasText(bpjsConsumerWithCategoryDto.getUserKey())) {
-                        requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
-                    }
-                    if (category != null
-                            && category.equals(BpjsConsumerCategoryType.VCLAIM)) {
-                        requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-                    } else {
-                        requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-                    }
+                BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = ResponseStsUtil.handleResponseSts(
+                        bpjsConsumerController.getBpjsConsumerWithCategory(category, entityCode));
+                final Long unixTime = System.currentTimeMillis() / 1000L;
+                final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
+                requestTemplate.header(Constant.X_CONS_ID, bpjsConsumerWithCategoryDto.getConsumerId());
+                requestTemplate.header(Constant.X_TIMESTAMP, unixTime + "");
+                requestTemplate.header(Constant.X_SIGNATURE,
+                        generateHmacSHA256Signature(salt, bpjsConsumerWithCategoryDto.getConsumerSecret()));
+                if (StringUtils.hasText(bpjsConsumerWithCategoryDto.getUserKey())) {
+                    requestTemplate.header("user_key", bpjsConsumerWithCategoryDto.getUserKey());
                 }
-            } catch (BusinessException e) {
-                log.error(e.getMessage());
-            } catch (IllegalStateException | GeneralSecurityException | ServiceException e) {
-                log.error(e.getMessage(), e);
+                if (category != null
+                        && category.equals(BpjsConsumerCategoryType.VCLAIM)) {
+                    requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+                } else {
+                    requestTemplate.header(Constant.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                }
             }
-        };
+        } catch (BusinessException e) {
+            log.error(e.getMessage());
+        } catch (IllegalStateException | GeneralSecurityException | ServiceException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private String generateHmacSHA256Signature(String data, String key) throws GeneralSecurityException {

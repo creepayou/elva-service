@@ -2,9 +2,17 @@ package com.rsmurniteguh.bpjs.bpjsservice.proxy;
 
 import java.util.List;
 
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestClientConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsFeignClientConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
+import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestErrorConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDashboardPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
@@ -18,15 +26,8 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestListTaskModelDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsResponse2;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-
 @FeignClient(name = Constant.ANTREAN_FEIGN_NAME, url = "${proxy.antreanrs.host}", configuration = {
-        BpjsRequestConfig.class, BpjsRequestClientConfig.class })
+        BpjsRequestConfig.class, BpjsFeignClientConfig.class, BpjsRequestErrorConfig.class })
 public interface AntreanRsProxy {
 
     @GetMapping(value = "/ref/poli")
