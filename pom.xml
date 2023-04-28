@@ -15,7 +15,7 @@
 	<description>MT-BPJS Service API</description>
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<spring-cloud.version>2021.0.7</spring-cloud.version>
 		<spring-cloud-gcp.version>3.4.9</spring-cloud-gcp.version>
 	</properties>
 	<dependencies>
