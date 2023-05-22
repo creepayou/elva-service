@@ -15,6 +15,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestErrorConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDashboardPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPatientFpDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
@@ -37,6 +38,20 @@ public interface AntreanRsProxy {
     @GetMapping(value = "/ref/dokter")
     public BpjsResponse2<List<BpjsAntreanDoctorDto>> getReferensiDokter(
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/ref/poli/fp")
+    public BpjsResponse2<List<BpjsAntreanPoliDto>> getReferensiPoliFp(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/ref/pasien/fp/identitas/nik/noidentitas/{nik}")
+    public BpjsResponse2<BpjsAntreanPatientFpDto> getReferensiPasienFpByNIK(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
+            @PathVariable("nik") String nik);
+
+   @GetMapping(value = "/ref/pasien/fp/identitas/noka/noidentitas/{bpjsNo}")
+   public BpjsResponse2<BpjsAntreanPatientFpDto> getReferensiPasienFpByBpjsNo(
+           @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
+           @PathVariable("bpjsNo") String bpjsNo);
 
     @GetMapping(value = "/jadwaldokter/kodepoli/{kodePoli}/tanggal/{tanggal}")
     public BpjsResponse2<List<BpjsAntreanScheduleDoctorDto>> getReferensiJadwalDokter(

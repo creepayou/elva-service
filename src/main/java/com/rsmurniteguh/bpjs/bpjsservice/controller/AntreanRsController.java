@@ -18,6 +18,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDashboardPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPatientFpDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterWaktuAntrean;
@@ -68,6 +69,34 @@ public class AntreanRsController extends BaseController {
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.getReferensiJadwalDokter(kodePoli,
                                 tanggal, entityCode)));
+    }
+
+    @GetMapping("/getReferensiPoliFp")
+    public ResponseSts<List<BpjsAntreanPoliDto>> getReferensiPoliFp(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
+            throws BusinessException {
+        return ResponseSts.onSuccess(
+                BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getReferensiPoliFp(entityCode)));
+    }
+
+    @GetMapping("/getReferensiPasienFpByBpjsNo/{bpjsNo}")
+    public ResponseSts<BpjsAntreanPatientFpDto> getReferensiPasienFpByBpjsNo(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
+            @PathVariable("bpjsNo") String bpjsNo)
+            throws BusinessException {
+        return ResponseSts.onSuccess(
+                BpjsResponseUtil.handleBpjsResponse(
+                        antreanRsProxy.getReferensiPasienFpByBpjsNo(entityCode, bpjsNo)));
+    }
+
+    @GetMapping("/getReferensiPasienFpByNIK/{nik}")
+    public ResponseSts<BpjsAntreanPatientFpDto> getReferensiPasienFpByNIK(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
+            @PathVariable("nik") String nik)
+            throws BusinessException {
+        return ResponseSts.onSuccess(
+                BpjsResponseUtil.handleBpjsResponse(
+                        antreanRsProxy.getReferensiPasienFpByNIK(entityCode, nik)));
     }
 
     @PostMapping("/updateJadwalDokter")
