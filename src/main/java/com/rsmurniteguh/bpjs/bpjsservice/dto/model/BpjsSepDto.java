@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBooleanDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
@@ -52,6 +54,14 @@ public class BpjsSepDto {
     private Indikator katarak;
     private ProvUmumDto provUmum;
     private ProvPerujukDto provPerujuk;
+    private VClaimMappingDto tujuanKunj;
+    private VClaimMappingDto flagProcedure;
+    private VClaimMappingDto kdPenunjang;
+    private VClaimMappingDto assestmenPel;
+    @JsonAlias("eSEP")
+    @JsonProperty("eSep")
+    @JsonDeserialize(using = CustomBooleanDeserializer.class)
+    private boolean eSep;
 
     @Data
     @Accessors(chain = true)

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.RequestUtil;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,9 @@ public class CustomJsonDateDeserializer extends JsonDeserializer<Timestamp> {
         if (string.contains("+")) {
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(string);
             return Timestamp.valueOf(zonedDateTime.toLocalDateTime());
+        }
+        if (string.charAt(0) == '-' || NumberUtils.isDigits(string)) {
+            return new Timestamp(Long.parseLong(string));
         }
 
         String entityCode = RequestUtil.getEntityCode(request);
