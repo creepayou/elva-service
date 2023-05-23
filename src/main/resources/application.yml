@@ -77,7 +77,7 @@ spring:
 proxy:
   commonservice:
     host: ${COMMONSERVICE_HOST:${proxy.commonservice.url}}
-    url: http://appcluster.homtmh.local/commonservice
+    url: http://cluster.homtmh.local/commonservice
   vclaimrest:
     host: ${VCLAIMREST_HOST:${proxy.vclaimrest.url}}
     url: https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest-dev
