@@ -13,12 +13,12 @@ import lombok.experimental.Accessors;
 @JsonInclude(value = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BpjsAntreanPoliDto {
-    @JsonAlias("nmpoli")
+    @JsonAlias({"nmpoli", "namapoli"})
     private String namaPoli;
-    @JsonAlias("nmsubspesialis")
+    @JsonAlias({"nmsubspesialis", "namasubspesialis"})
     private String namaSubspesialis;
-    @JsonAlias("kdpoli")
+    @JsonAlias({"kdpoli", "kodepoli"})
     private String kodePoli;
-    @JsonAlias("kdsubspesialis")
+    @JsonAlias({"kdsubspesialis", "kodesubspesialis"})
     private String kodeSubspesialis;
 }
