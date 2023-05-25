@@ -80,12 +80,26 @@ publish-job:      # This job runs in the deploy stage.
       --destination "asia.gcr.io/mthis-296015/${PACKAGE_NAME}:${CI_COMMIT_TAG}"
 
 deploy-job:
-  extends: .git:push
   stage: deploy
   environment: qa
   only:
     - /QA-.+/
-  script: echo "successfully deploy"
+  image:
+    name: alpine:latest
+  variables:
+    _PACKAGE_NAME: bpjsservice
+  script:
+    - apk add git
+    - apk add kustomize
+    - echo "Deploying dev application bpjsservice"
+    - cd /home
+    - git clone https://x-token-auth:$BITBUCKET_TOKEN@bitbucket.org/mtmh/kubernetes-config.git
+    - git config --global user.email 712020:f6c67926-45aa-416a-8cfa-128100ed6ef4@bots.bitbucket.org
+    - cd kubernetes-config/kustomize
+    - cd ${NAMESPACE}/${PACKAGE_NAME}/overlays/qa && kustomize edit set image asia.gcr.io/mthis-296015/${PACKAGE_NAME}="asia.gcr.io/mthis-296015/${PACKAGE_NAME}:${CI_COMMIT_TAG}"
+    - git add -A
+    - git commit -m "Gitops update ${PACKAGE_NAME}:${CI_COMMIT_TAG} by ${GITLAB_USER_NAME}"
+    - git push
 
 deploy-prod-job:      # This job runs in the deploy stage.
   stage: deploy-prd  # It only runs when *both* jobs in the test stage complete successfully.
