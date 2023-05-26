@@ -26,6 +26,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepKllDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSearchDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.VClaimMappingDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsRequestDto;
@@ -55,7 +56,7 @@ public class SepController extends BaseController {
     private static final String KEY_SEP = "sep";
 
     @GetMapping("/searchSEP/{sepNo}")
-    public ResponseSts<BpjsSepDto> searchSEP(@PathVariable("sepNo") String sepNo,
+    public ResponseSts<BpjsSepSearchDto> searchSEP(@PathVariable("sepNo") String sepNo,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
