@@ -28,6 +28,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukanListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepKllDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSearchDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepSuplesiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.DataDokterDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.RencanaKontrolCrudDto;
@@ -144,7 +145,7 @@ public interface VClaimProxy {
     // #region SEP
 
     @GetMapping("/SEP/{noSep}")
-    public BpjsResponse2<BpjsSepDto> searchSEP(@PathVariable("noSep") String noSep,
+    public BpjsResponse2<BpjsSepSearchDto> searchSEP(@PathVariable("noSep") String noSep,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
     @PostMapping("/SEP/2.0/insert")

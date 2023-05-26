@@ -6,15 +6,12 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.rsmurniteguh.bpjs.bpjsservice.config.CustomBooleanDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Pembiayaan;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto.Informasi;
 
 import lombok.Data;
@@ -46,54 +43,13 @@ public class BpjsSepDto {
     private String noRujukan;
     private Lakalantas kdStatusKecelakaan;
     private String nmstatusKecelakaan;
-    private LokasiKejadian lokasiKejadian;
-    private DokterDPJP dpjp;
+    private LokasiKejadianDto lokasiKejadian;
+    private DokterDPJPDto dpjp;
     private KelasRawatDto klsRawat;
-    private DokterDPJP kontrol;
+    private DokterDPJPDto kontrol;
     private Indikator cob;
     private Indikator katarak;
     private ProvUmumDto provUmum;
     private ProvPerujukDto provPerujuk;
-    private VClaimMappingDto tujuanKunj;
-    private VClaimMappingDto flagProcedure;
-    private VClaimMappingDto kdPenunjang;
-    private VClaimMappingDto assestmenPel;
-    @JsonAlias("eSEP")
-    @JsonProperty("eSep")
-    @JsonDeserialize(using = CustomBooleanDeserializer.class)
-    private boolean eSep;
-
-    @Data
-    @Accessors(chain = true)
-    public static class LokasiKejadian {
-        private String kdProp;
-        private String kdKab;
-        private String kdKec;
-        private String ketKejadian;
-        private String lokasi;
-        @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-        private Timestamp tglKejadian;
-    }
-
-    @Data
-    @Accessors(chain = true)
-    public static class DokterDPJP {
-        @JsonAlias("kdDPJP")
-        private String kdDokter;
-        @JsonAlias("nmDPJP")
-        private String nmDokter;
-        private String noSurat;
-    }
-
-    @Data
-    @Accessors(chain = true)
-    @JsonInclude(value = Include.NON_NULL)
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public class KelasRawatDto {
-        private KelasRawat klsRawatHak;
-        private String klsRawatNaik;
-        private Pembiayaan pembiayaan;
-        private String penanggungJawab;
-    }
 
 }
