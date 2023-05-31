@@ -1,0 +1,94 @@
+image: maven:3.8.5-openjdk-17-slim
+
+clone:
+  depth: 1
+
+definitions:
+  steps:
+  - step: &build-job
+      name: build
+      script:
+          - mvn package '-Dmaven.test.skip=true'
+      caches:
+        - maven
+      artifacts:
+        when: always
+        expire_in: 2 days
+        paths:
+          - target/*.jar
+          - Dockerfile
+  - step: &push-image-to-gcr
+      name: push-image
+      image: google/cloud-sdk:alpine
+      clone:
+        enabled: false
+      caches:
+        - docker
+      services:
+        - docker
+      script:
+        # build docker image
+        - docker build -t ${PACKAGE_NAME}:${BITBUCKET_TAG} .
+        # Authenticating with the service account key file
+        - echo $GCLOUD_API_KEYFILE | base64 -d > ./gcloud-api-key.json
+        - gcloud auth activate-service-account --key-file gcloud-api-key.json
+        - gcloud config set project $GCLOUD_PROJECT
+        - cat ./gcloud-api-key.json | docker login -u _json_key --password-stdin https://asia.gcr.io
+        - gcloud auth configure-docker asia-southeast2-docker.pkg.dev --quiet
+        # tag docker image
+        - docker tag ${PACKAGE_NAME}:${BITBUCKET_TAG} asia-southeast2-docker.pkg.dev/$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}
+        # push image 
+        - docker push asia-southeast2-docker.pkg.dev/$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}
+  - step: &deploy-dev-job
+      name: deploy-dev-job
+      trigger: manual
+      deployment: dev
+      clone:
+        enabled: false
+      image:
+        name: alpine:latest
+      script:
+        - apk add git
+        - apk add kustomize
+        - cd /home
+        - git clone https://x-token-auth:$BITBUCKET_TOKEN@bitbucket.org/mtmh/kubernetes-config.git
+        - git config --global user.email 712020:f6c67926-45aa-416a-8cfa-128100ed6ef4@bots.bitbucket.org
+        - cd kubernetes-config/kustomize
+        - cd ${NAMESPACE}/${PACKAGE_NAME}/overlays/qa && kustomize edit set image asia-southeast2-docker.pkg.dev/$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}="asia-southeast2-docker.pkg.dev/$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}"
+        - git add -A
+        - git commit -m "Gitops update ${PACKAGE_NAME}:${BITBUCKET_TAG} with tag ${BITBUCKET_TAG}"
+        - git push
+      artifacts:
+        download: false 
+  - step: &deploy-prd-job
+      name: deploy-prd-job
+      trigger: manual
+      deployment: production
+      clone:
+        enabled: false
+      image:
+        name: google/cloud-sdk:alpine
+      script:
+        - echo $GOOGLE_GITOPS | base64 -d > ./gcloud-api-key.json
+        - gcloud auth activate-service-account --key-file gcloud-api-key.json
+        - gcloud config set project $GCLOUD_PROJECT
+        - gcloud source repos clone mtmh-cluster-config --project=mthis-296015
+        - git config --global user.email "bitbucket-gitops@mthis-296015.iam.gserviceaccount.com"
+        - git config --global user.name "bitbucket-gitops"
+        - cd mtmh-cluster-config/namespaces/${NAMESPACE}
+        - sed -i s+$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}.*+$GCLOUD_PROJECT/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}+g deployment-${PACKAGE_NAME}.yaml
+        - git add -A
+        - git commit -m 'Gitops update ${PACKAGE_NAME}:${BITBUCKET_TAG}'
+        - git push
+      artifacts:
+        download: false 
+pipelines:
+  tags:
+    'QA-*':
+      - step: *build-job
+      - step: *push-image-to-gcr
+      - step: *deploy-dev-job
+    'PRD-*':
+      - step: *build-job
+      - step: *push-image-to-gcr
+      - step: *deploy-prd-job
