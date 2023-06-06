@@ -27,6 +27,7 @@ definitions:
       services:
         - docker
       script:
+        - export DOCKER_BUILDKIT=0
         # build docker image
         - docker build -t ${PACKAGE_NAME}:${BITBUCKET_TAG} .
         # Authenticating with the service account key file
