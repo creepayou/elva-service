@@ -23,9 +23,9 @@ definitions:
             | tar xz docker-credential-gcr \
             && chmod +x docker-credential-gcr && mv docker-credential-gcr /usr/bin/
           - docker-credential-gcr configure-docker --registries=asia-southeast2-docker.pkg.dev
-          - docker build -t asia-southeast2-docker.pkg.dev/mthis-296015/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}
+          - docker build -t asia-southeast2-docker.pkg.dev/${GCLOUD_PROJECT}/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG} .
           # push image 
-          - docker push asia-southeast2-docker.pkg.dev/mthis-296015/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}
+          - docker push asia-southeast2-docker.pkg.dev/${GCLOUD_PROJECT}/mtmh-image-repo/${PACKAGE_NAME}:${BITBUCKET_TAG}
   - step: &deploy-dev-job
       name: deploy-dev-job
       trigger: manual
