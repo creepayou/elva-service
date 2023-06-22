@@ -19,6 +19,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDashboardPerTangga
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPatientFpDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterWaktuAntrean;
@@ -198,6 +199,13 @@ public class AntreanRsController extends BaseController {
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.batalAntrean(bpjsBatalAntreanDto,
                                 entityCode)));
+    }
+
+    @GetMapping("/antreanPerTanggal")
+    public ResponseSts<List<BpjsAntreanPerTanggalDto>> getAntreanPerTanggal(
+        @RequestParam (value = "tanggal", required=true) String tanggal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getAntreanPerTanggal(tanggal, entityCode)));
     }
 
 }

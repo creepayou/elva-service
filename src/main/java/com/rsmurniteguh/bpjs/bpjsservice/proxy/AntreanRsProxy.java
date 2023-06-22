@@ -16,6 +16,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.config.BpjsRequestErrorConfig;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDashboardPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPatientFpDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
@@ -73,23 +74,28 @@ public interface AntreanRsProxy {
             @PathVariable("tanggal") String tanggal,
             @PathVariable("waktu") String waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    @GetMapping(value = "/dashboard/waktutunggu/bulan/{bulan}/tahun/{tahun}/waktu/{waktu}")
+            
+            @GetMapping(value = "/dashboard/waktutunggu/bulan/{bulan}/tahun/{tahun}/waktu/{waktu}")
     public BpjsResponse<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerBulan(
             @PathVariable("bulan") String bulan,
             @PathVariable("tahun") String tahun,
             @PathVariable("waktu") String waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    @PostMapping("/antrean/updatewaktu")
-    public BpjsResponse2<Object> updateWaktuAntrean(@RequestBody RequestAntreanDto requestAntreanDto,
+            
+            @PostMapping("/antrean/updatewaktu")
+            public BpjsResponse2<Object> updateWaktuAntrean(@RequestBody RequestAntreanDto requestAntreanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            
+            @PostMapping("/antrean/add")
+            public BpjsResponse2<Object> tambahAntrean(@RequestBody BpjsAntreanDto bpjsAntreanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+            
+            @PostMapping("/antrean/batal")
+            public BpjsResponse2<Object> batalAntrean(@RequestBody BpjsBatalAntreanDto bpjsBatalAntreanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-    @PostMapping("/antrean/add")
-    public BpjsResponse2<Object> tambahAntrean(@RequestBody BpjsAntreanDto bpjsAntreanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-
-    @PostMapping("/antrean/batal")
-    public BpjsResponse2<Object> batalAntrean(@RequestBody BpjsBatalAntreanDto bpjsBatalAntreanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+        @GetMapping(value = "/antrean/pendaftaran/tanggal/{tanggal}")
+        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerTanggal(
+                @PathVariable("tanggal") String tanggal,
+                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }
