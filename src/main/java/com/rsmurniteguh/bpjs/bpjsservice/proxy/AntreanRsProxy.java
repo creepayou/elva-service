@@ -99,6 +99,10 @@ public interface AntreanRsProxy {
                 @PathVariable("tanggal") String tanggal,
                 @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
+        @GetMapping(value = "/antrean/pendaftaran/aktif")
+        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanBelumDilayani(
+                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+                
         @GetMapping(value = "/antrean/pendaftaran/kodebooking/{kodeBooking}")
         public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerKodeBooking(
                 @PathVariable("kodeBooking") String kodeBooking,

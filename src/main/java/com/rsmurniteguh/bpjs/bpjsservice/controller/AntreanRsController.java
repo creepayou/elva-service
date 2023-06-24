@@ -207,6 +207,12 @@ public class AntreanRsController extends BaseController {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
         return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getAntreanPerTanggal(tanggal, entityCode)));
     }
+    
+    @GetMapping("/antreanBelumDilayani")
+    public ResponseSts<List<BpjsAntreanPerTanggalDto>> antreanBelumDilayani(
+        @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+        return ResponseSts.onSuccess(BpjsResponseUtil.handleBpjsResponse(antreanRsProxy.getAntreanBelumDilayani(entityCode)));
+    }
 
     @GetMapping("/antreanPerKodeBooking")
     public ResponseSts<List<BpjsAntreanPerTanggalDto>> getAntreanPerKodeBooking(
