@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.12</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.1.0</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rsmurniteguh.bpjs</groupId>
 	<artifactId>bpjsservice</artifactId>
@@ -14,9 +15,11 @@
 	<name>bpjsservice</name>
 	<description>MT-BPJS Service API</description>
 	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>2021.0.7</spring-cloud.version>
-		<spring-cloud-gcp.version>3.5.1</spring-cloud-gcp.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>2022.0.3</spring-cloud.version>
+		<spring-cloud-gcp.version>4.5.0</spring-cloud-gcp.version>
+		<mybatis-spring-boot.version>3.0.2</mybatis-spring-boot.version>
+		<springdoc-openapi.version>2.1.0</springdoc-openapi.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,7 +37,7 @@
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.3.1</version>
+			<version>${mybatis-spring-boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -67,14 +70,9 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-typehandlers-jsr310</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.7.0</version>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi.version}</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -98,6 +96,10 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

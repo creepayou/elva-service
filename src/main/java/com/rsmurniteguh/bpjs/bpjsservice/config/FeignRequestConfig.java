@@ -2,7 +2,7 @@ package com.rsmurniteguh.bpjs.bpjsservice.config;
 
 import java.util.Enumeration;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

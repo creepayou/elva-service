@@ -1,6 +1,17 @@
 spring:
   profiles:
     active: ${SPRING_PROFILES:dev}
+  cloud:
+    gcp:
+      trace:
+        enabled: false
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 30000
+            readTimeout: 60000
+            follow-redirects: false
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
@@ -14,14 +25,6 @@ default:
     dbname: bpjsservice
     username: postgres
     password: G00gl3123
-
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 30000
-        readTimeout: 60000
-        follow-redirects: false
 
 management:
   health:
@@ -97,8 +100,6 @@ spring:
       on-profile:
       - dev
       - qa
-  sleuth:
-    enabled: false
   datasource:
     hikari:
       maximum-pool-size: 2
@@ -118,8 +119,10 @@ spring:
       on-profile:
       - prod
       - prd
-  sleuth:
-    enabled: true 
+  cloud:
+    gcp:
+      trace:
+        enabled: true
   datasource:
     hikari:
       maximum-pool-size: 4

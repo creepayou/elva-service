@@ -1,6 +1,6 @@
 package com.rsmurniteguh.bpjs.bpjsservice.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
 

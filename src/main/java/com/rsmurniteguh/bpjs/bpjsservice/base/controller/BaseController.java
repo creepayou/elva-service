@@ -7,17 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.java.Log;
+import lombok.extern.apachecommons.CommonsLog;
 
 @RestController
-@Log
+@CommonsLog
 public class BaseController {
 	
 	private final List<SimpleDateFormat> dateFormatList = Arrays.asList(
@@ -44,7 +43,7 @@ public class BaseController {
                 	try {
 						setValue(new Timestamp(Long.parseLong(value)));
 					} catch(Exception e) {
-						log.log(Level.SEVERE, e.getMessage(), e);
+						log.error(e.getMessage(), e);
 						setValue(null);
 					}
                 } else {
