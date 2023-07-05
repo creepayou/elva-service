@@ -41,13 +41,13 @@ public class BpjsConsumerController extends BaseController {
     public ResponseSts<String> getProviderCode(@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode)
             throws BusinessException, ServiceException {
         BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = ResponseStsUtil
-                .handleResponseSts(getBpjsConsumerWithCategory(null, entityCode));
+                .handleResponseSts(getBpjsConsumerWithCategoryResponse(null, entityCode));
         return ResponseSts.onSuccess(bpjsConsumerWithCategoryDto.getProviderCode());
     }
 
     @GetMapping("/isBpjsConsumerAvailable")
     public ResponseSts<Boolean> isBpjsConsumerAvailable(@RequestParam("entityCode") String entityCode) {
-        ResponseSts<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryDto = getBpjsConsumerWithCategory(null,
+        ResponseSts<BpjsConsumerWithCategoryDto> bpjsConsumerWithCategoryDto = getBpjsConsumerWithCategoryResponse(null,
                 entityCode);
         return ResponseSts.onSuccess(bpjsConsumerWithCategoryDto.getData() != null);
     }
@@ -63,22 +63,30 @@ public class BpjsConsumerController extends BaseController {
     }
 
     @GetMapping("/category/{categoryType}")
-    public ResponseSts<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategory(
+    public ResponseSts<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryResponse(
             @PathVariable("categoryType") BpjsConsumerCategoryType category,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) {
+        BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = getBpjsConsumerWithCategory(category, entityCode);
+        if (bpjsConsumerWithCategoryDto == null)
+            return ResponseSts
+                    .onFail(String.format("BPJS Cons Id not found! Entity: %s, Category: %s", entityCode, category));
+        return ResponseSts.onSuccess(bpjsConsumerWithCategoryDto);
+    }
+
+    public BpjsConsumerWithCategoryDto getBpjsConsumerWithCategory(BpjsConsumerCategoryType category,
+            String entityCode) {
         for (BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto : bpjsConsumerWithCategoryList) {
             if (bpjsConsumerWithCategoryDto.getEntityCode().equals(entityCode)) {
                 if (category == null)
-                    return ResponseSts.onSuccess(
-                            new BpjsConsumerWithCategoryDto().setConsumerId(bpjsConsumerWithCategoryDto.getConsumerId())
-                                    .setConsumerSecret(bpjsConsumerWithCategoryDto.getConsumerSecret())
-                                    .setProviderCode(bpjsConsumerWithCategoryDto.getProviderCode()));
+                    return new BpjsConsumerWithCategoryDto().setConsumerId(bpjsConsumerWithCategoryDto.getConsumerId())
+                            .setConsumerSecret(bpjsConsumerWithCategoryDto.getConsumerSecret())
+                            .setProviderCode(bpjsConsumerWithCategoryDto.getProviderCode());
                 else if (bpjsConsumerWithCategoryDto.getCategory().equals(category)) {
-                    return ResponseSts.onSuccess(bpjsConsumerWithCategoryDto);
+                    return bpjsConsumerWithCategoryDto;
                 }
             }
         }
-        return ResponseSts
-                .onFail(String.format("BPJS Cons Id not found! Entity: %s, Category: %s", entityCode, category));
+        return null;
     }
+
 }

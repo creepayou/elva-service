@@ -41,7 +41,7 @@ public class BpjsRequestConfig implements RequestInterceptor {
                         .fromType(requestTemplate.feignTarget().name());
 
                 BpjsConsumerWithCategoryDto bpjsConsumerWithCategoryDto = ResponseStsUtil.handleResponseSts(
-                        bpjsConsumerController.getBpjsConsumerWithCategory(category, entityCode));
+                        bpjsConsumerController.getBpjsConsumerWithCategoryResponse(category, entityCode));
                 final Long unixTime = System.currentTimeMillis() / 1000L;
                 final String salt = bpjsConsumerWithCategoryDto.getConsumerId() + "&" + unixTime;
                 requestTemplate.header(Constant.X_CONS_ID, bpjsConsumerWithCategoryDto.getConsumerId());

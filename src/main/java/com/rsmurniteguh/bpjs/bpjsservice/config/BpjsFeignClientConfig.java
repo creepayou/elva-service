@@ -9,9 +9,9 @@ import org.springframework.util.StreamUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.rsmurniteguh.bpjs.bpjsservice.base.constant.Constant;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerDto;
+import com.rsmurniteguh.bpjs.bpjsservice.controller.BpjsConsumerController;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsConsumerWithCategoryDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.response.BpjsEncResponse;
-import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 import com.rsmurniteguh.bpjs.bpjsservice.util.DecryptUtil;
 import com.rsmurniteguh.bpjs.bpjsservice.util.JsonUtil;
 
@@ -23,10 +23,10 @@ import lombok.extern.apachecommons.CommonsLog;
 @CommonsLog
 public class BpjsFeignClientConfig implements Client {
 
-    private final BpjsConsumerService bpjsConsumerService;
+    private final BpjsConsumerController bpjsConsumerController;
 
-    public BpjsFeignClientConfig(BpjsConsumerService bpjsConsumerService) {
-        this.bpjsConsumerService = bpjsConsumerService;
+    public BpjsFeignClientConfig(BpjsConsumerController bpjsConsumerController) {
+        this.bpjsConsumerController = bpjsConsumerController;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class BpjsFeignClientConfig implements Client {
             return response.toBuilder().body(responseBody, StandardCharsets.UTF_8).build();
         }
 
-        BpjsConsumerDto bpjsConsumerDto = bpjsConsumerService.getBpjsConsumerByEntityCode(entityCode);
+        BpjsConsumerWithCategoryDto bpjsConsumerDto = bpjsConsumerController.getBpjsConsumerWithCategory(null, entityCode);
 
         String key = bpjsConsumerDto.getConsumerId() + bpjsConsumerDto.getConsumerSecret() + reqTimestamp;
 
