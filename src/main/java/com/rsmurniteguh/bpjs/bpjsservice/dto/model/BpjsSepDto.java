@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rsmurniteguh.bpjs.bpjsservice.config.CustomJsonDateDeserializer;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Indikator;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.JenisPelayanan;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.KelasRawat;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto.Informasi;
 
@@ -25,7 +24,7 @@ public class BpjsSepDto {
     private String catatan;
     private String diagnosa;
     private JenisPelayanan jnsPelayanan;
-    private KelasRawat kelasRawat;
+    private String kelasRawat;
     private String noMr;
     @JsonAlias("noSEP")
     private String noSep;
