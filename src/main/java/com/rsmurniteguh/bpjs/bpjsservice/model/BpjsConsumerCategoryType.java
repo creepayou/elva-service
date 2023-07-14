@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum BpjsConsumerCategoryType {
-    VCLAIM(Constant.VCLAIM_FEIGN_NAME), ANTREANRS(Constant.ANTREAN_FEIGN_NAME);
+    VCLAIM(Constant.VCLAIM_FEIGN_NAME), ANTREANRS(Constant.ANTREAN_FEIGN_NAME), IHS(Constant.IHS_FEIGN_NAME);
 
     @Getter
     private String type;

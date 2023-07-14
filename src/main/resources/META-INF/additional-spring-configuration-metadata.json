@@ -148,5 +148,15 @@
     "name": "logging.threshold",
     "type": "java.lang.Long",
     "description": "A description for 'logging.threshold'"
+  },
+  {
+    "name": "proxy.ihs.host",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.ihs.host'"
+  },
+  {
+    "name": "proxy.ihs.url",
+    "type": "java.lang.String",
+    "description": "A description for 'proxy.ihs.url'"
   }
 ]}

@@ -90,6 +90,9 @@ proxy:
   antreanrs:
     host: ${ANTREANRS_HOST:${proxy.antreanrs.url}}
     url: https://apijkn-dev.bpjs-kesehatan.go.id/antreanrs_dev
+  ihs:
+    host: ${IHS_HOST:${proxy.ihs.url}}
+    url: https://apijkn-dev.bpjs-kesehatan.go.id/ihs_dev
 
 logging:
   threshold: ${LOGGING_THRESHOLD:5000}

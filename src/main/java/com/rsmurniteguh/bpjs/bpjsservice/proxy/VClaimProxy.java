@@ -20,7 +20,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsJaminanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKlaimDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsKunjunganDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsListUpdateTglPulangDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsListUpdateTglPulangListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsPesertaResponseDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukBalikDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsRujukBalikListDto;
@@ -176,11 +176,10 @@ public interface VClaimProxy {
 			@RequestBody BpjsRequestDto<RequestUpdateTglPulangDto> requestSepDto,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-	@GetMapping("/Sep/updtglplg/list/bulan/{bulan}/tahun/{tahun}/{filter}")
-	public BpjsResponse2<BpjsListUpdateTglPulangDto> getListUpdateTglPulangSEP(
+	@GetMapping("/Sep/updtglplg/list/bulan/{bulan}/tahun/{tahun}/")
+	public BpjsResponse2<BpjsListUpdateTglPulangListDto> getListUpdateTglPulangSEP(
 			@PathVariable("bulan") int bulan,
 			@PathVariable("tahun") int tahun,
-			@PathVariable(name = "filter", required = false) String filter,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
 	@GetMapping("/SEP/Internal/{noSep}")

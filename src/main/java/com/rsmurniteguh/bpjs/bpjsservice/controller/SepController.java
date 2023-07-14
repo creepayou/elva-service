@@ -23,7 +23,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.base.model.ResponseSts;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.Lakalantas;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsFingerPrintStatusDto;
-import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsListUpdateTglPulangDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsListUpdateTglPulangListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepInternalListDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsSepKllDto;
@@ -108,14 +108,12 @@ public class SepController extends BaseController {
 	}
 
 	@GetMapping("/getListUpdateTglPulangSEP")
-	public ResponseSts<BpjsListUpdateTglPulangDto> getListUpdateTglPulangSEP(@RequestParam("bulan") int bulan,
+	public ResponseSts<BpjsListUpdateTglPulangListDto> getListUpdateTglPulangSEP(@RequestParam("bulan") int bulan,
 			@RequestParam("tahun") int tahun,
-			@RequestParam(name = "filter", required=false) String filter,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
-		filter = filter == null ? "" : filter;
 		return ResponseSts.onSuccess(BpjsResponseUtil
 				.handleBpjsResponse(vClaimProxy
-						.getListUpdateTglPulangSEP(bulan, tahun, filter, entityCode)));
+						.getListUpdateTglPulangSEP(bulan, tahun, entityCode)));
 	}
 
 	@GetMapping("/getSepInternal/{sepNo}")

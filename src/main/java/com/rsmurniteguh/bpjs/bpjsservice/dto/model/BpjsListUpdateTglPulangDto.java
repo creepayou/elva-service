@@ -34,5 +34,6 @@ public class BpjsListUpdateTglPulangDto {
     private String noSurat;
     private String keterangan;
     private String user;
+    private String status;
 }
 
