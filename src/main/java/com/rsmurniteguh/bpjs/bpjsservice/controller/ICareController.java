@@ -1,5 +1,7 @@
 package com.rsmurniteguh.bpjs.bpjsservice.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +25,11 @@ public class ICareController extends BaseController {
 	private IHSProxy ihsProxy;
 
 	@PostMapping("/validate")
-	public ResponseSts<Object> validate(@RequestBody ValidateICareDto validateICareDto,
+	public ResponseSts<String> validate(@RequestBody ValidateICareDto validateICareDto,
 			@RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+		Map<String, String> resMap = BpjsResponseUtil.handleBpjsResponse(ihsProxy.validate(validateICareDto, entityCode));
 		return ResponseSts
-				.onSuccess(BpjsResponseUtil
-						.handleBpjsResponse(ihsProxy.validate(validateICareDto,
-								entityCode)));
+				.onSuccess(resMap.get("url"));
 	}
 
 }
