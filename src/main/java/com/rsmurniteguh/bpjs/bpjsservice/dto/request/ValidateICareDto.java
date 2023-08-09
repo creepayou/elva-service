@@ -13,5 +13,5 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ValidateICareDto {
     private String param;
-    private Long kodedokter;   
+    private Long kodedokter;
 }
