@@ -20,6 +20,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanListTaskDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.AntreanFarmasiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsBatalAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.RequestAntreanDto;
@@ -49,10 +50,10 @@ public interface AntreanRsProxy {
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
             @PathVariable("nik") String nik);
 
-   @GetMapping(value = "/ref/pasien/fp/identitas/noka/noidentitas/{bpjsNo}")
-   public BpjsResponse2<BpjsAntreanPatientFpDto> getReferensiPasienFpByBpjsNo(
-           @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
-           @PathVariable("bpjsNo") String bpjsNo);
+    @GetMapping(value = "/ref/pasien/fp/identitas/noka/noidentitas/{bpjsNo}")
+    public BpjsResponse2<BpjsAntreanPatientFpDto> getReferensiPasienFpByBpjsNo(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode,
+            @PathVariable("bpjsNo") String bpjsNo);
 
     @GetMapping(value = "/jadwaldokter/kodepoli/{kodePoli}/tanggal/{tanggal}")
     public BpjsResponse2<List<BpjsAntreanScheduleDoctorDto>> getReferensiJadwalDokter(
@@ -74,45 +75,49 @@ public interface AntreanRsProxy {
             @PathVariable("tanggal") String tanggal,
             @PathVariable("waktu") String waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
-            @GetMapping(value = "/dashboard/waktutunggu/bulan/{bulan}/tahun/{tahun}/waktu/{waktu}")
+
+    @GetMapping(value = "/dashboard/waktutunggu/bulan/{bulan}/tahun/{tahun}/waktu/{waktu}")
     public BpjsResponse<List<BpjsAntreanDashboardPerTanggalDto>> getDashboardPerBulan(
             @PathVariable("bulan") String bulan,
             @PathVariable("tahun") String tahun,
             @PathVariable("waktu") String waktu,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
-            @PostMapping("/antrean/updatewaktu")
-            public BpjsResponse2<Object> updateWaktuAntrean(@RequestBody RequestAntreanDto requestAntreanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
-            @PostMapping("/antrean/add")
-            public BpjsResponse2<Object> tambahAntrean(@RequestBody BpjsAntreanDto bpjsAntreanDto,
-            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-            
-            @PostMapping("/antrean/batal")
-            public BpjsResponse2<Object> batalAntrean(@RequestBody BpjsBatalAntreanDto bpjsBatalAntreanDto,
+
+    @PostMapping("/antrean/updatewaktu")
+    public BpjsResponse2<Object> updateWaktuAntrean(@RequestBody RequestAntreanDto requestAntreanDto,
             @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-        @GetMapping(value = "/antrean/pendaftaran/tanggal/{tanggal}")
-        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerTanggal(
-                @PathVariable("tanggal") String tanggal,
-                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    @PostMapping("/antrean/add")
+    public BpjsResponse2<Object> tambahAntrean(@RequestBody BpjsAntreanDto bpjsAntreanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-        @GetMapping(value = "/antrean/pendaftaran/aktif")
-        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanBelumDilayani(
-                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
-                
-        @GetMapping(value = "/antrean/pendaftaran/kodebooking/{kodeBooking}")
-        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerKodeBooking(
-                @PathVariable("kodeBooking") String kodeBooking,
-                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    @PostMapping("/antrean/batal")
+    public BpjsResponse2<Object> batalAntrean(@RequestBody BpjsBatalAntreanDto bpjsBatalAntreanDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 
-        @GetMapping(value = "/antrean/pendaftaran/kodepoli/{kodePoli}/kodedokter/{kodeDokter}/hari/{hari}/jampraktek/{jamPraktek}")
-        public BpjsResponse2<List<BpjsAntreanPerTanggalDto>>  getAntreanBelumDilayaniperPoliDokterHariJam (
-                @PathVariable("kodePoli") String kodePoli,
-                @PathVariable("kodeDokter") Long kodeDokter,
-                @PathVariable("hari") String hari,
-                @PathVariable("jamPraktek") String jamPraktek,
-                @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+    @GetMapping(value = "/antrean/pendaftaran/tanggal/{tanggal}")
+    public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerTanggal(
+            @PathVariable("tanggal") String tanggal,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @PostMapping("/antrean/farmasi/add")
+    public BpjsResponse2<Object> tambahAntreanFarmasi(@RequestBody AntreanFarmasiDto antreanFarmasiDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/antrean/pendaftaran/aktif")
+    public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanBelumDilayani(
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/antrean/pendaftaran/kodebooking/{kodeBooking}")
+    public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanPerKodeBooking(
+            @PathVariable("kodeBooking") String kodeBooking,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
+
+    @GetMapping(value = "/antrean/pendaftaran/kodepoli/{kodePoli}/kodedokter/{kodeDokter}/hari/{hari}/jampraktek/{jamPraktek}")
+    public BpjsResponse2<List<BpjsAntreanPerTanggalDto>> getAntreanBelumDilayaniperPoliDokterHariJam(
+            @PathVariable("kodePoli") String kodePoli,
+            @PathVariable("kodeDokter") Long kodeDokter,
+            @PathVariable("hari") String hari,
+            @PathVariable("jamPraktek") String jamPraktek,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode);
 }

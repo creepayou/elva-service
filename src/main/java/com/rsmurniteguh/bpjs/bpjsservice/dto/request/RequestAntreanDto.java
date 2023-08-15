@@ -20,4 +20,5 @@ public class RequestAntreanDto {
     @JsonSerialize(using = CustomBpjsEnumSerializer.class, nullsUsing = CustomNullSerializer.class)
     private TaskIdAntrean taskid;
     private Long waktu;
+    private String jenisresep;
 }

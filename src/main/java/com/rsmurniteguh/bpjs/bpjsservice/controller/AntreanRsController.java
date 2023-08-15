@@ -23,6 +23,7 @@ import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPerTanggalDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanPoliDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsAntreanScheduleDoctorDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.model.BpjsEnum.FilterWaktuAntrean;
+import com.rsmurniteguh.bpjs.bpjsservice.dto.request.AntreanFarmasiDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsAntreanModelDto;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.request.BpjsBatalAntreanDto;
@@ -159,11 +160,11 @@ public class AntreanRsController extends BaseController {
         requestAntreanDto.setKodebooking(requestAntreanModelDto.getKodeBooking());
         requestAntreanDto.setTaskid(requestAntreanModelDto.getTaskId());
         requestAntreanDto.setWaktu(requestAntreanModelDto.getWaktu());
+        requestAntreanDto.setJenisresep(requestAntreanModelDto.getJenisresep());
         return ResponseSts
                 .onSuccess(BpjsResponseUtil
                         .handleBpjsResponse(antreanRsProxy.updateWaktuAntrean(requestAntreanDto,
                                 entityCode)));
-
     }
 
     @PostMapping("/tambahAntrean")
@@ -201,6 +202,15 @@ public class AntreanRsController extends BaseController {
                                 entityCode)));
     }
 
+    @PostMapping("/tambahAntreanFarmasi")
+    public ResponseSts<Object> tambahAntreanFarmasi(@RequestBody AntreanFarmasiDto antreanFarmasiDto,
+            @RequestHeader(Constant.MT_ENTITY_CODE) String entityCode) throws BusinessException {
+        return ResponseSts
+                .onSuccess(BpjsResponseUtil
+                        .handleBpjsResponse(antreanRsProxy.tambahAntreanFarmasi(antreanFarmasiDto,
+                                entityCode)));
+	}
+	
     @GetMapping("/antreanPerTanggal")
     public ResponseSts<List<BpjsAntreanPerTanggalDto>> getAntreanPerTanggal(
         @RequestParam (value = "tanggal", required=true) String tanggal,
