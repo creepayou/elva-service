@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,14 +44,17 @@ import com.rsmurniteguh.bpjs.bpjsservice.util.DateUtil;
 @RequestMapping("/sep")
 public class SepController extends BaseController {
 
-	@Autowired
-	private VClaimProxy vClaimProxy;
+	private final VClaimProxy vClaimProxy;
+	private final BpjsConsumerService bpjsConsumerService;
+	private final Map<String, String> entityTimeZone;
 
-	@Autowired
-	private BpjsConsumerService bpjsConsumerService;
-
-	@Autowired
-	private Map<String, String> entityTimeZone;
+	public SepController(VClaimProxy vClaimProxy,
+			BpjsConsumerService bpjsConsumerService,
+			Map<String, String> entityTimeZone) {
+		this.vClaimProxy = vClaimProxy;
+		this.bpjsConsumerService = bpjsConsumerService;
+		this.entityTimeZone = entityTimeZone;
+	}
 
 	private static final String KEY_SEP = "sep";
 

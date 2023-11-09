@@ -2,6 +2,8 @@ package com.rsmurniteguh.bpjs.bpjsservice.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerCategoryDtoMapper;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerDtoMapper;
 import com.rsmurniteguh.bpjs.bpjsservice.dto.mapper.BpjsConsumerWithCategoryDtoMapper;
@@ -15,51 +17,52 @@ import com.rsmurniteguh.bpjs.bpjsservice.model.BpjsConsumerCategoryType;
 import com.rsmurniteguh.bpjs.bpjsservice.repository.BpjsConsumerRepository;
 import com.rsmurniteguh.bpjs.bpjsservice.service.BpjsConsumerService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
 public class BpjsConsumerServiceImpl implements BpjsConsumerService {
 
-    @Autowired
-    private BpjsConsumerRepository bpjsConsumerRepository;
+	private final BpjsConsumerRepository bpjsConsumerRepository;
 
-    @Override
-    public BpjsConsumerDto insertBpjsConsumer(BpjsConsumerDto bpjsConsumerDto) {
-        BpjsConsumer bpjsConsumer = bpjsConsumerDto.toBpjsConsumer();
-        bpjsConsumerRepository.insert(bpjsConsumer);
-        return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumer);
-    }
+	public BpjsConsumerServiceImpl(BpjsConsumerRepository bpjsConsumerRepository) {
+		this.bpjsConsumerRepository = bpjsConsumerRepository;
+	}
 
-    @Override
-    public void updateBpjsConsumer(BpjsConsumerDto bpjsConsumerDto) {
-        BpjsConsumer bpjsConsumer = bpjsConsumerDto.toBpjsConsumer();
-        bpjsConsumerRepository.update(bpjsConsumer);
-    }
+	@Override
+	public BpjsConsumerDto insertBpjsConsumer(BpjsConsumerDto bpjsConsumerDto) {
+		BpjsConsumer bpjsConsumer = bpjsConsumerDto.toBpjsConsumer();
+		bpjsConsumerRepository.insert(bpjsConsumer);
+		return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumer);
+	}
 
-    @Override
-    public BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode) {
-        return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getByEntityCode(entityCode));
-    }
+	@Override
+	public void updateBpjsConsumer(BpjsConsumerDto bpjsConsumerDto) {
+		BpjsConsumer bpjsConsumer = bpjsConsumerDto.toBpjsConsumer();
+		bpjsConsumerRepository.update(bpjsConsumer);
+	}
 
-    @Override
-    public String getProviderCodeByEntityCode(String entityCode) throws BusinessException {
-        BpjsConsumerDto bpjsConsumerDto = getBpjsConsumerByEntityCode(entityCode);
-        if(bpjsConsumerDto == null) throw new BusinessException("Invalid entity");
-        return bpjsConsumerDto.getProviderCode();
-    }
+	@Override
+	public BpjsConsumerDto getBpjsConsumerByEntityCode(String entityCode) {
+		return BpjsConsumerDtoMapper.toBpjsConsumerDto(bpjsConsumerRepository.getByEntityCode(entityCode));
+	}
 
-    @Override
-    public BpjsConsumerCategoryDto insertBpjsConsumerCategory(BpjsConsumerCategoryDto bpjsConsumerCategoryDto) {
-        BpjsConsumerCategory bpjsConsumerCategory = bpjsConsumerCategoryDto.toBpjsConsumerCategory();
-        bpjsConsumerRepository.insertCategory(bpjsConsumerCategory);
-        return BpjsConsumerCategoryDtoMapper.toBpjsConsumerCategoryDto(bpjsConsumerCategory);
-    }
+	@Override
+	public String getProviderCodeByEntityCode(String entityCode) throws BusinessException {
+		BpjsConsumerDto bpjsConsumerDto = getBpjsConsumerByEntityCode(entityCode);
+		if (bpjsConsumerDto == null)
+			throw new BusinessException("Invalid entity");
+		return bpjsConsumerDto.getProviderCode();
+	}
 
-    @Override
-    public List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
-            List<String> entityCodeList) {
-        return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDtoList(
-                bpjsConsumerRepository.selectWithCategoryByEntityCodeList(category, entityCodeList));
-    }
+	@Override
+	public BpjsConsumerCategoryDto insertBpjsConsumerCategory(BpjsConsumerCategoryDto bpjsConsumerCategoryDto) {
+		BpjsConsumerCategory bpjsConsumerCategory = bpjsConsumerCategoryDto.toBpjsConsumerCategory();
+		bpjsConsumerRepository.insertCategory(bpjsConsumerCategory);
+		return BpjsConsumerCategoryDtoMapper.toBpjsConsumerCategoryDto(bpjsConsumerCategory);
+	}
+
+	@Override
+	public List<BpjsConsumerWithCategoryDto> getBpjsConsumerWithCategoryList(BpjsConsumerCategoryType category,
+			List<String> entityCodeList) {
+		return BpjsConsumerWithCategoryDtoMapper.toBpjsConsumerWithCategoryDtoList(
+				bpjsConsumerRepository.selectWithCategoryByEntityCodeList(category, entityCodeList));
+	}
 }
