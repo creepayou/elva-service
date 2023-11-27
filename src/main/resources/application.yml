@@ -18,11 +18,11 @@ mybatis:
 
 default:
   server:
-    port: 48084
+    port: 48091
   datasource:
     url: 192.168.222.90
     port: 5432
-    dbname: bpjsservice
+    dbname: elvaservice
     username: postgres
     password: G00gl3123
 
@@ -50,13 +50,13 @@ springdoc:
 
 ---
 server:
-  port: ${BPJSSERVICE_PORT:${default.server.port}}
+  port: ${ELVASERVICE_PORT:${default.server.port}}
   servlet:
-    context-path: /${BPJSSERVICE_CONTEXT_PATH:bpjsservice}
+    context-path: /${ELVASERVICE_CONTEXT_PATH:elvaservice}
 
 spring:
   application:
-    name: bpjsservice
+    name: elvaservice
   cloud:
     gcp:
       logging:
@@ -65,9 +65,9 @@ spring:
     init:
       platform: postgre
   datasource:
-    url: jdbc:postgresql://${BPJSSERVICE_DATABASE_URL:${default.datasource.url}}:${BPJSSERVICE_DATABASE_PORT:${default.datasource.port}}/${BPJSSERVICE_DATABASE_NAME:${default.datasource.dbname}}
-    username: ${BPJSSERVICE_DATABASE_USERNAME:${default.datasource.username}}
-    password: ${BPJSSERVICE_DATABASE_PASSWORD:${default.datasource.password}}
+    url: jdbc:postgresql://${ELVASERVICE_DATABASE_URL:${default.datasource.url}}:${ELVASERVICE_DATABASE_PORT:${default.datasource.port}}/${ELVASERVICE_DATABASE_NAME:${default.datasource.dbname}}
+    username: ${ELVASERVICE_DATABASE_USERNAME:${default.datasource.username}}
+    password: ${ELVASERVICE_DATABASE_PASSWORD:${default.datasource.password}}
     hikari:
       minimum-idle: 0
       max-lifetime: 60000
@@ -81,18 +81,6 @@ proxy:
   commonservice:
     host: ${COMMONSERVICE_HOST:${proxy.commonservice.url}}
     url: http://cluster.homtmh.local/commonservice
-  vclaimrest:
-    host: ${VCLAIMREST_HOST:${proxy.vclaimrest.url}}
-    url: https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest-dev
-  aplicaresrest:
-    host: ${APLICARESREST_HOST:${proxy.aplicaresrest.url}}
-    url: https://new-api.bpjs-kesehatan.go.id/aplicaresws/rest
-  antreanrs:
-    host: ${ANTREANRS_HOST:${proxy.antreanrs.url}}
-    url: https://apijkn-dev.bpjs-kesehatan.go.id/antreanrs_dev
-  ihs:
-    host: ${IHS_HOST:${proxy.ihs.url}}
-    url: https://apijkn-dev.bpjs-kesehatan.go.id/ihs_dev
 
 logging:
   threshold: ${LOGGING_THRESHOLD:5000}
@@ -133,6 +121,5 @@ spring:
 logging:
   level:
     root: ERROR
-    "[com.rsmurniteguh.bpjs.bpjsservice.BpjsserviceApplication]": INFO
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+    "[com.rsmurniteguh.elva.elvaservice.ElvaServiceApplication]": INFO
+
